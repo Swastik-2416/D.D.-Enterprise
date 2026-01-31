@@ -1,0 +1,2173 @@
+git --version<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>D.D. ENTERPRISE | Premium Paver Blocks & Landscape Solutions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #050608;
+      --bg-elevated: #0d1016;
+      --bg-elevated-soft: #141924;
+      --accent-gold: #f5b248;
+      --accent-teal: #3ad1c3;
+      --text-main: #f7f7f7;
+      --text-muted: #a0a4b8;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --danger: #ff4f5e;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.55);
+      --transition-fast: 0.2s ease;
+      --transition-med: 0.35s ease;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top left, #1c2738 0, #050608 55%);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.4rem;
+    }
+
+    /* NAVBAR */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(5, 6, 8, 0.96), rgba(5, 6, 8, 0.88));
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 0;
+      gap: 1.5rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .logo-mark {
+      width: 72px;
+      height: 72px;
+      border-radius: 0; /* not circular anymore */
+      background: transparent;
+      padding: 4px;
+      box-shadow: none; /* removed outer ring/border */
+      border: none;
+      outline: none;
+      /* allow visible image edges */
+      overflow: visible;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* maintain full logo without cropping */
+      display: block;
+      border-radius: 0;
+    }
+
+    .logo-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 30%, #ffffff18, #050608);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .brand-text h1 {
+      font-size: 1.05rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-top: 0.1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      font-size: 0.9rem;
+      transform: translateX(-50px);
+      /* Shift nav links 10px to the left as requested */
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      position: relative;
+      padding-bottom: 0.1rem;
+      transition: color var(--transition-fast);
+      white-space: wrap;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.25rem;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-teal), var(--accent-gold));
+      transition: width var(--transition-med);
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Keep the About Us nav link on a single line to prevent wrapping */
+    .nav-links a[href="#gallery"] {
+      white-space: nowrap;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .pill-badge {
+      font-size: 0.74rem;
+      padding: 0.2rem 1rem;
+      border-radius: 999px;
+      color: var(--accent-teal);
+      border: 1px solid rgba(58, 209, 195, 0.28);
+      background: radial-gradient(circle at top left, rgba(58, 209, 195, 0.16), transparent 60%);
+      display: inline-block;
+      width: 8.5rem; /* set a large width to allow text wrapping */
+      max-width: 10rem; /* limit width so text wraps into two lines */
+      white-space: normal; /* allow wrapping within the pill */
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 0.55rem 1.2rem;
+      font-size: 0.85rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-gold), #f09b2a);
+      color: #050608;
+      box-shadow: 0 14px 32px rgba(245, 178, 72, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(245, 178, 72, 0.45);
+    }
+
+    .btn-ghost {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: transparent;
+      color: var(--text-main);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.03);
+      transform: translateY(-1px);
+    }
+
+    .icon-arrow {
+      font-size: 1rem;
+      display: inline-block;
+      transform: translateY(1px);
+    }
+
+    .nav-toggle {
+      display: none;
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      padding: 0.35rem 0.55rem;
+      background: rgba(5, 6, 8, 0.9);
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    /* HERO SECTION */
+    main {
+      flex: 1;
+    }
+
+    .hero {
+      padding: 3.5rem 0 3rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.22rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(20, 25, 36, 0.9);
+      border: 1px solid rgba(245, 178, 72, 0.38);
+      color: var(--accent-gold);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.9rem;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent-gold));
+    }
+
+    .hero h2 {
+      font-size: clamp(2.1rem, 3.1vw, 3rem);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      line-height: 1.12;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero h2 span.highlight {
+      background: linear-gradient(135deg, var(--accent-teal), var(--accent-gold));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 540px;
+      color: var(--text-muted);
+      font-size: 0.97rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      align-items: center;
+      margin-bottom: 1.7rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+    }
+
+    .hero-meta span strong {
+      color: var(--accent-teal);
+      margin-right: 0.25rem;
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top, #222c3a, #090d13 58%);
+      border-radius: var(--radius-xl);
+      padding: 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -60%;
+      opacity: 0.35;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(58, 209, 195, 0.4), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(245, 178, 72, 0.4), transparent 55%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .hero-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+      font-size: 0.72rem;
+    }
+
+    .chip {
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(5, 6, 8, 0.65);
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+    }
+
+    .hero-card-main {
+      display: grid;
+      grid-template-columns: 2.2fr 2.4fr;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-badge strong {
+      color: var(--accent-gold);
+    }
+
+    .hero-card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-card-title span {
+      color: var(--accent-teal);
+    }
+
+    .hero-card-desc {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.1rem;
+      font-size: 0.8rem;
+    }
+
+    .hero-stat h4 {
+      font-size: 1.05rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .hero-stat span {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .hero-mock {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: linear-gradient(145deg, rgba(11, 16, 26, 0.9), rgba(9, 11, 16, 0.95));
+      padding: 0.8rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero-mock-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-mock-block {
+      border-radius: 14px;
+      background: radial-gradient(circle at 10% -10%, rgba(245, 178, 72, 0.25), transparent 55%), #050608;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 0.7rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-mock-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .paver-tile {
+      height: 100px;
+      border-radius: 6px;
+      background: linear-gradient(145deg, #2e394a, #171c27);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .paver-tile:nth-child(2),
+    .paver-tile:nth-child(5),
+    .paver-tile:nth-child(9) {
+      background: linear-gradient(145deg, #3c2a1c, #120e07);
+    }
+
+    .paver-tile:nth-child(3),
+    .paver-tile:nth-child(7),
+    .paver-tile:nth-child(10) {
+      background: linear-gradient(145deg, #253632, #111916);
+    }
+
+    .hero-mock-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .hero-mock-footer strong {
+      color: var(--accent-teal);
+    }
+
+    .status-pill {
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(58, 209, 195, 0.4);
+      color: var(--accent-teal);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    /* SECTION WRAPPER */
+    section {
+      padding: 2.6rem 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 1.8rem;
+    }
+    .project-header {
+      align-items: center;
+    }
+
+    .project-header .section-title:last-child {
+      justify-content: flex-end;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .section-title span.bar {
+      width: 30px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-teal), var(--accent-gold));
+    }
+
+    .section-subtitle {
+      max-width: 420px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    /* PRODUCTS SECTION */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+    /* Horizontal scroll variant for product cards when there are many items */
+    .card-grid.horizontal-scroll {
+      display: flex;
+      gap: 1.2rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x proximity;
+      padding-bottom: 0.5rem;
+      scroll-behavior: smooth;
+    }
+    .card-grid.horizontal-scroll .card {
+      flex: 0 0 320px;
+      min-width: 280px;
+      scroll-snap-align: start;
+    }
+    .card-grid.horizontal-scroll::-webkit-scrollbar {
+      height: 10px;
+    }
+    .card-grid.horizontal-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.06);
+      border-radius: 999px;
+    }
+
+    .card {
+      background: radial-gradient(circle at top, #171b26, #050608 55%);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med), background var(--transition-med);
+      cursor: pointer;
+      min-height: 320px; /* slightly taller cards for improved visual weight */
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      opacity: 0;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(58, 209, 195, 0.3), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(245, 178, 72, 0.3), transparent 55%);
+      transition: opacity var(--transition-med);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      /* Removed upward movement and heavy shadow to keep layout stable on hover.
+         Retain subtle color/border change for visual feedback. */
+      border-color: rgba(245, 178, 72, 0.45);
+      background: radial-gradient(circle at top, #1f2534, #050608 60%);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-kicker {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-teal);
+      margin-bottom: 0.4rem;
+    }
+
+    .card h3 {
+      font-size: 0.98rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .pill {
+      font-size: 0.72rem;
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--text-muted);
+    }
+
+    .card-footer {
+      font-size: 0.76rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+    }
+
+    .card-footer span.cta {
+      color: var(--accent-gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* ABOUT / STATS SECTION */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .about-panel {
+      background: radial-gradient(circle at top, #181f2f, #060910);
+      border-radius: var(--radius-xl);
+      padding: 1.4rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .about-panel h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .about-panel p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .about-list {
+      margin-top: 0.6rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem 1.2rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .about-list li::before {
+      content: "▹";
+      color: var(--accent-teal);
+      margin-right: 0.3rem;
+    }
+
+    .stats-panel {
+      background: radial-gradient(circle at 0 0, #313858, #050608);
+      border-radius: var(--radius-xl);
+      padding: 1.3rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.2rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .stat-box {
+      padding: 0.7rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(5, 6, 8, 0.8);
+      text-align: left;
+    }
+
+    .stat-box h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .stat-box span.label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+    }
+
+    .stat-caption {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* PROJECTS / TAGS SECTION */
+    .project-row {
+      display: grid;
+      grid-template-columns: minmax(0, 2.5fr) minmax(0, 2.2fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+    }
+
+    .tag {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px dashed rgba(255, 255, 255, 0.28);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    .tag.primary {
+      border-style: solid;
+      color: var(--accent-gold);
+      border-color: rgba(245, 178, 72, 0.7);
+    }
+
+    .project-list {
+      list-style: none;
+      display: grid;
+      gap: 0.8rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .project-list li strong {
+      color: var(--text-main);
+    }
+
+    /* GALLERY STRIP (simple placeholders) */
+    .gallery-strip {
+      display: grid;
+      /* Make gallery items larger while staying responsive:
+         each item will be at least 300px wide, and grow to fill available space. */
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .gallery-item {
+      border-radius: 14px;
+      background: linear-gradient(135deg, #232c3b, #11151f);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      aspect-ratio: 4 / 3;
+      min-height: 220px; /* ensure a visually larger card for images */
+      position: relative;
+      overflow: hidden;
+    }
+    /* Ensure images inside gallery cards fill the card area without distortion */
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Horizontal scroll variant: add `horizontal-scroll` to the .gallery-strip container
+       to enable a horizontally scrolling gallery that snaps to each card. */
+    .gallery-strip.horizontal-scroll {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x proximity;
+      padding-bottom: 0.5rem;
+    }
+
+    .gallery-strip.horizontal-scroll .gallery-item {
+      flex: 0 0 360px; /* wider cards for images */
+      min-width: 360px;
+      scroll-snap-align: start;
+      aspect-ratio: 4 / 3;
+    }
+
+    .gallery-strip.horizontal-scroll::-webkit-scrollbar {
+      height: 10px;
+    }
+    .gallery-strip.horizontal-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .gallery-strip.horizontal-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+    }
+
+    /* CONTACT SECTION */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .contact-panel {
+      background: radial-gradient(circle at top, #192231, #050608);
+      border-radius: var(--radius-xl);
+      padding: 1.3rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .contact-panel h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-panel p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    form {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(5, 6, 8, 0.9);
+      padding: 0.65rem 0.8rem;
+      color: var(--text-main);
+      font-size: 0.86rem;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(160, 164, 184, 0.6);
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(58, 209, 195, 0.7);
+      box-shadow: 0 0 0 1px rgba(58, 209, 195, 0.3);
+      background: rgba(7, 10, 16, 0.95);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .form-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 0.4rem;
+    }
+
+    .form-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .contact-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .contact-block {
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+      background: rgba(5, 6, 8, 0.9);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .contact-block h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-main);
+    }
+
+    .contact-block p + p {
+      margin-top: 0.2rem;
+    }
+
+    .contact-block a {
+      color: var(--accent-teal);
+      font-weight: 500;
+    }
+
+    /* FOOTER */
+    footer {
+      /* Softer, darker footer gradient for subtle separation */
+      border-top: 1px solid rgba(255,255,255,0.02);
+      background: linear-gradient(180deg, #10171e 0%, #03060a 60%, #010205 100%);
+      padding: 1.6rem 0 2rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) repeat(3, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-col h5 {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-gold);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 0.7rem;
+      font-size: 0.76rem;
+    }
+
+    .footer-bottom span strong {
+      color: var(--accent-teal);
+    }
+
+    .social-row {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .social-pill {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .social-pill:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(245, 178, 72, 0.7);
+      transform: translateY(-1px);
+    }
+
+    /* BACK TO TOP */
+    .back-to-top {
+      position: fixed;
+      right: 1.2rem;
+      bottom: 1.2rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(5, 6, 8, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.75);
+      transition: transform var(--transition-fast), opacity var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-2px);
+      border-color: rgba(245, 178, 72, 0.6);
+      background: #080b12;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .hero-grid,
+      .about-grid,
+      .project-row,
+      .contact-grid,
+      .footer-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .gallery-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      header {
+        position: sticky;
+      }
+
+      .nav-links,
+      .nav-cta {
+        display: none;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      .nav.open .nav-links,
+      .nav.open .nav-cta {
+        display: flex;
+      }
+
+      .nav.open {
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+
+      .nav.open .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding-top: 0.4rem;
+      }
+
+      .nav.open .nav-cta {
+        order: 2;
+        margin-left: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .card-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .gallery-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-card-main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .form-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      /* Mobile: remove fixed min-height to allow cards to size naturally */
+      .card {
+        min-height: auto;
+      }
+    }
+
+    /* PRODUCT DETAILS MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      /* lighter overlay for improved readability */
+      background: rgba(70, 70, 70, 0.28);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 60;
+      padding: 1.2rem;
+      backdrop-filter: blur(3px);
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      width: 100%;
+      max-width: 800px;
+      max-height: 90vh;
+      /* slightly more translucent modal to let background breathe */
+      background: rgba(2, 43, 55, 0.774);
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255,255,255,0.045);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.28);
+      color: var(--text-main);
+      backdrop-filter: saturate(1.06) blur(2px);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .modal-header .meta {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .modal-body {
+      padding: 1rem;
+      overflow: auto;
+      color: var(--text-main);
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 1rem;
+    }
+
+    .modal-gallery {
+      display: block;
+    }
+
+    .main-image-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #081016;
+    }
+
+    .main-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      opacity: 0;
+      transition: opacity 520ms ease-in-out;
+      will-change: opacity;
+    }
+
+    .main-image.visible { opacity: 1; }
+
+    .modal-details h3 { margin-top: 0; }
+
+    .modal-details .pill-row { margin: 0.6rem 0; display:flex; gap:0.5rem; flex-wrap:wrap; }
+
+    .modal-footer {
+      padding: 0.8rem 1rem;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    }
+
+    .modal .close-btn {
+      appearance: none;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-muted);
+      width:36px;
+      height:36px;
+      border-radius:8px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+
+    @media (max-width: 880px) {
+      .modal-body { grid-template-columns: 1fr; }
+      .modal-gallery .main-image { height:220px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- NAVBAR -->
+    <header>
+      <div class="container">
+        <nav class="nav" id="nav">
+          <div class="nav-left">
+            <div class="logo-mark">
+              <img src="Brand Logo.png" alt="D.D. Enterprise Logo">
+            </div>
+            <div class="brand-text">
+              <h1>D. D. ENTERPRISE</h1>
+              <span>Paver Blocks • Roof Tiles • Chequered Tiles</span>
+            </div>
+          </div>
+
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+
+          <div class="nav-links">
+            <a href="#top">Home</a>
+            <a href="#products">Products</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#about">About</a>
+            <!-- <a href="#contact">Contact</a> -->
+          </div>
+
+          <div class="nav-cta">
+            <div class="pill-badge">Serving West Bengal since 2010</div>
+            <!-- <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})"> </Button>-->
+              <button class="btn-ghost"><a href="tel:9433393977">+919433393977</a></button>
+            <button class="btn-primary" onclick="scrollToSection('contact')">
+              Get a Quote 
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero" id="top">
+        <div class="container">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                Premium Precast Concrete Article
+              </div>
+
+              <h2>
+                <span class="highlight">Transform</span> every driveway, courtyard &amp; pathways with engineered
+                <span class="highlight">paver systems</span>.
+              </h2>
+
+              <p class="hero-subtitle">
+                From heavy-duty Interlocking Blocks to Landscaping Tiles, D. D. ENTERPRISE delivers
+                Factory-Precision Paving Solutions for Architects, Developers and Premium Residences across West Bengal.
+              </p>
+
+              <div class="hero-cta-row">
+                <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+                  Explore product range
+                  <!-- <span class="icon-arrow">↓</span> -->
+                </button>
+                <a href="Product Catalogue - D. D. ENTERPRISE.pdf" download class="btn-ghost">
+                  Download Catalogue
+                </a>
+              </div>
+
+              <div class="hero-meta">
+                <span><strong>200+</strong> bulk projects delivered</span>
+                <span><strong>1.5 Lakh+ sq.ft</strong> executed sites</span>
+                <!-- <span><strong>IS:15658</strong> compliant paver blocks</span> -->
+              </div>
+            </div>
+
+            <!-- Hero Visual Card -->
+            <div class="hero-card">
+              <div class="hero-card-inner">
+                <div class="hero-chip-row">
+                  <div class="chip">INTERLOCKING-PAVER BLOCKS</div>
+                  <div class="chip">CHEQUERED TILES</div>
+                  <!-- <div class="chip">Kerbs &amp; Edges</div> -->
+                  <div class="chip">ROOF TILES</div>
+                </div>
+
+                <div class="hero-card-main">
+                  <div>
+                    <div class="hero-badge">
+                      Trusted by <strong>Leading Architects</strong> &amp; Infrastructure Brands
+                    </div>
+                    <div class="hero-card-title">
+                      Design-Led <span>Paving Systems</span> built for Indian Conditions.
+                    </div>
+                    <div class="hero-card-desc">
+                      Specify Once and Rely on our Engineered Mix Designs, Colour-Fast Pigments and Rigorous QA to keep your
+                      Pavements Performing for Decades.
+                    </div>
+                    <div class="hero-stats">
+                      <div class="hero-stat">
+                        <h4>15+</h4>
+                        <span>Years in precast</span>
+                      </div>
+                      <div class="hero-stat">
+                        <h4>4+</h4>
+                        <span>Thickness ranges</span>
+                      </div>
+                      <div class="hero-stat">
+                        <h4>50+</h4>
+                        <span>Product range</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="hero-mock">
+                    <!-- <div class="hero-mock-tag">Sample layout • High-load driveway</div> -->
+                    <div class="hero-mock-tag">Sample Paver Blocks</div>
+                    <div class="hero-mock-block">
+                      <div class="hero-mock-grid">
+                        <img src="1. Brick Red.png" alt="Brick Red">
+                        <img src="4. Cosmos Red.png" alt="Cheker Tile Red 36 Ball">
+                        <img src="7. ZigZag Red.png" alt="Cheker Tile Yellow Cross">
+                        <img src="10. Max Red.jpg" alt="Cosmos Grey">
+                        <img src="13. Domrup Yellow.png" alt="Domrup Yellow">
+                        <img src="16. Cheker Tile Yellow 36 Ball.jpg" alt="Domrup Grey">
+                        <img src="18. Cheker Tile Yellow 25 Sq.png" alt="Max Red">
+                        <img src="20. Cheker Tile Yellow Cross.png" alt="ZigZag Yellow">
+                      </div>
+                      <div class="hero-mock-footer">
+                        <!-- <span>Mix design: <strong>M40 • 80mm</strong></span>
+                        <span class="status-pill">Site ready</span> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRODUCTS -->
+      <section id="products">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="bar"></span>
+              Product Range
+            </div>
+            
+          </div>
+
+          <div class="card-grid horizontal-scroll">
+            <!-- Paving Blocks (condensed card content) -->
+            <article class="card" data-images="7. ZigZag Red.png,20. Cheker Tile Yellow Cross.png"
+                     data-modal-title="ZIG-ZAG — Heavy-Duty Interlock"
+                     data-modal-kicker="PAVER BLOCK — 40–80 MM (MODAL)"
+                     data-modal-desc="<strong>MODAL CONTENT:</strong> This detailed modal description is intentionally different from the outer card. It contains technical specs, suggested mix designs, recommended uses and maintenance tips to help you evaluate the product clearly."
+                     data-modal-pills="Colour fast pigments|Recommended: M40 mix"
+                     data-modal-footer="Modal: Built to last and easy to maintain. Call us for full details and pricing!"
+                     data-modal-images="7. ZigZag Red.png,20. Cheker Tile Yellow Cross.png,10. Max Red.jpg">
+              <div class="card-kicker">PAVER BLOCK • 40–80 MM</div>
+              <h3>ZIG-ZAG</h3>
+              <p class="card-brief">
+                The Unique Pattern Provides Superior Strength and Stability for Driveways, Walkways, And Patios.
+              </p>
+              <div class="pill-row">
+                <div class="pill">COLOUR FAST PIGMENTS</div>
+              </div>
+              <div class="card-footer">
+                <span>Suitable for heavy-duty places such as petrol pumps, roads.</span>
+                <!-- <span class="cta">View details ↗</span> -->
+              </div>
+            </article>
+
+            <article class="card" data-images="4. Cosmos Red.png,10. Max Red.jpg"
+                     data-modal-title="REFLECTIVES — High-Lustre Finish"
+                     data-modal-kicker="PAVER BLOCK — 60–80 MM (MODAL)"
+                     data-modal-desc="<strong>MODAL CONTENT:</strong> High-lustre reflective finish details, recommended sealants, and deployment examples for plazas and premium parking. Includes cleaning & polishing notes."
+                     data-modal-pills="Colour-fast pigments|Low porosity"
+                     data-modal-footer="Modal: Ideal for high-visibility public spaces; contact for sample tiles."
+                     data-modal-images="4. Cosmos Red.png,10. Max Red.jpg,1. Brick Red.png">
+              <div class="card-kicker">PAVER BLOCK • 60–80 MM</div>
+              <h3>REFLECTIVES</h3>
+              <p class="card-brief">
+                High-lustre pavers in contemporary colours delivering long-lasting finish for promenades and premium parking.
+              </p>
+              <div class="pill-row">
+                <div class="pill">COLOUR FAST PIGMENTS</div>
+              </div>
+              <div class="card-footer">
+                <span>Ideal for malls &amp; hotels</span>
+                <span class="cta">View details ↗</span>
+              </div>
+            </article>
+
+            <article class="card" data-images="16. Cheker Tile Yellow 36 Ball.jpg,18. Cheker Tile Yellow 25 Sq.png"
+                     data-modal-title="STURDY SERIES — Industrial Grade"
+                     data-modal-kicker="HEAVY DUTY — 80–120 MM (MODAL)"
+                     data-modal-desc="<strong>MODAL CONTENT:</strong> Engineered mix properties, load capacity figures, and QA checkpoints for heavy-duty applications (ports, container yards, fuel stations)."
+                     data-modal-pills="High abrasion resistance|Traction enhanced"
+                     data-modal-footer="Modal: Designed for extreme loads — request technical datasheet."
+                     data-modal-images="16. Cheker Tile Yellow 36 Ball.jpg,18. Cheker Tile Yellow 25 Sq.png,13. Domrup Yellow.png">
+              <div class="card-kicker">HEAVY DUTY • 80–120 MM</div>
+              <h3>STURDY SERIES</h3>
+              <p class="card-brief">
+                Engineered for extreme loads — ports, industrial yards and vehicle-intensive sites.
+              </p>
+              <div class="pill-row">
+                <div class="pill">HIGH ABRASION RESISTANCE</div>
+              </div>
+              <div class="card-footer">
+                <span>Designed for forklifts, trailers &amp; heavy traffic</span>
+                <span class="cta">View details ↗</span>
+              </div>
+            </article>
+
+            <article class="card" data-images="13. Domrup Yellow.png,1. Brick Red.png"
+                     data-modal-title="GRASS PAVERS & GRIDS — Permeable System"
+                     data-modal-kicker="ECO — 60–80 MM (MODAL)"
+                     data-modal-desc="<strong>MODAL CONTENT:</strong> Permeable grid system details, load-bearing guidelines, planting recommendations and drainage performance notes."
+                     data-modal-pills="Stormwater friendly|Permeable paving"
+                     data-modal-footer="Modal: Great for landscape parking and sustainable sites. Contact for CAD drawings."
+                     data-modal-images="13. Domrup Yellow.png,1. Brick Red.png,4. Cosmos Red.png">
+              <div class="card-kicker">ECO • 60–80 MM</div>
+              <h3>GRASS PAVERS &amp; GRIDS</h3>
+              <p class="card-brief">
+                Permeable grid systems that allow grass growth while providing structural support for light traffic.
+              </p>
+              <div class="pill-row">
+                <div class="pill">STORMWATER FRIENDLY</div>
+              </div>
+              <div class="card-footer">
+                <span>Perfect for open parking &amp; landscape areas</span>
+                <!-- <span class="cta">View details ↗</span> -->
+              </div>
+            </article>
+          </div>
+
+          <div style="margin-top:1.6rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;">
+            <p style="font-size:0.8rem; color:var(--text-muted);">
+              Also explore: Landscaping tiles & Kerbstones.
+            </p>
+            <button class="btn-ghost" onclick="scrollToSection('contact')">
+              Request full product catalogue
+            </button>
+          </div>
+          <!-- Product details modal -->
+          <div id="productModal" class="modal-overlay" aria-hidden="true">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+              <div class="modal-header">
+                <div>
+                  <div class="modal-kicker meta" id="modalKicker"></div>
+                  <h3 id="modalTitle"></h3>
+                </div>
+                <div style="display:flex;align-items:center;gap:0.6rem;">
+                  <button class="close-btn" id="modalClose" title="Close">✕</button>
+                </div>
+              </div>
+
+              <div class="modal-body">
+                <div class="modal-gallery">
+                  <div class="main-image-container" id="mainImageContainer">
+                    <img src="" alt="Product image" class="main-image visible" id="modalImageA">
+                    <img src="" alt="Product image" class="main-image" id="modalImageB">
+                  </div>
+                </div>
+
+                <div class="modal-details">
+                  <div class="pill-row" id="modalPills"></div>
+                  <p id="modalDesc"></p>
+                  <div style="margin-top:1rem;color:var(--text-muted);" id="modalExtra"></div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <span id="modalFooterText"></span>
+                <div>
+                  <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Quote</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            (function(){
+              const modalOverlay = document.getElementById('productModal');
+              const modalClose = document.getElementById('modalClose');
+              const modalKicker = document.getElementById('modalKicker');
+              const modalTitle = document.getElementById('modalTitle');
+              const modalDesc = document.getElementById('modalDesc');
+              const modalPills = document.getElementById('modalPills');
+              const modalFooterText = document.getElementById('modalFooterText');
+
+              const imgA = document.getElementById('modalImageA');
+              const imgB = document.getElementById('modalImageB');
+              const mainImageContainer = document.getElementById('mainImageContainer');
+
+              let currentImages = [];
+              let currentIndex = 0;
+              let autoScrollTimer = null;
+              let interactionPaused = false;
+              let visibleA = true;
+
+              function setImageWithFade(src, alt){
+                const from = visibleA ? imgA : imgB;
+                const to = visibleA ? imgB : imgA;
+                to.src = src;
+                to.alt = alt || '';
+                // trigger crossfade
+                to.classList.add('visible');
+                from.classList.remove('visible');
+                visibleA = !visibleA;
+              }
+
+              function goToIndex(idx){
+                if(!currentImages || currentImages.length === 0) return;
+                currentIndex = (idx + currentImages.length) % currentImages.length;
+                const src = currentImages[currentIndex];
+                setImageWithFade(src, modalTitle.textContent || '');
+              }
+
+              function startAutoScroll(){
+                stopAutoScroll();
+                if(!currentImages || currentImages.length <= 1) return;
+                autoScrollTimer = setInterval(()=>{
+                  if(interactionPaused) return;
+                  goToIndex(currentIndex + 1);
+                }, 4200);
+              }
+
+              function stopAutoScroll(){ if(autoScrollTimer){ clearInterval(autoScrollTimer); autoScrollTimer = null; } }
+
+              function openModalFromCard(card){
+                // Prefer explicit modal fields set on the card via data-modal-* attributes.
+                // This allows outer card content to differ from modal details.
+                const kicker = card.dataset.modalKicker || card.querySelector('.card-kicker')?.textContent || '';
+                const title = card.dataset.modalTitle || card.querySelector('h3')?.textContent || '';
+
+                // description: prefer `data-modal-desc`, then `.card-desc` or `.card-brief`, then any <p>
+                const desc = card.dataset.modalDesc || card.querySelector('p.card-desc')?.innerHTML || card.querySelector('p.card-brief')?.innerHTML || card.querySelector('p')?.innerHTML || '';
+
+                // pills: allow `data-modal-pills` as pipe-separated list, otherwise gather visible pills
+                let pills = [];
+                if(card.dataset.modalPills){
+                  pills = card.dataset.modalPills.split('|').map(s=>s.trim()).filter(Boolean);
+                } else {
+                  pills = Array.from(card.querySelectorAll('.pill')).map(n=>n.textContent.trim());
+                }
+
+                const footerSpan = card.dataset.modalFooter || card.querySelector('.card-footer span')?.textContent || '';
+
+                // images: prefer `data-modal-images` else fallback to `data-images`
+                const imagesAttr = card.dataset.modalImages || card.dataset.images;
+                let images = [];
+                if(imagesAttr) images = imagesAttr.split(',').map(s=>s.trim()).filter(Boolean);
+                if(images.length === 0) images = [ '1. Brick Red.png','4. Cosmos Red.png','7. ZigZag Red.png' ];
+
+                modalKicker.textContent = kicker;
+                modalTitle.textContent = title;
+                modalDesc.innerHTML = desc;
+                modalFooterText.textContent = footerSpan;
+
+                // pills
+                modalPills.innerHTML = '';
+                pills.forEach(p=>{ const d = document.createElement('div'); d.className = 'pill'; d.textContent = p; modalPills.appendChild(d); });
+
+                // setup images
+                currentImages = images.slice();
+                currentIndex = 0;
+                visibleA = true;
+                imgA.src = currentImages[0]; imgA.alt = title; imgA.classList.add('visible');
+                imgB.src = '' ; imgB.classList.remove('visible');
+
+                modalOverlay.classList.add('open');
+                modalOverlay.setAttribute('aria-hidden','false');
+                document.body.style.overflow = 'hidden';
+
+                startAutoScroll();
+              }
+
+              function closeModal(){ stopAutoScroll(); interactionPaused = false; currentImages = []; modalOverlay.classList.remove('open'); modalOverlay.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
+
+              // attach click handlers to product cards
+              document.querySelectorAll('.card-grid.horizontal-scroll .card').forEach(card=>{
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', (e)=>{
+                  if(e.target.closest('a') || e.target.closest('button')) return;
+                  openModalFromCard(card);
+                });
+              });
+
+              modalClose.addEventListener('click', closeModal);
+              modalOverlay.addEventListener('click', (e)=>{ if(e.target === modalOverlay) closeModal(); });
+              window.addEventListener('keydown', (e)=>{
+                if(e.key === 'Escape') return closeModal();
+                if(e.key === 'ArrowLeft'){ goToIndex(currentIndex-1); interactionPaused = true; setTimeout(()=>interactionPaused=false,900); }
+                if(e.key === 'ArrowRight'){ goToIndex(currentIndex+1); interactionPaused = true; setTimeout(()=>interactionPaused=false,900); }
+              });
+
+              // pause on hover / focus
+              modalOverlay.addEventListener('mouseenter', ()=>{ interactionPaused = true; });
+              modalOverlay.addEventListener('mouseleave', ()=>{ interactionPaused = false; });
+
+              // touch / swipe handling on image container
+              (function addSwipe(){
+                let startX = 0, startY = 0, startTime = 0, touching = false;
+                mainImageContainer.addEventListener('touchstart', (e)=>{
+                  if(!e.touches || e.touches.length === 0) return;
+                  touching = true; interactionPaused = true; stopAutoScroll();
+                  startX = e.touches[0].clientX; startY = e.touches[0].clientY; startTime = Date.now();
+                }, {passive:true});
+
+                mainImageContainer.addEventListener('touchend', (e)=>{
+                  if(!touching) return; touching = false;
+                  const dx = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX - startX : 0;
+                  const dy = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY - startY : 0;
+                  const dt = Date.now() - startTime;
+                  if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) && dt < 800){
+                    if(dx < 0) goToIndex(currentIndex+1); else goToIndex(currentIndex-1);
+                  }
+                  setTimeout(()=>{ interactionPaused = false; startAutoScroll(); }, 600);
+                }, {passive:true});
+
+                // mouse drag for desktop
+                let dragging = false; let mStartX = 0;
+                mainImageContainer.addEventListener('mousedown', (e)=>{ dragging = true; interactionPaused = true; stopAutoScroll(); mStartX = e.clientX; e.preventDefault(); });
+                window.addEventListener('mousemove', (e)=>{ if(!dragging) return; });
+                window.addEventListener('mouseup', (e)=>{ if(!dragging) return; dragging=false; const dx = e.clientX - mStartX; if(Math.abs(dx) > 60){ if(dx < 0) goToIndex(currentIndex+1); else goToIndex(currentIndex-1); } setTimeout(()=>{ interactionPaused=false; startAutoScroll(); }, 600); });
+              })();
+            })();
+          </script>
+        </div>
+      </section>
+
+      <!-- ABOUT + STATS -->
+      <section id="about">
+        <div class="container">
+          <div class="section-header">
+            <div class="section-title">
+              <span class="bar"></span>
+              About D.D. Enterprise
+            </div>
+          </div>
+
+          <div class="about-grid">
+            <div class="about-panel">
+              <h3>Design-First. Engineering-Backed. Site-Realistic.</h3>
+              <p>
+                Leveraging a Decade of Specialized Expertise, D. D. ENTERPRISE is a Distinguised and Leading Paver Block Manufacturer in West Bengal.
+                We are Commited to Supplying Superior Concrete Interlocking Paver Block, Chequered Tiles, Roof Tiles for all your Handscaping Needs.
+                <!-- Each paver profile is backed by mix design trials, pigment weathering checks, and real-site mockups before it
+                enters our catalogue. Your project doesn’t become our test case. -->
+              </p>
+              <p>
+                Our Extensive and Versatile Product Portfolio includes over 15+ varieties of High Quality Interlocking Paver Blocks and a wide selection of Premium Chequered Tile and Roof Tile.
+                We ensure both exceptional durability and aesthetic appeal for Projects ranging from Driveways and Paver Patios to Walkways and Commercial Paving.
+              </p>
+
+              <ul class="about-list">
+                <li>Commited to on Time Product Delivery</li>
+                <!-- <li>On-site plant setup for bulk works</li>
+                <li>Documented QA checks for every batch</li> -->
+                <li>Custom Textures, Sizes &amp; Colours on Spec</li>
+                <li>Complimentary Loading from our Side</li>
+                <!-- <li>Detailed maintenance guides &amp; FAQs</li> -->
+              </ul>
+              
+            </div>
+            
+
+            <aside class="stats-panel">
+              <div class="stats-grid">
+                <div class="stat-box">
+                  <h4>1,50,000+ sq.ft</h4>
+                  <span class="label">Largest Single-Site Execution</span>
+                </div>
+                <div class="stat-box">
+                  <h4>8</h4>
+                  <span class="label">Production Lines</span>
+                </div>
+                <div class="stat-box">
+                  <h4>48 hrs</h4>
+                  <span class="label">Typical Design Response</span>
+                </div>
+              </div>
+              <!-- <p class="stat-caption">
+                Featured projects include railways, industrial areas, hotels, educational campuses and
+                residential housing townships across West Bengal.
+              </p> -->
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS & GALLERY -->
+      <section id="projects">
+        <div class="container">
+          <div class="section-header projects-header">
+            <div class="section-title">
+              <span class="bar"></span>
+              Key Sectors
+            </div>
+            <!-- <p class="section-subtitle">
+              De-risk your paving package by partnering with a manufacturer that understands both municipal and private
+              infrastructure requirements.
+            </p> -->
+          </div>
+
+          <div class="project-row">
+            <div>
+              <div class="tag-cloud">
+                <div class="tag primary">Railways</div>
+                <div class="tag primary">Malls &amp; Hotels</div>
+                <div class="tag primary">Roads &amp; Pathways</div>
+                <div class="tag primary">Educational Campuses</div>
+                <div class="tag primary">Residential Housing</div>
+                <div class="tag primary">Industrial Estate</div>
+              </div>
+            </div>
+            <br>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="container">
+          <div id="gallery">
+            <div class="section-title" style="margin-bottom:0.9rem;">
+              <span class="bar"></span>
+              Gallery Sneak Peek
+            </div>
+            <div class="gallery-strip horizontal-scroll">
+              <div class="gallery-item"><img src="_DSC0010.JPG" alt=""></div>
+              <div class="gallery-item"><img src="_DSC0043.JPG" alt=""></div>
+              <div class="gallery-item"><img src="_DSC0015.JPG" alt=""></div>             
+              <div class="gallery-item"><img src="_DSC0045.JPG" alt=""></div>
+              <div class="gallery-item"><img src="_DSC0008.JPG" alt=""></div>
+              <div class="gallery-item"><img src="Office_Room.jpg" alt=""></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-panel">
+        <h3>Request a Project Callback</h3>
+        <br>
+
+        <!-- 🔴 REPLACE the old <form> here with the one below -->
+        <form id="quoteForm">
+          <div class="form-row">
+            <div>
+              <label for="name">Full Name <span style="color: var(--danger);">*</span></label>
+              <input id="name" type="text" placeholder="Your name" required>
+            </div>
+            <div>
+              <label for="company">Organisation</label>
+              <input id="company" type="text" placeholder="Developer / Architect / Contractor">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="you@company.com">
+            </div>
+            <div>
+              <label for="phone">Contact Number <span style="color: var(--danger);">*</span></label>
+              <input id="phone" type="tel" placeholder="+91-XXXXXXXXXX" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="city">City / Project Location <span style="color: var(--danger);">*</span></label>
+              <input id="city" type="text" placeholder="City, State" required>
+            </div>
+            <div>
+              <label for="type">Project Type</label>
+              <select id="type">
+                <option>Residential Driveway / Villa</option>
+                <option>Housing Society / Township</option>
+                <option>Commercial / Mall / Hotel</option>
+                <option>Industrial / Logistics / Port</option>
+                <option>Institutional Campus</option>
+                <option>Public Works / Govt. Project</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="message">Requirements / Notes <span style="color: var(--danger);">*</span></label>
+            <textarea id="message" placeholder="Share approximate area, load type (cars, trucks, forklifts), desired look &amp; project timelines." required></textarea>
+          </div>
+
+          <!-- ✅ CAPTCHA BLOCK STARTS HERE -->
+          <div>
+            <label for="captchaInput">Enter CAPTCHA</label>
+            <div style="display:flex; align-items:center; gap:0.6rem;">
+              <div id="captchaBox"
+                   style="
+                      padding:0.55rem 0.9rem;
+                      font-size:1.1rem;
+                      letter-spacing:0.3rem;
+                      background:linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+                      border:2px solid #999;
+                      border-radius:8px;
+                      user-select:none;
+                      font-weight:700;
+                      color:#333;
+                      font-family:'Courier New', monospace;
+                      transform:skewY(-5deg);
+                      text-shadow:1px 1px 0 rgba(0,0,0,0.1);
+                      box-shadow:inset 0 1px 2px rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.2);">
+              </div>
+              <button type="button" onclick="generateCaptcha()"
+                      style="
+                        padding:0.45rem 0.9rem;
+                        border-radius:999px;
+                        border:1px solid rgba(255,255,255,0.3);
+                        background:rgba(255,255,255,0.1);
+                        cursor:pointer;
+                        color:#fff;
+                        font-size:1.2rem;
+                        transition:all 0.2s ease;">↻</button>
+            </div>
+            
+
+            <input id="captchaInput"
+                   type="text"
+                   placeholder="Type the characters above"
+                   required
+                   style="margin-top:0.5rem;">
+          </div>
+          <!-- ✅ CAPTCHA BLOCK ENDS HERE -->
+
+          <div class="form-footer">
+            <button type="submit" class="btn-primary">
+              Submit request 
+            </button>
+            <p class="form-hint">
+              By Submitting, You Agree to be Contacted on Email &amp; Phone for this Enquiry. No Spam Ever.
+            </p>
+          </div>
+        </form>
+        <!-- 🔴 END OF NEW FORM -->
+      </div>
+      <!-- contact aside (right side) stays same -->
+
+
+            <aside class="contact-aside">
+              <div class="contact-block">
+                <h4>Contact Details</h4>
+                <p>Phone (Sales): <a href="tel:9433393977">+919433393977</a></p>
+                <p>Phone (Factory &amp; Dispatch): <a href="tel:+919330532627">+919330532627</a></p>
+                <p>Email: <a href="mailto:info@ddenterprisepaverblock.co.in">info@ddenterprisepaverblock.co.in</a></p>
+              </div>
+
+              <div class="contact-block">
+                <h4>Head Office, Factory & Dispatch</h4>
+                <p>
+                  D. D. ENTERPRISE<br>
+                  Khelia, Arkhali-Amdanga<br>
+                  North 24 Parganas, West Bengal – 743221
+                </p>
+                <p>Open • 9:00 AM – 6:00 PM (Friday Closed)</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">D. D. ENTERPRISE</div>
+            <p>
+              Design-Led Paver Block, Landscaping Tile and Kerbstone Manufacturer for Future-Ready Indian Infrastructure.
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h5>Company</h5>
+            <div class="footer-links">
+              <a href="#about">About</a>
+              <a href="#contact">Contact Us</a>
+            </div>
+          </div>
+
+          <!-- <div class="footer-col">
+            <h5>Products</h5>
+            <div class="footer-links">
+              <a href="#products">Paving Blocks</a>
+              <a href="#products">Landscaping Tiles</a>
+              <a href="#products">Kerbs &amp; Edgestones</a>
+              <a href="#products">Drain Covers</a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h5>Resources</h5>
+            <div class="footer-links">
+              <a href="#contact">IS Codes &amp; guidelines</a>
+              <a href="#contact">Download brochure</a>
+              <a href="#contact">FAQs</a>
+            </div>
+          </div> -->
+        </div>
+
+        <div class="footer-bottom">
+          <span>© <span id="year"></span> D. D. ENTERPRISE. All Rights Reserved.</span>
+          <!-- <span>Built for <strong>architects, developers &amp; infrastructure teams</strong>.</span> -->
+          <!-- <div class="social-row">
+            <div class="social-pill">in</div>
+            <div class="social-pill">f</div>
+            <div class="social-pill">✕</div>
+            <div class="social-pill">IG</div>
+          </div> -->
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top"></button>
+  </div>
+
+  <script>
+    // Mobile nav toggle
+    const nav = document.getElementById('nav');
+    const navToggle = document.getElementById('navToggle');
+
+    navToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+
+    // Back to top visibility
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 320) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    
+    function generateCaptcha() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code = "";
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  document.getElementById("captchaBox").textContent = code;
+}
+
+generateCaptcha(); // generates on page load
+
+document.getElementById('quoteForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const entered = document.getElementById("captchaInput").value.trim().toUpperCase();
+  const actual = document.getElementById("captchaBox").textContent.trim().toUpperCase();
+
+  if (entered !== actual) {
+    alert("Incorrect CAPTCHA. Please try again.");
+    generateCaptcha();
+    return;
+  }
+
+  const payload = {
+    name: document.getElementById('name').value.trim(),
+    company: document.getElementById('company').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    city: document.getElementById('city').value.trim(),
+    type: document.getElementById('type').value,
+    message: document.getElementById('message').value.trim(),
+    submittedAt: new Date().toISOString()
+  };
+
+  try {
+    const res = await fetch('/api/quotes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('Network response was not ok');
+    alert('Request submitted — we will contact you shortly.');
+    document.getElementById('quoteForm').reset();
+    generateCaptcha();
+  } catch (err) {
+    console.error(err);
+    alert('Failed to submit request. Please try again later.');
+  }
+});
+
+// Make vertical mouse wheel scroll horizontally over horizontal product scroller
+(function(){
+  const prodStrip = document.querySelector('.card-grid.horizontal-scroll');
+  if (!prodStrip) return;
+  prodStrip.addEventListener('wheel', function(e){
+    // only intercept if vertical scroll is greater than horizontal
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      prodStrip.scrollLeft += e.deltaY;
+    }
+  }, { passive: false });
+})();
+
+// Offset anchor scrolling to account for the sticky header height
+(function(){
+  const header = document.querySelector('header');
+  const getHeaderHeight = () => header ? header.getBoundingClientRect().height : 72;
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(ev){
+      const href = this.getAttribute('href');
+      if (!href || href === '#' ) return;
+
+      // If Home/top anchor, scroll to absolute top instead of the section top
+      if (href === '#top') {
+        ev.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        history.replaceState(null, '', href);
+        return;
+      }
+
+      const target = document.querySelector(href);
+      if (!target) return;
+
+      ev.preventDefault();
+      const offset = getHeaderHeight() + 12; // extra breathing room
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+      // update URL without jumping
+      history.replaceState(null, '', href);
+    });
+  });
+})();
+
+// Global helper so inline buttons can use the same offset behavior
+function scrollToSection(targetSelectorOrId, instant = false) {
+  const header = document.querySelector('header');
+  const headerHeight = header ? header.getBoundingClientRect().height : 72;
+  if (!targetSelectorOrId) return;
+  let selector = targetSelectorOrId;
+  if (!selector.startsWith('#')) selector = '#' + selector;
+
+  if (selector === '#top') {
+    window.scrollTo({ top: 0, behavior: instant ? 'auto' : 'smooth' });
+    history.replaceState(null, '', '#top');
+    return;
+  }
+
+  const target = document.querySelector(selector);
+  if (!target) return;
+  const offset = headerHeight + 12;
+  const top = target.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top, behavior: instant ? 'auto' : 'smooth' });
+  history.replaceState(null, '', selector);
+}
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Admin — Submissions</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;padding:1rem;background:#0b0d10;color:#eef}
+    .card{background:#0f1620;border:1px solid rgba(255,255,255,0.04);padding:1rem;border-radius:8px;}
+    input,button{padding:0.5rem;border-radius:6px;border:1px solid #333}
+    table{width:100%;border-collapse:collapse;margin-top:1rem}
+    th,td{padding:0.45rem;border-bottom:1px solid rgba(255,255,255,0.04);text-align:left;font-size:0.9rem}
+    .controls{display:flex;gap:0.5rem;align-items:center}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Submissions (Admin)</h2>
+    <div class="controls">
+      <input id="token" placeholder="Admin token" style="min-width:320px">
+      <button id="load">Load submissions</button>
+      <button id="csv">Download CSV</button>
+    </div>
+    <div id="status" style="margin-top:0.6rem;color:#a8c"></div>
+    <div id="list"></div>
+  </div>
+
+  <script>
+    const loadBtn = document.getElementById('load');
+    const csvBtn = document.getElementById('csv');
+    let current = [];
+
+    loadBtn.addEventListener('click', async () => {
+      const token = document.getElementById('token').value.trim();
+      if (!token) return alert('Enter admin token');
+      document.getElementById('status').textContent = 'Loading...';
+      try {
+        const res = await fetch('/api/quotes', { headers: { Authorization: 'Bearer ' + token } });
+        if (!res.ok) throw new Error('Unauthorized or server error');
+        const data = await res.json();
+        current = data;
+        render(data);
+        document.getElementById('status').textContent = `Loaded ${data.length} submissions`;
+      } catch (err) {
+        console.error(err);
+        document.getElementById('status').textContent = 'Failed to load — check token';
+      }
+    });
+
+    function render(items){
+      if (!items || items.length === 0) { document.getElementById('list').innerHTML = '<p>No submissions yet.</p>'; return; }
+      const rows = items.map(it => `
+        <tr>
+          <td>${escape(it.name)}</td>
+          <td>${escape(it.phone)}</td>
+          <td>${escape(it.email)}</td>
+          <td>${escape(it.city)}</td>
+          <td>${escape(it.type)}</td>
+          <td>${escape(it.message)}</td>
+          <td>${escape(it.submittedAt)}</td>
+        </tr>`).join('');
+      document.getElementById('list').innerHTML = `<table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>City</th><th>Type</th><th>Message</th><th>SubmittedAt</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }
+
+    function escape(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    csvBtn.addEventListener('click', ()=>{
+      if (!current || current.length===0) return alert('No data to export');
+      const keys = ['name','company','email','phone','city','type','message','submittedAt'];
+      const csv = [keys.join(',')].concat(current.map(r => keys.map(k => '"'+((r[k]||'').replace(/"/g,'""'))+'"').join(','))).join('\n');
+      const blob = new Blob([csv], {type:'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'submissions.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
