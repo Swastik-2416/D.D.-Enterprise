@@ -34,7 +34,7 @@ async function sendNotification(submission) {
     <p><strong>Phone:</strong> ${escapeHtml(submission.phone || '')}</p>
     <p><strong>City:</strong> ${escapeHtml(submission.city || '')}</p>
     <p><strong>Project Type:</strong> ${escapeHtml(submission.type || '')}</p>
-    <p><strong>Message:</strong><br/>${escapeHtml(submission.message || '').replace(/\n/g,'<br/>')}</p>
+    <p><strong>Message:</strong><br/>${escapeHtml(submission.message || '').replace(/\n/g, '<br/>')}</p>
     <p><em>Submitted at: ${submission.submittedAt || new Date().toISOString()}</em></p>
   `;
 
@@ -60,13 +60,18 @@ function escapeHtml(str) {
 }
 
 const PORT = process.env.PORT || 3000;
-const DATA_DIR = path.join(__dirname, 'data');
-const DATA_FILE = path.join(DATA_DIR, 'quotes.json');
+const db = require('./database');
 
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR);
-if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]', 'utf8');
+// ... (keep email helper)
 
-app.post('/api/quotes', (req, res) => {
+// Remove old constants
+// const DATA_DIR = path.join(__dirname, 'data');
+// const DATA_FILE = path.join(DATA_DIR, 'quotes.json');
+
+// if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR);
+// if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]', 'utf8');
+
+app.post('/api/quotes', async (req, res) => {
   const payload = req.body || {};
   // basic validation
   if (!payload.name || !payload.phone || !payload.message) {
@@ -74,14 +79,26 @@ app.post('/api/quotes', (req, res) => {
   }
 
   try {
-    const raw = fs.readFileSync(DATA_FILE, 'utf8');
-    const arr = JSON.parse(raw || '[]');
-    arr.push(payload);
-    fs.writeFileSync(DATA_FILE, JSON.stringify(arr, null, 2), 'utf8');
-    // fire-and-forget email notification
-    sendNotification(payload).catch(() => {});
+    const result = await db.run(
+      `INSERT INTO project_requests (name, company, email, phone, city, type, message) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [
+        payload.name,
+        payload.company,
+        payload.email,
+        payload.phone,
+        payload.city,
+        payload.type,
+        payload.message
+      ]
+    );
 
-    res.json({ ok: true });
+    // Add ID to payload for email
+    payload.id = result.id;
+
+    // fire-and-forget email notification
+    sendNotification(payload).catch(() => { });
+
+    res.json({ ok: true, id: result.id });
   } catch (err) {
     console.error('Failed to save quote', err);
     res.status(500).json({ error: 'Failed to save data' });
@@ -89,19 +106,54 @@ app.post('/api/quotes', (req, res) => {
 });
 
 // Admin: return submissions only if Authorization: Bearer <ADMIN_TOKEN> matches
-app.get('/api/quotes', (req, res) => {
+app.get('/api/quotes', async (req, res) => {
   const token = process.env.ADMIN_TOKEN || '';
   const auth = (req.headers.authorization || '').trim();
   if (!token || auth !== `Bearer ${token}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
+
   try {
-    const raw = fs.readFileSync(DATA_FILE, 'utf8');
-    const arr = JSON.parse(raw || '[]');
-    res.json(arr);
+    const { sort, filter } = req.query;
+    let sql = 'SELECT * FROM project_requests';
+    const params = [];
+
+    // Filter: 'unread'
+    if (filter === 'unread') {
+      sql += ' WHERE is_read = 0';
+    }
+
+    // Sort: 'oldest' vs 'newest' (default)
+    if (sort === 'oldest') {
+      sql += ' ORDER BY submitted_at ASC';
+    } else {
+      sql += ' ORDER BY submitted_at DESC';
+    }
+
+    const rows = await db.query(sql, params);
+    res.json(rows);
   } catch (err) {
     console.error('Failed to read quotes', err);
     res.status(500).json({ error: 'Failed to read data' });
+  }
+});
+
+app.patch('/api/quotes/:id', async (req, res) => {
+  const token = process.env.ADMIN_TOKEN || '';
+  const auth = (req.headers.authorization || '').trim();
+  if (!token || auth !== `Bearer ${token}`) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const { is_read } = req.body;
+  if (is_read === undefined) return res.status(400).json({ error: 'Missing is_read' });
+
+  try {
+    await db.run('UPDATE project_requests SET is_read = ? WHERE id = ?', [is_read ? 1 : 0, req.params.id]);
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Failed to update quote', err);
+    res.status(500).json({ error: 'Failed to update data' });
   }
 });
 

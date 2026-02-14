@@ -1,77 +1,218 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Admin — Submissions</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
-    body{font-family:Arial,Helvetica,sans-serif;padding:1rem;background:#0b0d10;color:#eef}
-    .card{background:#0f1620;border:1px solid rgba(255,255,255,0.04);padding:1rem;border-radius:8px;}
-    input,button{padding:0.5rem;border-radius:6px;border:1px solid #333}
-    table{width:100%;border-collapse:collapse;margin-top:1rem}
-    th,td{padding:0.45rem;border-bottom:1px solid rgba(255,255,255,0.04);text-align:left;font-size:0.9rem}
-    .controls{display:flex;gap:0.5rem;align-items:center}
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 1rem;
+      background: #0b0d10;
+      color: #eef
+    }
+
+    .card {
+      background: #0f1620;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    input,
+    button {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #333
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem
+    }
+
+    th,
+    td {
+      padding: 0.45rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      text-align: left;
+      font-size: 0.9rem
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center
+    }
   </style>
 </head>
+
 <body>
   <div class="card">
-    <h2>Submissions (Admin)</h2>
-    <div class="controls">
-      <input id="token" placeholder="Admin token" style="min-width:320px">
-      <button id="load">Load submissions</button>
-      <button id="csv">Download CSV</button>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+      <h2 style="margin:0;">Submissions (Admin)</h2>
+      <div id="status" style="color:#a8c;font-size:0.9rem;"></div>
     </div>
-    <div id="status" style="margin-top:0.6rem;color:#a8c"></div>
-    <div id="list"></div>
+
+    <div class="controls" style="flex-wrap:wrap;">
+      <input id="token" placeholder="Admin token" style="min-width:200px">
+
+      <select id="filterStatus">
+        <option value="all">All Status</option>
+        <option value="unread">Unread Only</option>
+      </select>
+
+      <select id="sortOrder">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+      </select>
+
+      <button id="load">Load</button>
+      <button id="csv" style="background:#234;color:#aec;border-color:#456;">Export CSV</button>
+    </div>
+
+    <div id="list" style="margin-top:1rem;overflow-x:auto;"></div>
   </div>
 
   <script>
+    const STORAGE_KEY = 'dd_quotes_token'; // Store token not data
+
+    // Restore token
+    document.getElementById('token').value = localStorage.getItem(STORAGE_KEY) || '';
+
+    let currentData = [];
+
     const loadBtn = document.getElementById('load');
     const csvBtn = document.getElementById('csv');
-    let current = [];
+    const filterSelect = document.getElementById('filterStatus');
+    const sortSelect = document.getElementById('sortOrder');
 
-    loadBtn.addEventListener('click', async () => {
+    async function loadSubmissions() {
       const token = document.getElementById('token').value.trim();
-      if (!token) return alert('Enter admin token');
+      const filter = filterSelect.value;
+      const sort = sortSelect.value;
+
+      if (!token) return alert('Please enter Admin Token');
+
+      localStorage.setItem(STORAGE_KEY, token);
       document.getElementById('status').textContent = 'Loading...';
+
       try {
-        const res = await fetch('/api/quotes', { headers: { Authorization: 'Bearer ' + token } });
+        const query = new URLSearchParams({ sort, filter });
+        const res = await fetch(`http://localhost:3000/api/quotes?${query}`, {
+          headers: { Authorization: 'Bearer ' + token }
+        });
+
         if (!res.ok) throw new Error('Unauthorized or server error');
+
         const data = await res.json();
-        current = data;
+        currentData = data;
         render(data);
-        document.getElementById('status').textContent = `Loaded ${data.length} submissions`;
+        document.getElementById('status').textContent = `Loaded ${data.length} items`;
       } catch (err) {
         console.error(err);
-        document.getElementById('status').textContent = 'Failed to load — check token';
+        document.getElementById('status').textContent = 'Error loading data';
       }
-    });
+    }
 
-    function render(items){
-      if (!items || items.length === 0) { document.getElementById('list').innerHTML = '<p>No submissions yet.</p>'; return; }
-      const rows = items.map(it => `
-        <tr>
+    loadBtn.addEventListener('click', loadSubmissions);
+    filterSelect.addEventListener('change', loadSubmissions);
+    sortSelect.addEventListener('change', loadSubmissions);
+
+    async function toggleRead(id, currentStatus) {
+      const token = document.getElementById('token').value.trim();
+      if (!token) return;
+
+      const newStatus = !currentStatus;
+      try {
+        const res = await fetch(`http://localhost:3000/api/quotes/${id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({ is_read: newStatus })
+        });
+        if (res.ok) {
+          // update local data to reflect change immediately without reload
+          const item = currentData.find(i => i.id === id);
+          if (item) item.is_read = newStatus ? 1 : 0;
+          render(currentData);
+        }
+      } catch (err) {
+        console.error('Failed to toggle status', err);
+      }
+    }
+
+    function render(items) {
+      if (!items || items.length === 0) {
+        document.getElementById('list').innerHTML = '<p style="color:#666;text-align:center;padding:2rem;">No submissions found.</p>';
+        return;
+      }
+
+      const rows = items.map(it => {
+        const isRead = it.is_read === 1;
+        const style = isRead ? 'background:transparent;opacity:0.7;' : 'background:rgba(58,209,195,0.05);font-weight:bold;';
+
+        return `
+        <tr style="${style}">
+          <td style="white-space:nowrap;">
+            <input type="checkbox" ${isRead ? 'checked' : ''} onclick="toggleRead(${it.id}, ${isRead})">
+          </td>
           <td>${escape(it.name)}</td>
           <td>${escape(it.phone)}</td>
           <td>${escape(it.email)}</td>
           <td>${escape(it.city)}</td>
           <td>${escape(it.type)}</td>
-          <td>${escape(it.message)}</td>
-          <td>${escape(it.submittedAt)}</td>
-        </tr>`).join('');
-      document.getElementById('list').innerHTML = `<table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>City</th><th>Type</th><th>Message</th><th>SubmittedAt</th></tr></thead><tbody>${rows}</tbody></table>`;
+          <td style="min-width:200px;font-weight:normal;">${escape(it.message)}</td>
+          <td style="white-space:nowrap;font-size:0.8rem;color:#889;">${new Date(it.submitted_at).toLocaleString()}</td>
+        </tr>`;
+      }).join('');
+
+      document.getElementById('list').innerHTML = `
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:2px solid #333;text-align:left;color:#889;">
+              <th style="width:30px">✓</th>
+              <th>Name</th><th>Phone</th><th>Email</th><th>City</th><th>Type</th><th>Message</th><th>Time</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
     }
 
-    function escape(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    // Make toggleRead global so it can be called from onclick
+    window.toggleRead = toggleRead;
 
-    csvBtn.addEventListener('click', ()=>{
-      if (!current || current.length===0) return alert('No data to export');
-      const keys = ['name','company','email','phone','city','type','message','submittedAt'];
-      const csv = [keys.join(',')].concat(current.map(r => keys.map(k => '"'+((r[k]||'').replace(/"/g,'""'))+'"').join(','))).join('\n');
-      const blob = new Blob([csv], {type:'text/csv'});
+    function escape(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+    csvBtn.addEventListener('click', () => {
+      if (!currentData || currentData.length === 0) return alert('No data to export');
+
+      // CSV Headers
+      const keys = ['id', 'name', 'company', 'email', 'phone', 'city', 'type', 'message', 'submitted_at', 'is_read'];
+
+      const csvContent = [
+        keys.join(','),
+        ...currentData.map(row => keys.map(k => {
+          let val = row[k] === null || row[k] === undefined ? '' : String(row[k]);
+          // Escape quotes and wrap in quotes
+          val = val.replace(/"/g, '""');
+          return `"${val}"`;
+        }).join(','))
+      ].join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'submissions.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `submissions_${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     });
   </script>
 </body>
-</html>
