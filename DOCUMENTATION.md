@@ -1,10 +1,10 @@
 # Full Project Documentation — Paver Project
 
-This document provides a file-by-file explanation of the repository and how each file works together. No source files were modified.
+This document provides a file-by-file explanation of the repository and how each file works together.
 
 ## Overview
 
-A minimal Node.js static server with a small submission API and an admin UI to fetch submissions. The server persists quote submissions to `data/quotes.json` and can optionally send notifications via SMTP when environment variables are configured.
+A Node.js server with a SQLite database backend for handling quote submissions. It includes a submission API and an admin UI to fetch, filter, and sort submissions. The server persists data to `data/database.sqlite` and can optionally send notifications via SMTP when environment variables are configured.
 
 ## Files
 
@@ -12,26 +12,38 @@ A minimal Node.js static server with a small submission API and an admin UI to f
 
 - [server.js](server.js):
   - Implements an Express server.
-  - Middleware: `cors()`, `express.json()` and `express.static(__dirname)` to serve static files from the project root.
+  - Middleware: `cors()`, `express.json()` and `express.static(__dirname)` to serve static files.
   - Environment variables used:
     - `PORT` — server port (default `3000`).
-    - `ADMIN_TOKEN` — token required by the admin `GET /api/quotes` endpoint.
+    - `ADMIN_TOKEN` — token required by the admin `GET /api/quotes` and `PATCH /api/quotes/:id` endpoints.
     - `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_TO`, `EMAIL_FROM` — optional SMTP settings for `sendNotification()`.
   - Endpoints:
-    - `POST /api/quotes` — Accepts JSON payloads. Requires `name`, `phone`, and `message`. Appends the submission to `data/quotes.json` and returns `{ ok: true }` on success. On save, it calls `sendNotification()` (fire-and-forget) which attempts to send an email when SMTP variables are set.
-    - `GET /api/quotes` — Returns the saved submissions only when the request `Authorization` header equals `Bearer <ADMIN_TOKEN>`; otherwise returns 401.
-  - Data directory handling: creates `data/` and `data/quotes.json` if missing; uses JSON array format.
-  - Security notes: the admin endpoint is protected by a simple token; ensure `ADMIN_TOKEN` is kept secret in production. SMTP credentials are read from env vars and not stored in the repo.
+    - `POST /api/quotes` — Accepts JSON payloads. Requires `name`, `phone`, and `message`. Inserts the submission into `project_requests` table in `data/database.sqlite` and returns `{ ok: true, id: <id> }` on success. Asynchronously calls `sendNotification()`.
+    - `GET /api/quotes` — Returns submissions. Requires `Authorization: Bearer <ADMIN_TOKEN>`.
+      - Query params:
+        - `filter=unread`: Returns only unread submissions.
+        - `sort=oldest`: Sorts by `submitted_at` ascending (default is descending).
+    - `PATCH /api/quotes/:id` — Updates a submission (e.g., mark as read). Requires `Authorization: Bearer <ADMIN_TOKEN>`.
+      - Body: `{ is_read: <boolean> }`.
+  - Data directory handling: creates `data/` if missing.
+  - Security notes: the admin endpoint is protected by a simple token; ensure `ADMIN_TOKEN` is kept secret in production.
+
+- [database.js](database.js):
+  - Handles SQLite database connection and initialization.
+  - Creates `data/database.sqlite` if it doesn't exist.
+  - Defines the `project_requests` table schema:
+    - `id`, `name`, `company`, `email`, `phone`, `city`, `type`, `message`, `submitted_at`, `is_read`.
+  - Exports helper functions: `run` (INSERT/UPDATE), `query` (SELECT all), `get` (SELECT one).
 
 - [package.json](package.json):
-  - Project metadata and `scripts.start` invoking `node server.js`.
-  - Dependencies: `express`, `cors`, `nodemailer`.
+  - Project metadata and `scripts.start`.
+  - Dependencies: `express`, `cors`, `nodemailer`, `sqlite3`.
 
 - [README.md](README.md):
   - Quick start, install, and run instructions.
 
 - [CONTRIBUTING.md](CONTRIBUTING.md):
-  - Guidelines for reporting issues and contributing changes.
+  - Guidelines for reporting issues and submitting changes.
 
 - [DOCUMENTATION.md](DOCUMENTATION.md):
   - (This file) Full per-file documentation.
@@ -42,67 +54,48 @@ A minimal Node.js static server with a small submission API and an admin UI to f
   - Main marketing/front-facing single-page HTML.
   - Contains inline CSS styles and the complete page layout and components.
   - Uses Google Fonts `Inter`.
-  - Includes a hero section, navigation, UI elements and various utility styles.
-  - Likely contains a form or client-side code (not altered) that posts to `POST /api/quotes` for submissions — verify the form `action` or fetch usage if modifying behavior.
-  - The file is quite long (many inline styles and sections); it should be served as static content by the server.
+  - Clients-side form posts to `POST /api/quotes` for submissions.
 
 - [admin.html](admin.html):
-  - Simple admin UI to load saved submissions from `GET /api/quotes` using the admin token.
+  - Admin UI to manage submissions.
   - Features:
-    - An input for the admin token and a `Load submissions` button that fetches `/api/quotes` with `Authorization: Bearer <token>`.
-    - Renders a table of submissions with fields: `name`, `phone`, `email`, `city`, `type`, `message`, `submittedAt`.
-    - A `Download CSV` button that exports the loaded submissions to a CSV file.
-  - Intended for local admin usage; do not expose the token publicly.
+    - Authenticate with `ADMIN_TOKEN`.
+    - Fetch submissions via `GET /api/quotes`.
+    - Sort and filter options (Read/Unread, Newest/Oldest).
+    - Mark submissions as read via checkbox (calls `PATCH /api/quotes/:id`).
+    - Download CSV export of currently loaded data.
 
 - `index.html.bak`:
-  - A short textual backup placeholder indicating historic backup. Keep it as-is.
+  - Backup of an older version of `index.html`.
 
 **Data**
 
-- `data/quotes.json`:
-  - JSON array persisted by `server.js` when new `POST /api/quotes` submissions are received.
-  - Initially empty in this repository (`[]`).
+- `data/database.sqlite`:
+  - SQLite database file created by `database.js`.
+  - Contains the `project_requests` table.
+  - Ignored by git (via `.gitignore` if present/configured).
 
 ## How things work together
 
-- The Express server serves `index.html` and other static assets. When a visitor submits a quote (via whatever front-end form exists in `index.html`), the client posts JSON to `POST /api/quotes`.
-- Submissions are appended to `data/quotes.json` on disk. The admin can retrieve all submissions by visiting `admin.html`, entering the `ADMIN_TOKEN`, and clicking `Load submissions`.
-- If SMTP environment variables are provided, `server.js` will attempt to send an email notification (to `EMAIL_TO` or `SMTP_USER`) for each submission.
+- The Express server serves `index.html` and other static assets. When a visitor submits a quote, the client posts JSON to `POST /api/quotes`.
+- `server.js` uses `database.js` to insert the record into the SQLite database.
+- The admin retrieves submissions by visiting `admin.html`, which requests `GET /api/quotes` using the `ADMIN_TOKEN`.
+- If SMTP environment variables are provided, `server.js` attempts to send an email notification.
 
 ## Deployment and environment
 
 - Recommended minimal env vars for production:
   - `PORT` — port to listen on.
   - `ADMIN_TOKEN` — random strong string used to protect the admin API.
-  - Optional SMTP settings: `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_TO`, `EMAIL_FROM`.
+  - Optional SMTP settings.
 
 - Run with:
-
-```bash
-npm install
-npm start
-```
-
-- To run behind a reverse proxy, set `PORT` and route traffic appropriately.
+  ```bash
+  npm install
+  npm start
+  ```
 
 ## Maintenance notes
 
-- Backups: `data/quotes.json` is the only mutable file tracked; back it up regularly if submissions are important.
-- Tests: no automated tests present. Consider adding unit tests for `server.js` API handling and file I/O.
-- Security: do not commit `ADMIN_TOKEN` or SMTP credentials to the repository. Use environment variables or a secret store.
-
-## Suggested next enhancements (optional)
-
-- Add validation and rate-limiting to `POST /api/quotes`.
-- Add basic authentication flow or hashed tokens for admin API.
-- Add server-side sanitization for stored messages (currently stored as provided, though email uses HTML-escaped values).
-- Add automated tests and a CI workflow.
-
----
-
-If you want, I can:
-- Commit the documentation files to git, or
-- Split documentation into `docs/` with separate files per topic, or
-- Add API examples and curl snippets to this documentation.
-
-Which would you like next?
+- Backups: `data/database.sqlite` contains all submission data; back it up regularly.
+- Database: The schema is defined in `database.js`. Migrations would be needed for schema changes in existing databases.

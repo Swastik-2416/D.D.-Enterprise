@@ -34,13 +34,14 @@ By default the server uses the `start` script in `package.json` which invokes `n
 ## Project files
 
 - `server.js` — Node/Express server serving the app and APIs.
+- `database.js` — SQLite connection and query helpers.
 - `package.json` — project metadata and `start` script.
 - `index.html` — main frontend page.
 - `admin.html` — admin or alternate page.
-- `data/quotes.json` — sample data used by the server.
+- `data/database.sqlite` — SQLite database file (created on runtime).
 - `index.html.bak` — backup of `index.html`.
 
 ## Notes
 
-- No content was modified; this README is added for documentation only.
+- The project uses SQLite for data persistence.
 - If you want me to add a contributing guide, API docs, or tests, tell me which you'd like next.
