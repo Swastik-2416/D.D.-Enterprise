@@ -105,7 +105,10 @@
           headers: { Authorization: 'Bearer ' + token }
         });
 
-        if (!res.ok) throw new Error('Unauthorized or server error');
+        if (!res.ok) {
+          const detail = await res.json().catch(() => ({}));
+          throw new Error(detail.error || `Server returned ${res.status}`);
+        }
 
         const data = await res.json();
         currentData = data;
@@ -113,7 +116,7 @@
         document.getElementById('status').textContent = `Loaded ${data.length} items`;
       } catch (err) {
         console.error(err);
-        document.getElementById('status').textContent = 'Error loading data';
+        document.getElementById('status').textContent = `Error: ${err.message}`;
       }
     }
 
