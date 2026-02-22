@@ -101,7 +101,7 @@
 
       try {
         const query = new URLSearchParams({ sort, filter });
-        const res = await fetch(`http://localhost:3000/api/quotes?${query}`, {
+        const res = await fetch(`/api/quotes?${query}`, {
           headers: { Authorization: 'Bearer ' + token }
         });
 
@@ -127,7 +127,7 @@
 
       const newStatus = !currentStatus;
       try {
-        const res = await fetch(`http://localhost:3000/api/quotes/${id}`, {
+        const res = await fetch(`/api/quotes/${id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
