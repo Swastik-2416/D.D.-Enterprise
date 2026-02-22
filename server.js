@@ -113,9 +113,11 @@ app.post('/api/quotes', async (req, res) => {
 
 // Admin: return submissions only if Authorization: Bearer <ADMIN_TOKEN> matches
 app.get('/api/quotes', async (req, res) => {
-  const token = process.env.ADMIN_TOKEN || '';
+  const token = (process.env.ADMIN_TOKEN || '').trim();
   const auth = (req.headers.authorization || '').trim();
+
   if (!token || auth !== `Bearer ${token}`) {
+    console.log(`Auth Failed. TokenLen: ${token.length}, AuthLen: ${auth.length}`);
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
@@ -145,7 +147,7 @@ app.get('/api/quotes', async (req, res) => {
 });
 
 app.patch('/api/quotes/:id', async (req, res) => {
-  const token = process.env.ADMIN_TOKEN || '';
+  const token = (process.env.ADMIN_TOKEN || '').trim();
   const auth = (req.headers.authorization || '').trim();
   if (!token || auth !== `Bearer ${token}`) {
     return res.status(401).json({ error: 'Unauthorized' });
