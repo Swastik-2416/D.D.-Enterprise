@@ -71,6 +71,8 @@
 
       <button id="load">Load</button>
       <button id="csv" style="background:#234;color:#aec;border-color:#456;">Export CSV</button>
+      <button id="deleteBtn" style="background:#422;color:#fca;border-color:#633;display:none;"
+        onclick="deleteSelected()">Delete Selected</button>
     </div>
 
     <div id="list" style="margin-top:1rem;overflow-x:auto;"></div>
@@ -148,6 +150,52 @@
         console.error('Failed to toggle status', err);
       }
     }
+    async function deleteSelected() {
+      const selected = Array.from(document.querySelectorAll('.row-select:checked')).map(el => parseInt(el.dataset.id));
+      if (selected.length === 0) return;
+
+      if (!confirm(`Are you sure you want to delete ${selected.length} items? This cannot be undone.`)) return;
+
+      const token = document.getElementById('token').value.trim();
+      const statusIndicator = document.getElementById('status');
+      statusIndicator.textContent = 'Deleting...';
+
+      try {
+        const res = await fetch('/api/quotes', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({ ids: selected })
+        });
+
+        if (res.ok) {
+          statusIndicator.textContent = `Deleted ${selected.length} items.`;
+          loadSubmissions();
+        } else {
+          const detail = await res.json().catch(() => ({}));
+          throw new Error(detail.error || 'Delete failed');
+        }
+      } catch (err) {
+        console.error(err);
+        statusIndicator.textContent = `Error: ${err.message}`;
+      }
+    }
+
+    function updateDeleteBtn() {
+      const selected = document.querySelectorAll('.row-select:checked').length;
+      const btn = document.getElementById('deleteBtn');
+      btn.style.display = selected > 0 ? 'inline-block' : 'none';
+      btn.textContent = `Delete Selected (${selected})`;
+    }
+
+    function toggleSelectAll(master) {
+      document.querySelectorAll('.row-select').forEach(el => {
+        el.checked = master.checked;
+      });
+      updateDeleteBtn();
+    }
 
     function render(items) {
       if (!items || items.length === 0) {
@@ -161,6 +209,7 @@
 
         return `
         <tr style="${style}">
+          <td><input type="checkbox" class="row-select" data-id="${it.id}" onchange="updateDeleteBtn()"></td>
           <td style="white-space:nowrap;">
             <input type="checkbox" ${isRead ? 'checked' : ''} onclick="toggleRead(${it.id}, ${isRead})">
           </td>
@@ -178,6 +227,7 @@
         <table style="width:100%;border-collapse:collapse;">
           <thead>
             <tr style="border-bottom:2px solid #333;text-align:left;color:#889;">
+              <th style="width:30px"><input type="checkbox" onclick="toggleSelectAll(this)"></th>
               <th style="width:30px">✓</th>
               <th>Name</th><th>Phone</th><th>Email</th><th>City</th><th>Type</th><th>Message</th><th>Time</th>
             </tr>

@@ -165,6 +165,28 @@ app.patch('/api/quotes/:id', async (req, res) => {
   }
 });
 
+app.delete('/api/quotes', async (req, res) => {
+  const token = (process.env.ADMIN_TOKEN || '').trim();
+  const auth = (req.headers.authorization || '').trim();
+  if (!token || auth !== `Bearer ${token}`) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const { ids } = req.body;
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({ error: 'No IDs provided' });
+  }
+
+  try {
+    const placeholders = ids.map(() => '?').join(',');
+    await db.run(`DELETE FROM project_requests WHERE id IN (${placeholders})`, ids);
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Failed to delete quotes', err);
+    res.status(500).json({ error: 'Failed to delete data' });
+  }
+});
+
 // Serve static files (so you can open http://localhost:3000/)
 app.use(express.static(path.join(__dirname)));
 
