@@ -8,6 +8,12 @@ app.use(cors());
 app.use(express.json());
 const nodemailer = require('nodemailer');
 
+// Simple request logger
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
+
 // Helper: send notification email if SMTP config present
 async function sendNotification(submission) {
   const host = process.env.SMTP_HOST;
