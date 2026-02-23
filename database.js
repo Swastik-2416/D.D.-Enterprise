@@ -23,10 +23,23 @@ function initDb() {
     type TEXT,
     message TEXT,
     submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    is_read INTEGER DEFAULT 0
+    is_read INTEGER DEFAULT 0,
+    ip_address TEXT
   )`, (err) => {
         if (err) {
             console.error('Error creating table:', err.message);
+        } else {
+            // Migration: Add ip_address column if it doesn't exist
+            db.all("PRAGMA table_info(project_requests)", (err, columns) => {
+                if (err) return console.error('Error checking table info:', err.message);
+                const hasIp = columns.some(col => col.name === 'ip_address');
+                if (!hasIp) {
+                    db.run("ALTER TABLE project_requests ADD COLUMN ip_address TEXT", (err) => {
+                        if (err) console.error('Error adding ip_address column:', err.message);
+                        else console.log('Added ip_address column successfully.');
+                    });
+                }
+            });
         }
     });
 }

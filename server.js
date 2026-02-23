@@ -84,9 +84,17 @@ app.post('/api/quotes', async (req, res) => {
     return res.status(400).json({ error: 'Missing required fields: name, phone, message' });
   }
 
+  // IP Rate Limiting: Max 10 per IP
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
   try {
+    const countResult = await db.get('SELECT COUNT(*) as count FROM project_requests WHERE ip_address = ?', [ip]);
+    if (countResult && countResult.count >= 10) {
+      return res.status(429).json({ error: 'Too many requests from this IP. Limit is 10.' });
+    }
+
     const result = await db.run(
-      `INSERT INTO project_requests (name, company, email, phone, city, type, message) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO project_requests (name, company, email, phone, city, type, message, ip_address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         payload.name,
         payload.company,
@@ -94,7 +102,8 @@ app.post('/api/quotes', async (req, res) => {
         payload.phone,
         payload.city,
         payload.type,
-        payload.message
+        payload.message,
+        ip
       ]
     );
 
