@@ -1583,13 +1583,13 @@
             </article>
 
             <article class="card" data-images="1. Brick Red.png,1. Brick Yellow.png" data-modal-title="BRICK"
-              data-modal-kicker="Thickness options — 40–60 MM"
+              data-modal-kicker="Thickness options — 40–80 MM"
               data-modal-desc="Brick Paver Blocks are Durable, Strong, Low-Maintenance and Asthetically Pleasing.
                      This High-Performance Surfacing Solution is Engineered for Universal Application, Ranging from Refined Shopfronts and Residential Entrances to High-TrafficPedestrian Footpaths and Municipal Roadways."
               data-modal-pills="Colour-fast pigments|Coverage: 4.5pc per sq.ft|Colours available: Red, Yellow, Grey"
               data-modal-footer="Built to last and easy to maintain. Call us for full details and pricing!"
               data-modal-images="1. Brick Red.png,1. Brick Yellow.png">
-              <div class="card-kicker">THICKNESS • 40–60 MM</div>
+              <div class="card-kicker">THICKNESS • 40–80 MM</div>
               <h3>BRICK</h3>
               <p class="card-brief">
                 Brick Paver Blocks are Durable, Strong, Low-Maintenance and Asthetically Pleasing for Universal
@@ -2224,17 +2224,18 @@
       }
     });
 
-    // Make vertical mouse wheel scroll horizontally over horizontal product scroller
+    // Make vertical mouse wheel scroll horizontally over horizontal scrollers (Products & Gallery)
     (function () {
-      const prodStrip = document.querySelector('.card-grid.horizontal-scroll');
-      if (!prodStrip) return;
-      prodStrip.addEventListener('wheel', function (e) {
-        // only intercept if vertical scroll is greater than horizontal
-        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-          e.preventDefault();
-          prodStrip.scrollLeft += e.deltaY;
-        }
-      }, { passive: false });
+      const scrollers = document.querySelectorAll('.horizontal-scroll');
+      scrollers.forEach(scroller => {
+        scroller.addEventListener('wheel', function (e) {
+          // only intercept if vertical scroll is greater than horizontal
+          if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+            e.preventDefault();
+            scroller.scrollLeft += e.deltaY;
+          }
+        }, { passive: false });
+      });
     })();
 
     // Offset anchor scrolling to account for the sticky header height
