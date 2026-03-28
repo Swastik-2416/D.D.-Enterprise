@@ -1,81 +1,70 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const mysql = require('mysql2/promise');
+require('dotenv').config();
 
-const DB_PATH = path.join(__dirname, 'data', 'database.sqlite');
+// Create connection pool
+const poolConfig = process.env.DATABASE_URL || {
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'dd_enterprise',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+};
 
-const db = new sqlite3.Database(DB_PATH, (err) => {
-    if (err) {
-        console.error('Error opening database:', err.message);
-    } else {
-        console.log('Connected to the SQLite database.');
-        initDb();
-    }
-});
+const pool = mysql.createPool(poolConfig);
 
-function initDb() {
-    db.run(`CREATE TABLE IF NOT EXISTS project_requests (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    company TEXT,
-    email TEXT,
-    phone TEXT,
-    city TEXT,
-    type TEXT,
-    message TEXT,
-    submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    is_read INTEGER DEFAULT 0,
-    ip_address TEXT
-  )`, (err) => {
-        if (err) {
-            console.error('Error creating table:', err.message);
+async function initDb() {
+    try {
+        const createTableSql = `
+            CREATE TABLE IF NOT EXISTS project_requests (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255),
+                company VARCHAR(255),
+                email VARCHAR(255),
+                phone VARCHAR(50),
+                city VARCHAR(100),
+                type VARCHAR(100),
+                message TEXT,
+                submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                is_read BOOLEAN DEFAULT 0,
+                ip_address VARCHAR(45)
+            )
+        `;
+        await pool.query(createTableSql);
+        console.log('Connected to MySQL and ensured table exists.');
+    } catch (err) {
+        if (err.code === 'ECONNREFUSED') {
+            console.error('MySQL Connection Refused! Make sure your DATABASE_URL is correct or MySQL is running locally.');
         } else {
-            // Migration: Add ip_address column if it doesn't exist
-            db.all("PRAGMA table_info(project_requests)", (err, columns) => {
-                if (err) return console.error('Error checking table info:', err.message);
-                const hasIp = columns.some(col => col.name === 'ip_address');
-                if (!hasIp) {
-                    db.run("ALTER TABLE project_requests ADD COLUMN ip_address TEXT", (err) => {
-                        if (err) console.error('Error adding ip_address column:', err.message);
-                        else console.log('Added ip_address column successfully.');
-                    });
-                }
-            });
+            console.error('Error initializing database:', err.message);
         }
-    });
+    }
 }
 
+// Initialize on startup
+initDb();
+
 // Promisify helper for run actions (INSERT, UPDATE, DELETE)
-function run(sql, params = []) {
-    return new Promise((resolve, reject) => {
-        db.run(sql, params, function (err) {
-            if (err) reject(err);
-            else resolve({ id: this.lastID, changes: this.changes });
-        });
-    });
+async function run(sql, params = []) {
+    const [result] = await pool.execute(sql, params);
+    return { id: result.insertId, changes: result.affectedRows };
 }
 
 // Promisify helper for getting all rows (SELECT)
-function query(sql, params = []) {
-    return new Promise((resolve, reject) => {
-        db.all(sql, params, (err, rows) => {
-            if (err) reject(err);
-            else resolve(rows);
-        });
-    });
+async function query(sql, params = []) {
+    const [rows] = await pool.query(sql, params);
+    return rows;
 }
 
 // Promisify helper for getting a single row
-function get(sql, params = []) {
-    return new Promise((resolve, reject) => {
-        db.get(sql, params, (err, row) => {
-            if (err) reject(err);
-            else resolve(row);
-        });
-    });
+async function get(sql, params = []) {
+    const [rows] = await pool.query(sql, params);
+    return rows[0];
 }
 
 module.exports = {
-    db,
+    pool,
     run,
     query,
     get
