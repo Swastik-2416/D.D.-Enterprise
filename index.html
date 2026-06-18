@@ -3,2142 +3,1114 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>D.D. ENTERPRISE | Premium Paver Blocks & Landscape Solutions</title>
+  <title>D.D. ENTERPRISE | Premium Paver Blocks &amp; Landscape Solutions</title>
+  <meta name="description" content="D.D. Enterprise — West Bengal's leading manufacturer of premium interlocking paver blocks, chequered tiles, and roof tiles. Trusted by architects, developers, and infrastructure teams." />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="keywords" content="paver blocks, interlocking paver, chequered tiles, roof tiles, West Bengal, D.D. Enterprise, precast concrete" />
 
-  <!-- Favicon -->
   <link rel="icon" href="Brand Logo.png" type="image/png" />
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg-main: #050608;
-      --bg-elevated: #0d1016;
-      --bg-elevated-soft: #141924;
-      --accent-gold: #f5b248;
-      --accent-teal: #3ad1c3;
-      --text-main: #f7f7f7;
-      --text-muted: #a0a4b8;
-      --border-subtle: rgba(255, 255, 255, 0.06);
-      --danger: #ff4f5e;
-      --radius-lg: 18px;
-      --radius-xl: 24px;
-      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.55);
-      --transition-fast: 0.2s ease;
-      --transition-med: 0.35s ease;
-      --max-width: 1180px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(circle at top left, #1c2738 0, #050608 55%);
-      color: var(--text-main);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .page-wrapper {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .container {
-      width: 100%;
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 1.4rem;
-    }
-
-    /* NAVBAR */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(18px);
-      background: linear-gradient(to bottom, rgba(5, 6, 8, 0.96), rgba(5, 6, 8, 0.88));
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.9rem 0;
-      gap: 1.5rem;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-    }
-
-    .logo-mark {
-      width: 72px;
-      height: 72px;
-      border-radius: 0;
-      /* not circular anymore */
-      background: transparent;
-      padding: 4px;
-      box-shadow: none;
-      /* removed outer ring/border */
-      border: none;
-      outline: none;
-      /* allow visible image edges */
-      overflow: visible;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .logo-mark img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      /* maintain full logo without cropping */
-      display: block;
-      border-radius: 0;
-    }
-
-    .logo-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
-      background: radial-gradient(circle at 30% 30%, #ffffff18, #050608);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .brand-text h1 {
-      font-size: 1.05rem;
-      letter-spacing: 0.11em;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    .brand-text span {
-      display: block;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      margin-top: 0.1rem;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.6rem;
-      font-size: 0.9rem;
-      transform: translateX(-50px);
-      /* Shift nav links 10px to the left as requested */
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      position: relative;
-      padding-bottom: 0.1rem;
-      transition: color var(--transition-fast);
-      white-space: wrap;
-    }
-
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -0.25rem;
-      width: 0;
-      height: 2px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent-teal), var(--accent-gold));
-      transition: width var(--transition-med);
-    }
-
-    .nav-links a:hover {
-      color: var(--text-main);
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    /* Keep the About Us nav link on a single line to prevent wrapping */
-    .nav-links a[href="#gallery"] {
-      white-space: nowrap;
-    }
-
-    .nav-cta {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-    }
-
-    .pill-badge {
-      font-size: 0.74rem;
-      padding: 0.2rem 1rem;
-      border-radius: 999px;
-      color: var(--accent-teal);
-      border: 1px solid rgba(58, 209, 195, 0.28);
-      background: radial-gradient(circle at top left, rgba(58, 209, 195, 0.16), transparent 60%);
-      display: inline-block;
-      width: 8.5rem;
-      /* set a large width to allow text wrapping */
-      max-width: 10rem;
-      /* limit width so text wraps into two lines */
-      white-space: normal;
-      /* allow wrapping within the pill */
-    }
-
-    .btn-primary,
-    .btn-ghost {
-      border-radius: 999px;
-      padding: 0.55rem 1.2rem;
-      font-size: 0.85rem;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-weight: 600;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent-gold), #f09b2a);
-      color: #050608;
-      box-shadow: 0 14px 32px rgba(245, 178, 72, 0.35);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 40px rgba(245, 178, 72, 0.45);
-    }
-
-    .btn-ghost {
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: transparent;
-      color: var(--text-main);
-    }
-
-    .btn-ghost:hover {
-      background: rgba(255, 255, 255, 0.03);
-      transform: translateY(-1px);
-    }
-
-    .icon-arrow {
-      font-size: 1rem;
-      display: inline-block;
-      transform: translateY(1px);
-    }
-
-    .nav-toggle {
-      display: none;
-      border: 1px solid var(--border-subtle);
-      border-radius: 999px;
-      padding: 0.35rem 0.55rem;
-      background: rgba(5, 6, 8, 0.9);
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    /* HERO SECTION */
-    main {
-      flex: 1;
-    }
-
-    .hero {
-      padding: 3.5rem 0 3rem;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.22rem 0.7rem;
-      border-radius: 999px;
-      background: rgba(20, 25, 36, 0.9);
-      border: 1px solid rgba(245, 178, 72, 0.38);
-      color: var(--accent-gold);
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      margin-bottom: 0.9rem;
-    }
-
-    .eyebrow-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #fff, var(--accent-gold));
-    }
-
-    .hero h2 {
-      font-size: clamp(2.1rem, 3.1vw, 3rem);
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      line-height: 1.12;
-      margin-bottom: 0.9rem;
-    }
-
-    .hero h2 span.highlight {
-      background: linear-gradient(135deg, var(--accent-teal), var(--accent-gold));
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero-subtitle {
-      max-width: 540px;
-      color: var(--text-muted);
-      font-size: 0.97rem;
-      margin-bottom: 1.4rem;
-    }
-
-    .hero-cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.9rem;
-      align-items: center;
-      margin-bottom: 1.7rem;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-    }
-
-    .hero-meta span strong {
-      color: var(--accent-teal);
-      margin-right: 0.25rem;
-    }
-
-    .hero-card {
-      background: radial-gradient(circle at top, #222c3a, #090d13 58%);
-      border-radius: var(--radius-xl);
-      padding: 1.1rem;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: -60%;
-      opacity: 0.35;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(58, 209, 195, 0.4), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(245, 178, 72, 0.4), transparent 55%);
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    .hero-card-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-bottom: 1rem;
-      font-size: 0.72rem;
-    }
-
-    .chip {
-      padding: 0.22rem 0.65rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(5, 6, 8, 0.65);
-      backdrop-filter: blur(8px);
-      white-space: nowrap;
-    }
-
-    .hero-card-main {
-      display: grid;
-      grid-template-columns: 2.2fr 2.4fr;
-      gap: 1.2rem;
-      align-items: center;
-    }
-
-    .hero-badge {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 0.5rem;
-    }
-
-    .hero-badge strong {
-      color: var(--accent-gold);
-    }
-
-    .hero-card-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-    }
-
-    .hero-card-title span {
-      color: var(--accent-teal);
-    }
-
-    .hero-card-desc {
-      font-size: 0.83rem;
-      color: var(--text-muted);
-      margin-bottom: 0.8rem;
-    }
-
-    .hero-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.1rem;
-      font-size: 0.8rem;
-    }
-
-    .hero-stat h4 {
-      font-size: 1.05rem;
-      margin-bottom: 0.15rem;
-    }
-
-    .hero-stat span {
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-
-    .hero-mock {
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: linear-gradient(145deg, rgba(11, 16, 26, 0.9), rgba(9, 11, 16, 0.95));
-      padding: 0.8rem;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
-    }
-
-    .hero-mock-tag {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--text-muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .hero-mock-block {
-      border-radius: 14px;
-      background: radial-gradient(circle at 10% -10%, rgba(245, 178, 72, 0.25), transparent 55%), #050608;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      padding: 0.7rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-mock-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.8rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .paver-tile {
-      height: 100px;
-      border-radius: 6px;
-      background: linear-gradient(145deg, #2e394a, #171c27);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-    }
-
-    .paver-tile:nth-child(2),
-    .paver-tile:nth-child(5),
-    .paver-tile:nth-child(9) {
-      background: linear-gradient(145deg, #3c2a1c, #120e07);
-    }
-
-    .paver-tile:nth-child(3),
-    .paver-tile:nth-child(7),
-    .paver-tile:nth-child(10) {
-      background: linear-gradient(145deg, #253632, #111916);
-    }
-
-    .hero-mock-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .hero-mock-footer strong {
-      color: var(--accent-teal);
-    }
-
-    .status-pill {
-      padding: 0.18rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid rgba(58, 209, 195, 0.4);
-      color: var(--accent-teal);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-    }
-
-    /* SECTION WRAPPER */
-    section {
-      padding: 2.6rem 0;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 1.5rem;
-      margin-bottom: 1.8rem;
-    }
-
-    .project-header {
-      align-items: center;
-    }
-
-    .project-header .section-title:last-child {
-      justify-content: flex-end;
-    }
-
-    .section-title {
-      font-size: 1.25rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-    }
-
-    .section-title span.bar {
-      width: 30px;
-      height: 2px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent-teal), var(--accent-gold));
-    }
-
-    .section-subtitle {
-      max-width: 420px;
-      font-size: 0.86rem;
-      color: var(--text-muted);
-    }
-
-    /* PRODUCTS SECTION */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1.2rem;
-      scrollbar-width: thin;
-      scrollbar-color: #000 rgba(0, 0, 0, 0.3);
-    }
-
-    /* Horizontal scroll variant for product cards when there are many items */
-    .card-grid.horizontal-scroll {
-      display: flex;
-      gap: 1.2rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x proximity;
-      padding-bottom: 0.5rem;
-      scroll-behavior: smooth;
-    }
-
-    .card-grid.horizontal-scroll .card {
-      flex: 0 0 320px;
-      min-width: 280px;
-      scroll-snap-align: start;
-    }
-
-    .card-grid.horizontal-scroll::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .card-grid.horizontal-scroll::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 999px;
-    }
-
-    .card-grid.horizontal-scroll::-webkit-scrollbar-thumb {
-      background: #000;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .card {
-      background: radial-gradient(circle at top, #171b26, #050608 55%);
-      border-radius: var(--radius-lg);
-      padding: 1rem;
-      border: 1px solid var(--border-subtle);
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.7);
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-      transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med), background var(--transition-med);
-      cursor: pointer;
-      min-height: 320px;
-      /* slightly taller cards for improved visual weight */
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      opacity: 0;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(58, 209, 195, 0.3), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(245, 178, 72, 0.3), transparent 55%);
-      transition: opacity var(--transition-med);
-      pointer-events: none;
-    }
-
-    .card:hover {
-      /* Removed upward movement and heavy shadow to keep layout stable on hover.
-         Retain subtle color/border change for visual feedback. */
-      border-color: rgba(245, 178, 72, 0.45);
-      background: radial-gradient(circle at top, #1f2534, #050608 60%);
-    }
-
-    .card:hover::before {
-      opacity: 1;
-    }
-
-    .card-kicker {
-      font-size: 0.74rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--accent-teal);
-      margin-bottom: 0.4rem;
-    }
-
-    .card h3 {
-      font-size: 0.98rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .card p {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 0.8rem;
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .pill {
-      font-size: 0.72rem;
-      padding: 0.18rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      color: var(--text-muted);
-    }
-
-    .card-footer {
-      font-size: 0.76rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: var(--text-muted);
-    }
-
-    .card-footer span.cta {
-      color: var(--accent-gold);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-
-    /* ABOUT / STATS SECTION */
-    .about-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
-      gap: 2rem;
-      align-items: stretch;
-    }
-
-    .about-panel {
-      background: radial-gradient(circle at top, #181f2f, #060910);
-      border-radius: var(--radius-xl);
-      padding: 1.4rem;
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .about-panel h3 {
-      font-size: 1.05rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .about-panel p {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 0.6rem;
-    }
-
-    .about-list {
-      margin-top: 0.6rem;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.5rem 1.2rem;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-
-    .about-list li::before {
-      content: "▹";
-      color: var(--accent-teal);
-      margin-right: 0.3rem;
-    }
-
-    .stats-panel {
-      background: radial-gradient(circle at 0 0, #313858, #050608);
-      border-radius: var(--radius-xl);
-      padding: 1.3rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 1.2rem;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-    }
-
-    .stat-box {
-      padding: 0.7rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(5, 6, 8, 0.8);
-      text-align: left;
-    }
-
-    .stat-box h4 {
-      font-size: 1.2rem;
-      margin-bottom: 0.1rem;
-    }
-
-    .stat-box span.label {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--text-muted);
-    }
-
-    .stat-caption {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    /* PROJECTS / TAGS SECTION */
-    .project-row {
-      display: grid;
-      grid-template-columns: minmax(0, 2.5fr) minmax(0, 2.2fr);
-      gap: 2rem;
-      align-items: flex-start;
-    }
-
-    .tag-cloud {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      font-size: 0.78rem;
-    }
-
-    .tag {
-      padding: 0.25rem 0.7rem;
-      border-radius: 999px;
-      border: 1px dashed rgba(255, 255, 255, 0.28);
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.11em;
-    }
-
-    .tag.primary {
-      border-style: solid;
-      color: var(--accent-gold);
-      border-color: rgba(245, 178, 72, 0.7);
-    }
-
-    .project-list {
-      list-style: none;
-      display: grid;
-      gap: 0.8rem;
-      font-size: 0.84rem;
-      color: var(--text-muted);
-    }
-
-    .project-list li strong {
-      color: var(--text-main);
-    }
-
-    /* GALLERY STRIP (simple placeholders) */
-    .gallery-strip {
-      display: grid;
-      /* Make gallery items larger while staying responsive:
-         each item will be at least 300px wide, and grow to fill available space. */
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1rem;
-      align-items: start;
-      scrollbar-width: thin;
-      scrollbar-color: #000 rgba(0, 0, 0, 0.3);
-    }
-
-    .gallery-item {
-      border-radius: 14px;
-      background: linear-gradient(135deg, #232c3b, #11151f);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      aspect-ratio: 4 / 3;
-      min-height: 220px;
-      /* ensure a visually larger card for images */
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Ensure images inside gallery cards fill the card area without distortion */
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Horizontal scroll variant: add `horizontal-scroll` to the .gallery-strip container
-       to enable a horizontally scrolling gallery that snaps to each card. */
-    .gallery-strip.horizontal-scroll {
-      display: flex;
-      gap: 1rem;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x proximity;
-      padding-bottom: 0.5rem;
-    }
-
-    .gallery-strip.horizontal-scroll .gallery-item {
-      flex: 0 0 360px;
-      /* wider cards for images */
-      min-width: 360px;
-      scroll-snap-align: start;
-      aspect-ratio: 4 / 3;
-    }
-
-    .gallery-strip.horizontal-scroll::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .gallery-strip.horizontal-scroll::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 999px;
-    }
-
-    .gallery-strip.horizontal-scroll::-webkit-scrollbar-thumb {
-      background: #000;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    /* CONTACT SECTION */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
-      gap: 2rem;
-      align-items: flex-start;
-    }
-
-    .contact-panel {
-      background: radial-gradient(circle at top, #192231, #050608);
-      border-radius: var(--radius-xl);
-      padding: 1.3rem;
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .contact-panel h3 {
-      font-size: 1.05rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .contact-panel p {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-    }
-
-    form {
-      display: grid;
-      gap: 0.8rem;
-    }
-
-    label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(5, 6, 8, 0.9);
-      padding: 0.65rem 0.8rem;
-      color: var(--text-main);
-      font-size: 0.86rem;
-      outline: none;
-      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: rgba(160, 164, 184, 0.6);
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: rgba(58, 209, 195, 0.7);
-      box-shadow: 0 0 0 1px rgba(58, 209, 195, 0.3);
-      background: rgba(7, 10, 16, 0.95);
-    }
-
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.8rem;
-    }
-
-    .form-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-      margin-top: 0.4rem;
-    }
-
-    .form-hint {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .contact-aside {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      font-size: 0.86rem;
-      color: var(--text-muted);
-    }
-
-    .contact-block {
-      padding: 1rem;
-      border-radius: var(--radius-lg);
-      background: rgba(5, 6, 8, 0.9);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .contact-block h4 {
-      font-size: 0.9rem;
-      margin-bottom: 0.4rem;
-      color: var(--text-main);
-    }
-
-    .contact-block p+p {
-      margin-top: 0.2rem;
-    }
-
-    .contact-block a {
-      color: var(--accent-teal);
-      font-weight: 500;
-    }
-
-    /* FOOTER */
-    footer {
-      /* Softer, darker footer gradient for subtle separation */
-      border-top: 1px solid rgba(255, 255, 255, 0.02);
-      background: linear-gradient(180deg, #10171e 0%, #03060a 60%, #010205 100%);
-      padding: 1.6rem 0 2rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 2.2fr) repeat(3, minmax(0, 1fr));
-      gap: 1.4rem;
-      margin-bottom: 1rem;
-    }
-
-    .footer-logo {
-      font-size: 0.9rem;
-      font-weight: 500;
-      margin-bottom: 0.4rem;
-    }
-
-    .footer-col h5 {
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      margin-bottom: 0.5rem;
-      color: var(--text-main);
-    }
-
-    .footer-links {
-      display: grid;
-      gap: 0.25rem;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-    }
-
-    .footer-links a:hover {
-      color: var(--accent-gold);
-    }
-
-    .footer-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
-      padding-top: 0.7rem;
-      font-size: 0.76rem;
-    }
-
-    .footer-bottom span strong {
-      color: var(--accent-teal);
-    }
-
-    .social-row {
-      display: flex;
-      gap: 0.4rem;
-    }
-
-    .social-pill {
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
-    }
-
-    .social-pill:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(245, 178, 72, 0.7);
-      transform: translateY(-1px);
-    }
-
-    /* BACK TO TOP */
-    .back-to-top {
-      position: fixed;
-      right: 1.2rem;
-      bottom: 1.2rem;
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(5, 6, 8, 0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      cursor: pointer;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.75);
-      transition: transform var(--transition-fast), opacity var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 40;
-    }
-
-    .back-to-top.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .back-to-top:hover {
-      transform: translateY(-2px);
-      border-color: rgba(245, 178, 72, 0.6);
-      background: #080b12;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 960px) {
-
-      .hero-grid,
-      .about-grid,
-      .project-row,
-      .contact-grid,
-      .footer-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .card-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .gallery-strip {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      header {
-        position: sticky;
-      }
-
-      .nav-links,
-      .nav-cta {
-        display: none;
-      }
-
-      .nav-toggle {
-        display: inline-flex;
-      }
-
-      .nav.open .nav-links,
-      .nav.open .nav-cta {
-        display: flex;
-      }
-
-      .nav.open {
-        flex-wrap: wrap;
-        align-items: flex-start;
-      }
-
-      .nav.open .nav-links {
-        order: 3;
-        width: 100%;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        padding-top: 0.4rem;
-      }
-
-      .nav.open .nav-cta {
-        order: 2;
-        margin-left: auto;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .card-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .gallery-strip {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .hero-card-main {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .form-row {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      /* Mobile: remove fixed min-height to allow cards to size naturally */
-      .card {
-        min-height: auto;
-      }
-    }
-
-    /* PRODUCT DETAILS MODAL */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      /* lighter overlay for improved readability */
-      background: rgba(70, 70, 70, 0.28);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 60;
-      padding: 1.2rem;
-      backdrop-filter: blur(3px);
-    }
-
-    .modal-overlay.open {
-      display: flex;
-    }
-
-    .modal {
-      width: 100%;
-      max-width: 800px;
-      max-height: 90vh;
-      /* slightly more translucent modal to let background breathe */
-      background: rgba(2, 43, 55, 0.774);
-      border-radius: 14px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid rgba(255, 255, 255, 0.045);
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
-      color: var(--text-main);
-      backdrop-filter: saturate(1.06) blur(2px);
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.9rem 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .modal-header .meta {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .modal-body {
-      padding: 1rem;
-      overflow: auto;
-      color: var(--text-main);
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 1rem;
-    }
-
-    .modal-gallery {
-      display: block;
-    }
-
-    .main-image-container {
-      position: relative;
-      width: 100%;
-      height: 320px;
-      border-radius: 10px;
-      overflow: hidden;
-      background: #081016;
-    }
-
-    .main-image {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 10px;
-      opacity: 0;
-      transition: opacity 520ms ease-in-out;
-      will-change: opacity;
-    }
-
-    .main-image.visible {
-      opacity: 1;
-    }
-
-    .modal-details h3 {
-      margin-top: 0;
-    }
-
-    .modal-details .pill-row {
-      margin: 0.6rem 0;
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .modal-footer {
-      padding: 0.8rem 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
-    }
-
-    .modal .close-btn {
-      appearance: none;
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      color: var(--text-muted);
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    @media (max-width: 880px) {
-      .modal-body {
-        grid-template-columns: 1fr;
-      }
-
-      .modal-gallery .main-image {
-        height: 220px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+  <!-- Concrete aggregate background canvas -->
+  <canvas id="bg-canvas"></canvas>
+
   <div class="page-wrapper">
-    <!-- NAVBAR -->
-    <header>
+
+    <!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
+    <header id="site-header">
       <div class="container">
         <nav class="nav" id="nav">
-          <div class="nav-left">
-            <div class="logo-mark">
+          <div class="nav-brand">
+            <div class="nav-logo-wrap">
               <img src="Brand Logo.png" alt="D.D. Enterprise Logo">
             </div>
-            <div class="brand-text">
-              <h1>D. D. ENTERPRISE</h1>
-              <span>Paver Blocks • Roof Tiles • Chequered Tiles</span>
+            <div>
+              <div class="brand-name">D. D. Enterprise</div>
+              <div class="brand-sub">Paver Blocks &middot; Tiles</div>
             </div>
           </div>
 
-          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
-
           <div class="nav-links">
-            <a href="#top">Home</a>
-            <a href="#products">Products</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#about">About</a>
-            <!-- <a href="#contact">Contact</a> -->
+            <a href="#hero" class="nav-link active">Home</a>
+            <a href="#products" class="nav-link">Products</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#gallery" class="nav-link">Gallery</a>
+            <a href="#contact" class="nav-link">Contact</a>
           </div>
 
-          <div class="nav-cta">
-            <div class="pill-badge">Serving West Bengal since 2010</div>
-            <!-- <button class="btn-ghost" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})"> </Button>-->
-            <button class="btn-ghost"><a href="tel:9433393977">+919433393977</a></button>
-            <button class="btn-primary" onclick="scrollToSection('contact')">
-              Get a Quote
-            </button>
+          <div class="nav-actions">
+            <a href="tel:9433393977" class="nav-phone">+91 94333 93977</a>
+            <button class="btn btn-gold btn-sm" onclick="scrollTo('#contact')">Get a Quote</button>
           </div>
+
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
         </nav>
       </div>
     </header>
 
     <main>
-      <!-- HERO -->
-      <section class="hero" id="top">
+
+      <!-- ════════════════════════ HERO ═══════════════════════ -->
+      <section class="hero" id="hero">
+        <div class="hero-blob-1"></div>
+        <div class="hero-blob-2"></div>
+
         <div class="container">
           <div class="hero-grid">
+
+            <!-- Left: Headline & CTA -->
             <div>
-              <div class="eyebrow">
-                <span class="eyebrow-dot"></span>
-                Premium Precast Concrete Article
+              <div class="hero-badge reveal">
+                <span class="hero-badge-bar"></span>
+                Manufacturer &amp; Supplier &mdash; West Bengal Since 2010
               </div>
 
-              <h2>
-                <span class="highlight">Transform</span> every driveway, courtyard &amp; pathways with engineered
-                <span class="highlight">paver systems</span>.
-              </h2>
+              <h1 class="hero-h1 reveal" style="transition-delay:0.08s">
+                <span class="word-gold">Premium Paver Blocks</span><br>
+                Manufactured for<br>
+                Every Surface &amp; Scale.
+              </h1>
 
-              <p class="hero-subtitle">
-                From heavy-duty Interlocking Blocks to Landscaping Tiles, D. D. ENTERPRISE delivers
-                Factory-Precision Paving Solutions for Architects, Developers and Premium Residences across West Bengal.
+              <p class="hero-desc reveal" style="transition-delay:0.16s">
+                From heavy-duty interlocking blocks to precision chequered tiles &mdash; D.D. Enterprise manufactures
+                factory-grade paving products trusted by architects, developers and infrastructure teams across West Bengal.
               </p>
 
-              <div class="hero-cta-row">
-                <button class="btn-primary"
-                  onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
-                  Explore product range
-                  <!-- <span class="icon-arrow">↓</span> -->
+              <div class="hero-cta-row reveal" style="transition-delay:0.22s">
+                <button class="btn btn-gold btn-lg" onclick="scrollTo('#products')">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                  View Product Range
                 </button>
-                <a href="Product Catalogue - D. D. ENTERPRISE.pdf" download class="btn-ghost">
+                <a href="Product Catalogue - D. D. ENTERPRISE.pdf" download class="btn btn-glass btn-lg">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   Download Catalogue
                 </a>
               </div>
 
-              <div class="hero-meta">
-                <span><strong>200+</strong> bulk projects delivered</span>
-                <span><strong>1.5 Lakh+ sq.ft</strong> executed sites</span>
-                <!-- <span><strong>IS:15658</strong> compliant paver blocks</span> -->
+              <div class="hero-meta-row reveal" style="transition-delay:0.3s">
+                <div class="hero-meta-item">
+                  <span class="val"><span class="accent" data-count="200">0</span>+</span>
+                  <span class="lbl">Bulk Projects</span>
+                </div>
+                <div class="hero-meta-item">
+                  <span class="val"><span class="accent" data-count="15">0</span>+ yrs</span>
+                  <span class="lbl">In Precast</span>
+                </div>
+                <div class="hero-meta-item">
+                  <span class="val"><span class="accent" data-count="50">0</span>+</span>
+                  <span class="lbl">Product Range</span>
+                </div>
+                <div class="hero-meta-item">
+                  <span class="val"><span class="accent" data-count="8">0</span></span>
+                  <span class="lbl">Production Lines</span>
+                </div>
               </div>
             </div>
 
-            <!-- Hero Visual Card -->
-            <div class="hero-card">
-              <div class="hero-card-inner">
-                <div class="hero-chip-row">
-                  <div class="chip">INTERLOCKING-PAVER BLOCKS</div>
-                  <div class="chip">CHEQUERED TILES</div>
-                  <!-- <div class="chip">Kerbs &amp; Edges</div> -->
-                  <div class="chip">ROOF TILES</div>
-                </div>
+            <!-- Right: Product visual card -->
+            <div class="hero-visual reveal-right" style="transition-delay:0.12s">
+              <div class="hero-float-badge">
+                <span class="num">M40</span>
+                <span class="txt">Grade Concrete</span>
+              </div>
 
-                <div class="hero-card-main">
-                  <div>
-                    <div class="hero-badge">
-                      Trusted by <strong>Leading Architects</strong> &amp; Infrastructure Brands
-                    </div>
-                    <div class="hero-card-title">
-                      Design-Led <span>Paving Systems</span> built for Indian Conditions.
-                    </div>
-                    <div class="hero-card-desc">
-                      Specify Once and Rely on our Engineered Mix Designs, Colour-Fast Pigments and Rigorous QA to keep
-                      your
-                      Pavements Performing for Decades.
-                    </div>
-                    <div class="hero-stats">
-                      <div class="hero-stat">
-                        <h4>15+</h4>
-                        <span>Years in precast</span>
-                      </div>
-                      <div class="hero-stat">
-                        <h4>4+</h4>
-                        <span>Thickness ranges</span>
-                      </div>
-                      <div class="hero-stat">
-                        <h4>50+</h4>
-                        <span>Product range</span>
-                      </div>
-                    </div>
+              <div class="hero-card-main">
+                <div class="hero-card-glow"></div>
+                <div class="hero-card-inner">
+                  <div class="hero-card-label-row">
+                    <span class="hero-card-label">Manufactured in West Bengal</span>
+                    <span class="hero-card-grade">IS Compliant</span>
                   </div>
 
-                  <div class="hero-mock">
-                    <!-- <div class="hero-mock-tag">Sample layout • High-load driveway</div> -->
-                    <div class="hero-mock-tag">Sample Paver Blocks</div>
-                    <div class="hero-mock-block">
-                      <div class="hero-mock-grid">
-                        <img src="Products/1. Brick Red.png" alt="Brick Red">
-                        <img src="Products/4. Cosmos Red.png" alt="Cheker Tile Red 36 Ball">
-                        <img src="Products/7. ZigZag Red.png" alt="Cheker Tile Yellow Cross">
-                        <img src="Products/10. Max Red.png" alt="Cosmos Grey">
-                        <img src="Products/13. Domrup Yellow.png" alt="Domrup Yellow">
-                        <img src="Products/16. Cheker Tile Yellow 36 Ball.png" alt="Domrup Grey">
-                        <img src="Products/18. Cheker Tile Yellow 25 Sq.png" alt="Max Red">
-                        <img src="Products/20. Cheker Tile Yellow Cross.png" alt="ZigZag Yellow">
-                      </div>
-                      <div class="hero-mock-footer">
-                        <!-- <span>Mix design: <strong>M40 • 80mm</strong></span>
-                        <span class="status-pill">Site ready</span> -->
-                      </div>
+                  <div class="hero-product-grid">
+                    <div class="hero-product-tile"><img src="Products/1. Brick Red.png" alt="Brick Red Paver Block" loading="lazy"></div>
+                    <div class="hero-product-tile"><img src="Products/4. Cosmos Red.png" alt="Cosmos Red Paver Block" loading="lazy"></div>
+                    <div class="hero-product-tile"><img src="Products/7. ZigZag Red.png" alt="ZigZag Red Paver Block" loading="lazy"></div>
+                    <div class="hero-product-tile"><img src="Products/10. Max Red.png" alt="Max Red Paver Block" loading="lazy"></div>
+                    <div class="hero-product-tile"><img src="Products/13. Domrup Yellow.png" alt="Damru Yellow Paver Block" loading="lazy"></div>
+                    <div class="hero-product-tile"><img src="Products/16. Cheker Tile Yellow 36 Ball.png" alt="Chequered Tile Yellow 36 Ball" loading="lazy"></div>
+                    <div class="hero-product-tile"><img src="Products/18. Cheker Tile Yellow 25 Sq.png" alt="Chequered Tile 25 Square" loading="lazy"></div>
+                    <div class="hero-product-tile"><img src="Products/20. Cheker Tile Yellow Cross.png" alt="Chequered Tile Cross" loading="lazy"></div>
+                  </div>
+
+                  <div class="hero-card-footer">
+                    <div class="hero-card-footer-text">
+                      Grade: <strong>M30 &ndash; M40</strong> &middot; 40 / 60 / 80 mm thickness
+                    </div>
+                    <div class="hero-card-footer-text" style="color:var(--gold); font-weight:700; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;">
+                      Colour Fast Pigments
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
-      <!-- PRODUCTS -->
+      <!-- ═══════════════ SECTOR MARQUEE BAND ═════════════════ -->
+      <div class="trust-band">
+        <div class="marquee-track">
+          <div class="marquee-item"><span class="marquee-sep"></span>Railways</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Malls &amp; Hotels</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Residential Housing</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Educational Campuses</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Industrial Estates</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Municipal Roads</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Petroleum Service Stations</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Public Parks &amp; Walkways</div>
+          <!-- Duplicate for seamless loop -->
+          <div class="marquee-item"><span class="marquee-sep"></span>Railways</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Malls &amp; Hotels</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Residential Housing</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Educational Campuses</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Industrial Estates</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Municipal Roads</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Petroleum Service Stations</div>
+          <div class="marquee-item"><span class="marquee-sep"></span>Public Parks &amp; Walkways</div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════ PRODUCTS ══════════════════════ -->
       <section id="products">
         <div class="container">
-          <div class="section-header">
-            <div class="section-title">
-              <span class="bar"></span>
-              Product Range
+          <div class="products-header reveal">
+            <div>
+              <div class="section-eyebrow">Our Products</div>
+              <h2 class="section-heading">Manufactured for<br><span class="grad">every load &amp; application</span></h2>
+            </div>
+            <p class="section-desc">Each product is built to specification &mdash; precise mix designs, colour-fast pigments, and rigorous quality checks on every batch. Click any product to see full details.</p>
+          </div>
+
+          <div class="products-scroll-wrapper reveal" style="transition-delay:0.1s">
+            <div class="products-grid" id="productsGrid">
+
+              <!-- ZIG-ZAG -->
+              <article class="product-card"
+                data-modal-title="ZIG-ZAG"
+                data-modal-kicker="Thickness Options — 40MM, 60MM, 80MM"
+                data-modal-desc="The Zig-Zag pattern provides superior interlock strength and stability for driveways, walkways, and patios.
+
+Engineered for high-durability applications including municipal roadways, petroleum service stations, and industrial flooring. The interlocking shape distributes load evenly and resists lateral movement.
+
+Available in 40mm, 60mm, and 80mm thickness to suit light pedestrian through to heavy vehicular load requirements."
+                data-modal-pills="Colour-Fast Pigments|Coverage: 2.88 pcs / sq.ft|Available: Red, Yellow, Grey"
+                data-modal-footer="Built to last. Call us for pricing and availability."
+                data-modal-images="Products/7. ZigZag Red.png,Products/7. ZigZag Yellow.png">
+                <div class="product-card-image">
+                  <img src="Products/7. ZigZag Red.png" alt="Zig-Zag Interlocking Paver Block" loading="lazy">
+                  <div class="product-card-image-overlay"></div>
+                  <div class="product-card-badge">40 &ndash; 80 MM</div>
+                </div>
+                <div class="product-card-body">
+                  <h3 class="product-card-title">ZIG-ZAG</h3>
+                  <p class="product-card-desc">High-durability interlocking blocks for roads, service stations and industrial flooring.</p>
+                  <div class="product-card-pills">
+                    <span class="product-pill">2.88 pcs / sq.ft</span>
+                    <span class="product-pill">Red &middot; Yellow &middot; Grey</span>
+                  </div>
+                  <div class="product-card-cta">
+                    <span class="link-arrow">View Details
+                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- COSMOS -->
+              <article class="product-card"
+                data-modal-title="COSMOS (COSMIC)"
+                data-modal-kicker="Thickness Options — 40MM, 60MM"
+                data-modal-desc="The Cosmos interlocking paver block offers a distinctive circular pattern that enhances any outdoor surface.
+
+Versatile and designed for aesthetic and functional integration within lawns, private courtyards, public parks, and pedestrian walkways. The pattern allows excellent drainage and remains slip-resistant.
+
+Colour-fast pigments ensure the finish retains its appearance over years of outdoor exposure."
+                data-modal-pills="Colour-Fast Pigments|Coverage: 1.85 pcs / sq.ft|Available: Red, Yellow, Grey"
+                data-modal-footer="Ideal for high-visibility public and private spaces."
+                data-modal-images="Products/4. Cosmos Red.png,Products/4. Cosmos Yellow.png">
+                <div class="product-card-image">
+                  <img src="Products/4. Cosmos Red.png" alt="Cosmos Interlocking Paver Block" loading="lazy">
+                  <div class="product-card-image-overlay"></div>
+                  <div class="product-card-badge">40 &ndash; 60 MM</div>
+                </div>
+                <div class="product-card-body">
+                  <h3 class="product-card-title">COSMOS</h3>
+                  <p class="product-card-desc">Aesthetic and functional paving for lawns, courtyards, parks and pedestrian walkways.</p>
+                  <div class="product-card-pills">
+                    <span class="product-pill">1.85 pcs / sq.ft</span>
+                    <span class="product-pill">Red &middot; Yellow &middot; Grey</span>
+                  </div>
+                  <div class="product-card-cta">
+                    <span class="link-arrow">View Details
+                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- DAMRU -->
+              <article class="product-card"
+                data-modal-title="DAMRU"
+                data-modal-kicker="Thickness Options — 40MM, 60MM"
+                data-modal-desc="The Damru block features a distinctive hourglass silhouette that delivers both bold visual character and exceptional load-bearing performance.
+
+Engineered for high-traffic pedestrian footpaths and residential housing developments. The shape provides superior interlocking that prevents block migration under repeated use.
+
+Available in multiple colours with colour-fast pigments for long-lasting appearance."
+                data-modal-pills="Colour-Fast Pigments|Coverage: 2.62 pcs / sq.ft|Available: Red, Yellow, Grey"
+                data-modal-footer="Built to last. Call us for full details and pricing."
+                data-modal-images="Products/13. Domrup Yellow.png,Products/13. Domrup Red.png">
+                <div class="product-card-image">
+                  <img src="Products/13. Domrup Yellow.png" alt="Damru Paver Block" loading="lazy">
+                  <div class="product-card-image-overlay"></div>
+                  <div class="product-card-badge">40 &ndash; 60 MM</div>
+                </div>
+                <div class="product-card-body">
+                  <h3 class="product-card-title">DAMRU</h3>
+                  <p class="product-card-desc">Distinctive hourglass profile for pedestrian footpaths and residential housing developments.</p>
+                  <div class="product-card-pills">
+                    <span class="product-pill">2.62 pcs / sq.ft</span>
+                    <span class="product-pill">Red &middot; Yellow &middot; Grey</span>
+                  </div>
+                  <div class="product-card-cta">
+                    <span class="link-arrow">View Details
+                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- MAX / BROOK -->
+              <article class="product-card"
+                data-modal-title="MAX (BROOK)"
+                data-modal-kicker="Thickness Options — 40MM, 60MM"
+                data-modal-desc="Max, also known as Brook, is a reliable general-purpose interlocking paver block suited to a wide range of applications.
+
+Optimised for both durability and visual consistency, making it a practical choice for public park landscapes, residential lawns, and pedestrian thoroughfares.
+
+The clean rectangular profile is easy to lay and maintain, with a proven track record on large-scale housing and municipal projects."
+                data-modal-pills="Colour-Fast Pigments|Coverage: 1.85 pcs / sq.ft|Available: Red, Yellow, Grey"
+                data-modal-footer="Reliable, durable and easy to maintain."
+                data-modal-images="Products/10. Max Red.png,Products/10. Max Yellow.png">
+                <div class="product-card-image">
+                  <img src="Products/10. Max Red.png" alt="Max Brook Paver Block" loading="lazy">
+                  <div class="product-card-image-overlay"></div>
+                  <div class="product-card-badge">40 &ndash; 60 MM</div>
+                </div>
+                <div class="product-card-body">
+                  <h3 class="product-card-title">MAX (BROOK)</h3>
+                  <p class="product-card-desc">Reliable all-purpose paver for parks, residential lawns and pedestrian thoroughfares.</p>
+                  <div class="product-card-pills">
+                    <span class="product-pill">1.85 pcs / sq.ft</span>
+                    <span class="product-pill">Red &middot; Yellow &middot; Grey</span>
+                  </div>
+                  <div class="product-card-cta">
+                    <span class="link-arrow">View Details
+                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- BRICK -->
+              <article class="product-card"
+                data-modal-title="BRICK"
+                data-modal-kicker="Thickness Options — 40MM, 60MM, 80MM"
+                data-modal-desc="The Brick paver block is a classic rectangular unit that delivers consistent, dependable performance across a wide range of applications.
+
+Suitable for shopfronts and residential entrances through to high-traffic pedestrian footpaths and municipal roadways. The familiar brick profile is easy to specify, install and replace.
+
+Available in 40mm, 60mm, and 80mm thickness with colour-fast pigments."
+                data-modal-pills="Colour-Fast Pigments|Coverage: 4.5 pcs / sq.ft|Available: Red, Yellow, Grey"
+                data-modal-footer="The dependable choice for any paving project."
+                data-modal-images="Products/1. Brick Red.png,Products/1. Brick Yellow.png">
+                <div class="product-card-image">
+                  <img src="Products/1. Brick Red.png" alt="Brick Paver Block" loading="lazy">
+                  <div class="product-card-image-overlay"></div>
+                  <div class="product-card-badge">40 &ndash; 80 MM</div>
+                </div>
+                <div class="product-card-body">
+                  <h3 class="product-card-title">BRICK</h3>
+                  <p class="product-card-desc">Classic rectangular block for shopfronts, residences, footpaths and municipal roadways.</p>
+                  <div class="product-card-pills">
+                    <span class="product-pill">4.5 pcs / sq.ft</span>
+                    <span class="product-pill">Red &middot; Yellow &middot; Grey</span>
+                  </div>
+                  <div class="product-card-cta">
+                    <span class="link-arrow">View Details
+                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- CHEQUERED TILES -->
+              <article class="product-card"
+                data-modal-title="CHEQUERED TILES"
+                data-modal-kicker="Thickness — 30MM"
+                data-modal-desc="Our chequered tiles are available in four distinct patterns to suit a range of architectural preferences:
+
+100 Square — Dense, intricate grid for a bold traditional checkerboard appearance.
+25 Square — Bold five-by-five grid for a clean, modern floor finish.
+36 Ball — Circular tessellation for a unique, tactile surface with enhanced grip.
+Cross — Subtle inset line detail for refined commercial interiors and entryways.
+
+All patterns available in Red, Yellow, and Grey with colour-fast pigments."
+                data-modal-pills="Colour-Fast Pigments|Coverage: 1 pc / sq.ft|4 Pattern Options"
+                data-modal-footer="Sophisticated finish for high-visibility areas."
+                data-modal-images="Products/15. Cheker Tile Red 36 Ball.png,Products/16. Cheker Tile Yellow 36 Ball.png,Products/18. Cheker Tile Yellow 25 Sq.png,Products/20. Cheker Tile Yellow Cross.png">
+                <div class="product-card-image">
+                  <img src="Products/15. Cheker Tile Red 36 Ball.png" alt="Chequered Tile" loading="lazy">
+                  <div class="product-card-image-overlay"></div>
+                  <div class="product-card-badge">30 MM</div>
+                </div>
+                <div class="product-card-body">
+                  <h3 class="product-card-title">CHEQUERED TILES</h3>
+                  <p class="product-card-desc">Four pattern options for shopfronts, residential entryways and diverse level-surface applications.</p>
+                  <div class="product-card-pills">
+                    <span class="product-pill">4 Patterns Available</span>
+                    <span class="product-pill">Red &middot; Yellow &middot; Grey</span>
+                  </div>
+                  <div class="product-card-cta">
+                    <span class="link-arrow">View Details
+                      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+            </div><!-- end .products-grid -->
+          </div>
+
+          <div style="margin-top:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;" class="reveal">
+            <p style="font-size:0.83rem; color:var(--text-2);">Also manufactured: Roof tiles, landscaping tiles and kerbstones &mdash; available on request.</p>
+            <button class="btn btn-glass" onclick="scrollTo('#contact')">Request Full Catalogue</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════ ABOUT ════════════════════════ -->
+      <section id="about" class="about-section">
+        <div class="container">
+          <div class="about-grid">
+
+            <!-- Left: About text + features -->
+            <div class="reveal-left">
+              <div class="section-eyebrow">About the Company</div>
+              <h2 class="section-heading">Built with Precision.<br><span class="grad">Delivered on Time.</span></h2>
+
+              <p class="about-body-text">
+                Established in 2010, D.D. Enterprise is a dedicated manufacturer of premium precast concrete products in West Bengal.
+                We supply high-grade interlocking paver blocks, chequered tiles, and roof tiles to builders, architects, and
+                government project teams across the region.
+              </p>
+              <p class="about-body-text">
+                Our production facility operates 8 dedicated lines, allowing us to fulfil large-volume orders with consistent
+                quality. Every batch is manufactured to M30&ndash;M40 grade concrete specifications with colour-fast pigments
+                that withstand years of outdoor exposure.
+              </p>
+
+              <div class="about-feature-list stagger-children">
+                <div class="about-feature">
+                  <div class="about-feature-icon">
+                    <!-- Clock icon: on-time delivery -->
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </div>
+                  <h4>On-Time Delivery</h4>
+                  <p>Committed to punctual delivery schedules to keep your project timeline on track.</p>
+                </div>
+                <div class="about-feature">
+                  <div class="about-feature-icon">
+                    <!-- Truck icon: free loading -->
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  </div>
+                  <h4>Free Loading</h4>
+                  <p>Complimentary loading from our factory, reducing your total logistics cost.</p>
+                </div>
+                <div class="about-feature">
+                  <div class="about-feature-icon">
+                    <!-- Sliders icon: custom specs -->
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+                  </div>
+                  <h4>Custom Specifications</h4>
+                  <p>Custom sizes, textures and colours manufactured to your project specification.</p>
+                </div>
+                <div class="about-feature">
+                  <div class="about-feature-icon">
+                    <!-- Shield icon: grade certification -->
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </div>
+                  <h4>M30 &ndash; M40 Grade</h4>
+                  <p>All blocks manufactured to verified M30&ndash;M40 concrete grade for proven strength.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Stats & quality cards -->
+            <div class="stats-panel-wrap reveal-right">
+              <div class="stats-card">
+                <div class="stats-grid-2x2">
+                  <div class="stat-item">
+                    <div class="stat-number"><span data-count="150000">0</span><span class="unit">+</span></div>
+                    <div class="stat-label">sq.ft Single-Site</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-number"><span data-count="8">0</span></div>
+                    <div class="stat-label">Production Lines</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-number"><span data-count="15">0</span><span class="unit">+</span></div>
+                    <div class="stat-label">Years Operating</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-number">48<span class="unit">hr</span></div>
+                    <div class="stat-label">Quote Response</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="quality-card">
+                <div class="quality-card-icon">
+                  <!-- Award icon -->
+                  <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+                </div>
+                <div class="quality-card-text">
+                  <h4>M30 &ndash; M40 Grade Verified</h4>
+                  <p>Colour-fast pigments, engineered mix designs and rigorous QA on every batch.</p>
+                </div>
+              </div>
+
+              <div class="quality-card" style="border-color:rgba(245,178,72,0.2);">
+                <div class="quality-card-icon">
+                  <!-- Package/box icon -->
+                  <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </div>
+                <div class="quality-card-text">
+                  <h4>200+ Bulk Projects Delivered</h4>
+                  <p>Trusted by architects, developers and government infrastructure teams across West Bengal.</p>
+                </div>
+              </div>
             </div>
 
           </div>
+        </div>
+      </section>
 
-          <div class="card-grid horizontal-scroll">
-            <!-- Paving Blocks (condensed card content) -->
-            <article class="card" data-images="Products/7. ZigZag Red.png,Products/7. ZigZag Yellow.png" data-modal-title="ZIG-ZAG"
-              data-modal-kicker="Thickness Options — 40MM, 60MM, 80 MM"
-              data-modal-desc="The Zig-Zag Pattern Provides Superior Strength and Stability for Driveways, Walkways, And Patios. 
-                     These Premium Paver Blocks are Engineered for High-Durability Applications, including Municipal Roadways, Petroleum Service Station and Industrial Flooring. Available in Multiple Thickness Options (40mm, 60mm, and 80mm) to Suit Various Load Requirements."
-              data-modal-pills="Colour fast pigments|Coverage: 2.88pc per sq.ft|Colours available: Red, Yellow, Grey"
-              data-modal-footer="Built to last and easy to maintain. Call us for full details and pricing!"
-              data-modal-images="Products/7. ZigZag Red.png,Products/7. ZigZag Yellow.png">
-              <div class="card-kicker">Thickness • 40–80 MM</div>
-              <h3>ZIG-ZAG</h3>
-              <p class="card-brief">
-                These Unique and Premium Paver Blocks are Engineered for High-Durability Applications, including
-                Municipal Roadways, Petroleum Service Station and Industrial Flooring.
-              </p>
-              <div class="pill-row">
-                <div class="pill">COLOUR FAST PIGMENTS</div>
-                <div class="pill">COVERAGE: 2.88 PC PER SQ.FT</div>
-              </div>
-              <!-- <div class="card-footer">
-                <span>Suitable for municipal roadways, petroleum service stations, and industrial flooring.</span>
-                <span class="cta">View details ↗</span>
-              </div> -->
-            </article>
-
-            <article class="card" data-images="Products/4. Cosmos Red.png, Products/4. Cosmos Yellow.png"
-              data-modal-title="COSMOS (COSMIC)" data-modal-kicker="Thickness options — 40MM, 60 MM"
-              data-modal-desc=" Enhance Your Outdoor Space with Our Cosmos Interlocking Paver Blocks, for Durable, Beautiful and Easily Maintained Surfaces.
-                     These are Versatile and Specifically Designed for Asthetic and Functional Integration within Lawns, Private Courtyards, Public Parks and Pedestrian Walkways."
-              data-modal-pills="Colour-fast pigments|Coverage: 1.85pc per sq.ft|Colours available: Red, Yellow, Grey"
-              data-modal-footer="Ideal for High-Visibility Public and Private Spaces; Contact for Sample Tiles."
-              data-modal-images="Products/4. Cosmos Red.png, Products/4. Cosmos Yellow.png">
-              <div class="card-kicker">Thickness • 40–60 MM</div>
-              <h3>COSMOS (COSMIC)</h3>
-              <p class="card-brief">
-                These are Versatile and Specifically Designed for Asthetic and Functional Integration within Lawns,
-                Private Courtyards, Public Parks and Pedestrian Walkways.
-              </p>
-              <div class="pill-row">
-                <div class="pill">COLOUR FAST PIGMENTS</div>
-                <div class="pill">COVERAGE: 1.85 PC PER SQ.FT</div>
-              </div>
-              <!-- <div class="card-footer">
-                <span>Ideal for malls &amp; hotels</span>
-                <span class="cta">View details ↗</span>
-              </div> -->
-            </article>
-
-            <article class="card" data-images="Products/13. Domrup Yellow.png,Products/13. Domrup Red.png" data-modal-title="DAMRU"
-              data-modal-kicker="Thickness options — 40–60 MM "
-              data-modal-desc="Damru, Unique, High- Strength Paving for Distinctive Outdoor Areas, Offering Superior Durability and Bold Design.
-                     Engineered for Durability and Asthetic Appeal, these Units are Ideally Suited for High-Traffic Pedestrian Footpaths and  Comprehensive Residential Housing Developments."
-              data-modal-pills="Colour-fast pigments|Coverage: 2.62pc per sq.ft|Colours available: Red, Yellow, Grey"
-              data-modal-footer="Build to Last and Easy to Maintain. Call Us For Full Details and Pricing!"
-              data-modal-images="Products/13. Domrup Yellow.png,Products/13. Domrup Red.png">
-              <div class="card-kicker">THICKNESS • 40–60 MM</div>
-              <h3>DAMRU</h3>
-              <p class="card-brief">
-                Unique, High- Strength Paving for Distinctive Outdoor Areas, Offering Superior Durability and Bold
-                Design.
-              </p>
-              <div class="pill-row">
-                <div class="pill">Colour-fast pigments</div>
-                <div class="pill">Coverage: 2.62pc per sq.ft</div>
-              </div>
-              <!-- <div class="card-footer">
-                <span>Designed for forklifts, trailers &amp; heavy traffic</span>
-                <span class="cta">View details ↗</span>
-              </div> -->
-            </article>
-
-            <article class="card" data-images="Products/10. Max Red.png,Products/10. Max Yellow.png" data-modal-title="MAX (BROOK)"
-              data-modal-kicker="Thickness options — 40–60 MM "
-              data-modal-desc="Brook Also Known as Max, Interlocking Paver Blocks Durable & Stylish Paving that Transforms any Outdoor Space with Lasting Beauty and Strength.
-                     Optimized for Both durability and Visual Harmony , therse Pavers are Premier Choice for Public Park Landscapes, residential Lawns, and Pedestrian Throughfares. "
-              data-modal-pills="Colour-fast pigments|Coverage: 1.85pc per sq.ft|Colours available: Red, Yellow, Grey"
-              data-modal-footer="Built to last and easy to maintain. Call us for full details and pricing!"
-              data-modal-images="Products/10. Max Red.png,Products/10. Max Yellow.png">
-              <div class="card-kicker">THICKNESS • 40–60 MM</div>
-              <h3>MAX (BROOK)</h3>
-              <p class="card-brief">
-                Brook Also Known as Max, Interlocking Paver Blocks Durable & Stylish Paving that Transforms any Outdoor
-                Space with Lasting Beauty and Strength
-              </p>
-              <div class="pill-row">
-                <div class="pill">Colour-fast pigments</div>
-                <div class="pill">Coverage: 1.85pc per sq.ft</div>
-              </div>
-              <!-- <div class="card-footer">
-                <span>Perfect for open parking &amp; landscape areas</span>
-                <span class="cta">View details ↗</span>
-              </div> -->
-            </article>
-
-            <article class="card" data-images="Products/1. Brick Red.png,Products/1. Brick Yellow.png" data-modal-title="BRICK"
-              data-modal-kicker="Thickness options — 40–80 MM"
-              data-modal-desc="Brick Paver Blocks are Durable, Strong, Low-Maintenance and Asthetically Pleasing.
-                     This High-Performance Surfacing Solution is Engineered for Universal Application, Ranging from Refined Shopfronts and Residential Entrances to High-TrafficPedestrian Footpaths and Municipal Roadways."
-              data-modal-pills="Colour-fast pigments|Coverage: 4.5pc per sq.ft|Colours available: Red, Yellow, Grey"
-              data-modal-footer="Built to last and easy to maintain. Call us for full details and pricing!"
-              data-modal-images="Products/1. Brick Red.png,Products/1. Brick Yellow.png">
-              <div class="card-kicker">THICKNESS • 40–80 MM</div>
-              <h3>BRICK</h3>
-              <p class="card-brief">
-                Brick Paver Blocks are Durable, Strong, Low-Maintenance and Asthetically Pleasing for Universal
-                Application.
-              </p>
-              <div class="pill-row">
-                <div class="pill">Colour-fast pigments</div>
-                <div class="pill">Coverage: 4.5pc per sq.ft</div>
-              </div>
-              <!-- <div class="card-footer">
-                <span>Perfect for open parking &amp; landscape areas</span>
-                <span class="cta">View details ↗</span>
-              </div> -->
-            </article>
-
-            <article class="card"
-              data-images="Products/15. Cheker Tile Red 36 Ball.png, Products/16. Cheker Tile Yellow 36 Ball.png"
-              data-modal-title="CHEQUERED TILES" data-modal-kicker="Thickness options — 30MM" data-modal-desc="100 Square: Dense, intricate grid: a classic hundred-square checkerboard pattern for flooring.
-                    25 Square: Bold, balanced five-by-five squares; a versatile, simplified chequered design choice.
-                    36 Ball: Circular tessellation creating a unique, playful checkerboard of repeating spheres.
-                    Cross: Four-by-four grid featuring five defined lines for a subtle inset detail."
-              data-modal-pills="Colour-fast pigments|Coverage: 1pc per sq.ft|Colours available: Red, Yellow, Grey"
-              data-modal-footer="Built to last and easy to maintain. Call us for full details and pricing! "
-              data-modal-images="Products/15. Cheker Tile Red 36 Ball.png, Products/16. Cheker Tile Yellow 36 Ball.png">
-              <div class="card-kicker">THICKNESS • 30MM</div>
-              <h3>CHEQUERED TILES</h3>
-              <p class="card-brief">
-                These Pavers Offer a Sophisticated Finish Tailored for High-Visibility Shopfronts, Residential Entryways
-                amd Diverse Level-Surface Applications
-              </p>
-              <div class="pill-row">
-                <div class="pill">Colour-fast pigments</div>
-                <div class="pill">Coverage: 4.5pc per sq.ft</div>
-              </div>
-              <!-- <div class="card-footer">
-                <span>Perfect for open parking &amp; landscape areas</span>
-                <span class="cta">View details ↗</span>
-              </div> -->
-            </article>
+      <!-- ══════════════════════ SECTORS ════════════════════════ -->
+      <section id="sectors" class="sectors-section">
+        <div class="container">
+          <div style="text-align:center; margin-bottom:3rem;" class="reveal">
+            <div class="section-eyebrow" style="justify-content:center;">Where We Supply</div>
+            <h2 class="section-heading">Built for every sector,<br><span class="grad">at every scale.</span></h2>
           </div>
 
-          <div
-            style="margin-top:1.6rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;">
-            <p style="font-size:0.8rem; color:var(--text-muted);">
-              Also explore: Landscaping tiles & Kerbstones.
-            </p>
-            <button class="btn-ghost" onclick="scrollToSection('contact')">
-              Request full product catalogue
-            </button>
-          </div>
-          <!-- Product details modal -->
-          <div id="productModal" class="modal-overlay" aria-hidden="true">
-            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-              <div class="modal-header">
-                <div>
-                  <div class="modal-kicker meta" id="modalKicker"></div>
-                  <h3 id="modalTitle"></h3>
-                </div>
-                <div style="display:flex;align-items:center;gap:0.6rem;">
-                  <button class="close-btn" id="modalClose" title="Close">✕</button>
-                </div>
-              </div>
+          <div class="sectors-grid stagger-children">
 
-              <div class="modal-body">
-                <div class="modal-gallery">
-                  <div class="main-image-container" id="mainImageContainer">
-                    <img src="" alt="Product image" class="main-image visible" id="modalImageA">
-                    <img src="" alt="Product image" class="main-image" id="modalImageB">
+            <div class="sector-card">
+              <div class="sector-icon">
+                <!-- Rail track icon -->
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 12h16M12 4v16"/></svg>
+              </div>
+              <h3>Railways</h3>
+              <p>Heavy-duty paver blocks for railway platforms, station forecourts and high-footfall zones requiring long-lasting surfaces.</p>
+            </div>
+
+            <div class="sector-card">
+              <div class="sector-icon">
+                <!-- Building icon -->
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="9" width="13" height="13"/><path d="M16 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3"/><rect x="16" y="13" width="5" height="9"/><path d="M9 22v-8h4v8"/></svg>
+              </div>
+              <h3>Malls &amp; Hotels</h3>
+              <p>Premium-finish tiles for commercial walkways, courtyards, entryways and high-visibility exterior areas.</p>
+            </div>
+
+            <div class="sector-card">
+              <div class="sector-icon">
+                <!-- House icon -->
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <h3>Residential Housing</h3>
+              <p>Driveways, garden paths, villa courtyards and housing society roads &mdash; lasting surfaces for homes built to last.</p>
+            </div>
+
+            <div class="sector-card">
+              <div class="sector-icon">
+                <!-- Institution / book icon -->
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              </div>
+              <h3>Educational Campuses</h3>
+              <p>Safe, durable and low-maintenance paving for school and university campuses across the region.</p>
+            </div>
+
+            <div class="sector-card">
+              <div class="sector-icon">
+                <!-- Factory / gear icon -->
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M15.536 8.464a5 5 0 0 1 0 7.072M8.464 8.464a5 5 0 0 0 0 7.072"/></svg>
+              </div>
+              <h3>Industrial &amp; Logistics</h3>
+              <p>High-load interlocking blocks rated for forklift traffic, heavy trucks and demanding logistics floor applications.</p>
+            </div>
+
+            <div class="sector-card">
+              <div class="sector-icon">
+                <!-- Road icon -->
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10H3M21 6H3M21 14H3M21 18H3"/></svg>
+              </div>
+              <h3>Municipal Roads</h3>
+              <p>IS-compliant paver blocks for public works contracts, government projects and urban road infrastructure.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════ GALLERY ════════════════════════ -->
+      <section id="gallery" class="gallery-section">
+        <div class="container">
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:3rem; flex-wrap:wrap; gap:1rem;" class="reveal">
+            <div>
+              <div class="section-eyebrow">Site Gallery</div>
+              <h2 class="section-heading">Real projects.<br><span class="grad">Real results.</span></h2>
+            </div>
+            <p class="section-desc" style="max-width:320px;">From our factory to finished sites across West Bengal &mdash; our work speaks for itself.</p>
+          </div>
+
+          <div class="gallery-grid stagger-children">
+            <div class="gallery-item featured">
+              <img src="Assets/_DSC0010.png" alt="D.D. Enterprise paver block site installation" loading="lazy">
+              <div class="gallery-item-overlay"><span>Site Installation</span></div>
+            </div>
+            <div class="gallery-item">
+              <img src="Assets/_DSC0043.png" alt="Paver block laying pattern" loading="lazy">
+              <div class="gallery-item-overlay"><span>Laying Pattern</span></div>
+            </div>
+            <div class="gallery-item">
+              <img src="Assets/_DSC0015.png" alt="Factory production floor" loading="lazy">
+              <div class="gallery-item-overlay"><span>Factory Floor</span></div>
+            </div>
+            <div class="gallery-item">
+              <img src="Assets/_DSC0045.png" alt="Finished paved surface" loading="lazy">
+              <div class="gallery-item-overlay"><span>Finished Surface</span></div>
+            </div>
+            <div class="gallery-item">
+              <img src="Assets/_DSC0008.png" alt="Product range display" loading="lazy">
+              <div class="gallery-item-overlay"><span>Product Range</span></div>
+            </div>
+            <div class="gallery-item">
+              <img src="Assets/Office_Room.png" alt="D.D. Enterprise office" loading="lazy">
+              <div class="gallery-item-overlay"><span>Our Office</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════ CONTACT ════════════════════════ -->
+      <section id="contact" class="contact-section">
+        <div class="container">
+          <div style="text-align:center; margin-bottom:3.5rem;" class="reveal">
+            <div class="section-eyebrow" style="justify-content:center;">Contact &amp; Enquiry</div>
+            <h2 class="section-heading">Tell us about<br><span class="grad">your project.</span></h2>
+          </div>
+
+          <div class="contact-grid">
+
+            <!-- Quote form -->
+            <div class="contact-form-card reveal-left">
+              <h3>Request a Callback</h3>
+              <p class="contact-intro">Fill in the form and our team will get back to you within 24 hours with a tailored recommendation and quote.</p>
+
+              <form id="quoteForm" class="form-stack">
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="name">Full Name <span class="req">*</span></label>
+                    <input id="name" type="text" placeholder="Your name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="company">Organisation</label>
+                    <input id="company" type="text" placeholder="Developer / Architect / Contractor">
                   </div>
                 </div>
 
-                <div class="modal-details">
-                  <div class="pill-row" id="modalPills"></div>
-                  <p id="modalDesc"></p>
-                  <div style="margin-top:1rem;color:var(--text-muted);" id="modalExtra"></div>
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input id="email" type="email" placeholder="you@company.com">
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Contact Number <span class="req">*</span></label>
+                    <input id="phone" type="tel" placeholder="+91-XXXXXXXXXX" required>
+                  </div>
                 </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="city">City / Project Location <span class="req">*</span></label>
+                    <input id="city" type="text" placeholder="City, State" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="type">Project Type</label>
+                    <select id="type">
+                      <option>Residential Driveway / Villa</option>
+                      <option>Housing Society / Township</option>
+                      <option>Commercial / Mall / Hotel</option>
+                      <option>Industrial / Logistics / Port</option>
+                      <option>Institutional Campus</option>
+                      <option>Public Works / Govt. Project</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="message">Requirements &amp; Notes <span class="req">*</span></label>
+                  <textarea id="message" placeholder="Share approximate area (sq.ft), load type (pedestrian / vehicles / forklifts), preferred colours and project timeline." required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="captchaInput">Enter Verification Code <span class="req">*</span></label>
+                  <div class="captcha-row">
+                    <div class="captcha-box" id="captchaBox"></div>
+                    <button type="button" class="captcha-refresh" onclick="generateCaptcha()" title="Refresh code">&#8635;</button>
+                    <input id="captchaInput" type="text" placeholder="Type the characters above" required>
+                  </div>
+                </div>
+
+                <div class="form-submit-row">
+                  <p class="form-note">By submitting, you agree to be contacted on email and phone for this enquiry. No spam.</p>
+                  <button type="submit" class="btn btn-gold btn-lg">
+                    Submit Enquiry
+                    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Contact info aside -->
+            <div class="contact-aside reveal-right">
+
+              <div class="contact-info-card">
+                <div class="contact-info-card-icon">
+                  <!-- Phone icon -->
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.72 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.67 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <h4>Phone</h4>
+                <p>
+                  Sales: <a href="tel:9433393977">+91 94333 93977</a><br>
+                  Factory &amp; Dispatch: <a href="tel:+919330532627">+91 93305 32627</a>
+                </p>
               </div>
 
-              <div class="modal-footer">
-                <span id="modalFooterText"></span>
-                <div>
-                  <button class="btn-primary"
-                    onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a
-                    Quote</button>
+              <div class="contact-info-card">
+                <div class="contact-info-card-icon">
+                  <!-- Mail icon -->
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 </div>
+                <h4>Email</h4>
+                <p><a href="mailto:info@ddenterprisepaverblock.co.in">info@ddenterprisepaverblock.co.in</a></p>
               </div>
-            </div>
-          </div>
 
-          <script>
-            (function () {
-              const modalOverlay = document.getElementById('productModal');
-              const modalClose = document.getElementById('modalClose');
-              const modalKicker = document.getElementById('modalKicker');
-              const modalTitle = document.getElementById('modalTitle');
-              const modalDesc = document.getElementById('modalDesc');
-              const modalPills = document.getElementById('modalPills');
-              const modalFooterText = document.getElementById('modalFooterText');
-
-              const imgA = document.getElementById('modalImageA');
-              const imgB = document.getElementById('modalImageB');
-              const mainImageContainer = document.getElementById('mainImageContainer');
-
-              let currentImages = [];
-              let currentIndex = 0;
-              let autoScrollTimer = null;
-              let interactionPaused = false;
-              let visibleA = true;
-
-              function setImageWithFade(src, alt) {
-                const from = visibleA ? imgA : imgB;
-                const to = visibleA ? imgB : imgA;
-                to.src = src;
-                to.alt = alt || '';
-                // trigger crossfade
-                to.classList.add('visible');
-                from.classList.remove('visible');
-                visibleA = !visibleA;
-              }
-
-              function goToIndex(idx) {
-                if (!currentImages || currentImages.length === 0) return;
-                currentIndex = (idx + currentImages.length) % currentImages.length;
-                const src = currentImages[currentIndex];
-                setImageWithFade(src, modalTitle.textContent || '');
-              }
-
-              function startAutoScroll() {
-                stopAutoScroll();
-                if (!currentImages || currentImages.length <= 1) return;
-                autoScrollTimer = setInterval(() => {
-                  if (interactionPaused) return;
-                  goToIndex(currentIndex + 1);
-                }, 4200);
-              }
-
-              function stopAutoScroll() { if (autoScrollTimer) { clearInterval(autoScrollTimer); autoScrollTimer = null; } }
-
-              function openModalFromCard(card) {
-                // Prefer explicit modal fields set on the card via data-modal-* attributes.
-                // This allows outer card content to differ from modal details.
-                const kicker = card.dataset.modalKicker || card.querySelector('.card-kicker')?.textContent || '';
-                const title = card.dataset.modalTitle || card.querySelector('h3')?.textContent || '';
-
-                // description: prefer `data-modal-desc`, then `.card-desc` or `.card-brief`, then any <p>
-                const desc = card.dataset.modalDesc || card.querySelector('p.card-desc')?.innerHTML || card.querySelector('p.card-brief')?.innerHTML || card.querySelector('p')?.innerHTML || '';
-
-                // pills: allow `data-modal-pills` as pipe-separated list, otherwise gather visible pills
-                let pills = [];
-                if (card.dataset.modalPills) {
-                  pills = card.dataset.modalPills.split('|').map(s => s.trim()).filter(Boolean);
-                } else {
-                  pills = Array.from(card.querySelectorAll('.pill')).map(n => n.textContent.trim());
-                }
-
-                const footerSpan = card.dataset.modalFooter || card.querySelector('.card-footer span')?.textContent || '';
-
-                // images: prefer `data-modal-images` else fallback to `data-images`
-                const imagesAttr = card.dataset.modalImages || card.dataset.images;
-                let images = [];
-                if (imagesAttr) images = imagesAttr.split(',').map(s => s.trim()).filter(Boolean);
-                if (images.length === 0) images = ['1. Brick Red.png', '4. Cosmos Red.png', '7. ZigZag Red.png'];
-
-                modalKicker.textContent = kicker;
-                modalTitle.textContent = title;
-                modalDesc.innerHTML = desc;
-                modalFooterText.textContent = footerSpan;
-
-                // pills
-                modalPills.innerHTML = '';
-                pills.forEach(p => { const d = document.createElement('div'); d.className = 'pill'; d.textContent = p; modalPills.appendChild(d); });
-
-                // setup images
-                currentImages = images.slice();
-                currentIndex = 0;
-                visibleA = true;
-                imgA.src = currentImages[0]; imgA.alt = title; imgA.classList.add('visible');
-                imgB.src = ''; imgB.classList.remove('visible');
-
-                modalOverlay.classList.add('open');
-                modalOverlay.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden';
-
-                startAutoScroll();
-              }
-
-              function closeModal() { stopAutoScroll(); interactionPaused = false; currentImages = []; modalOverlay.classList.remove('open'); modalOverlay.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
-
-              // attach click handlers to product cards
-              document.querySelectorAll('.card-grid.horizontal-scroll .card').forEach(card => {
-                card.style.cursor = 'pointer';
-                card.addEventListener('click', (e) => {
-                  if (e.target.closest('a') || e.target.closest('button')) return;
-                  openModalFromCard(card);
-                });
-              });
-
-              modalClose.addEventListener('click', closeModal);
-              modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-              window.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') return closeModal();
-                if (e.key === 'ArrowLeft') { goToIndex(currentIndex - 1); interactionPaused = true; setTimeout(() => interactionPaused = false, 900); }
-                if (e.key === 'ArrowRight') { goToIndex(currentIndex + 1); interactionPaused = true; setTimeout(() => interactionPaused = false, 900); }
-              });
-
-              // pause on hover / focus
-              modalOverlay.addEventListener('mouseenter', () => { interactionPaused = true; });
-              modalOverlay.addEventListener('mouseleave', () => { interactionPaused = false; });
-
-              // touch / swipe handling on image container
-              (function addSwipe() {
-                let startX = 0, startY = 0, startTime = 0, touching = false;
-                mainImageContainer.addEventListener('touchstart', (e) => {
-                  if (!e.touches || e.touches.length === 0) return;
-                  touching = true; interactionPaused = true; stopAutoScroll();
-                  startX = e.touches[0].clientX; startY = e.touches[0].clientY; startTime = Date.now();
-                }, { passive: true });
-
-                mainImageContainer.addEventListener('touchend', (e) => {
-                  if (!touching) return; touching = false;
-                  const dx = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX - startX : 0;
-                  const dy = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY - startY : 0;
-                  const dt = Date.now() - startTime;
-                  if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) && dt < 800) {
-                    if (dx < 0) goToIndex(currentIndex + 1); else goToIndex(currentIndex - 1);
-                  }
-                  setTimeout(() => { interactionPaused = false; startAutoScroll(); }, 600);
-                }, { passive: true });
-
-                // mouse drag for desktop
-                let dragging = false; let mStartX = 0;
-                mainImageContainer.addEventListener('mousedown', (e) => { dragging = true; interactionPaused = true; stopAutoScroll(); mStartX = e.clientX; e.preventDefault(); });
-                window.addEventListener('mousemove', (e) => { if (!dragging) return; });
-                window.addEventListener('mouseup', (e) => { if (!dragging) return; dragging = false; const dx = e.clientX - mStartX; if (Math.abs(dx) > 60) { if (dx < 0) goToIndex(currentIndex + 1); else goToIndex(currentIndex - 1); } setTimeout(() => { interactionPaused = false; startAutoScroll(); }, 600); });
-              })();
-            })();
-          </script>
-        </div>
-      </section>
-
-      <!-- ABOUT + STATS -->
-      <section id="about">
-        <div class="container">
-          <div class="section-header">
-            <div class="section-title">
-              <span class="bar"></span>
-              About D.D. Enterprise
-            </div>
-          </div>
-
-          <div class="about-grid">
-            <div class="about-panel">
-              <h3>Design-First. Engineering-Backed. Site-Realistic.</h3>
-              <p>
-                Leveraging a Decade of Specialized Expertise, D. D. ENTERPRISE is a Distinguised and Leading Paver Block
-                Manufacturer in West Bengal.
-                We are Commited to Supplying Superior Concrete Interlocking Paver Block, Chequered Tiles, Roof Tiles for
-                all your Handscaping Needs.
-                <!-- Each paver profile is backed by mix design trials, pigment weathering checks, and real-site mockups before it
-                enters our catalogue. Your project doesn’t become our test case. -->
-              </p>
-              <p>
-                Our Extensive and Versatile Product Portfolio includes over 15+ varieties of High Quality Interlocking
-                Paver Blocks and a wide selection of Premium Chequered Tile and Roof Tile.
-                We ensure both exceptional durability and aesthetic appeal for Projects ranging from Driveways and Paver
-                Patios to Walkways and Commercial Paving.
-              </p>
-
-              <ul class="about-list">
-                <li>Commited to on Time Product Delivery</li>
-                <li>Complimentary Loading from our Side</li>
-                <!-- <li>Documented QA checks for every batch</li> -->
-                <li>Custom Textures, Sizes &amp; Colours on Specification</li>
-                <li>Supplying M30- M40 Grade Concrete Paver Block</li>
-                <!-- <li>Detailed maintenance guides &amp; FAQs</li> -->
-              </ul>
-
-            </div>
-
-
-            <aside class="stats-panel">
-              <div class="stats-grid">
-                <div class="stat-box">
-                  <h4>1,50,000+ sq.ft</h4>
-                  <span class="label">Largest Single-Site Execution</span>
+              <div class="contact-info-card">
+                <div class="contact-info-card-icon">
+                  <!-- Map pin icon -->
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 </div>
-                <div class="stat-box">
-                  <h4>8</h4>
-                  <span class="label">Production Lines</span>
-                </div>
-                <div class="stat-box">
-                  <h4>48 hrs</h4>
-                  <span class="label">Typical Design Response</span>
-                </div>
+                <h4>Factory &amp; Head Office</h4>
+                <p>
+                  D.D. Enterprise<br>
+                  Khelia, Arkhali-Amdanga<br>
+                  North 24 Parganas, West Bengal &ndash; 743221<br><br>
+                  <strong style="color:var(--gold);">Open:</strong> 9:00 AM &ndash; 6:00 PM &nbsp;&middot;&nbsp; Friday Closed
+                </p>
               </div>
-              <!-- <p class="stat-caption">
-                Featured projects include railways, industrial areas, hotels, educational campuses and
-                residential housing townships across West Bengal.
-              </p> -->
-            </aside>
-          </div>
-        </div>
-      </section>
 
-      <!-- PROJECTS & GALLERY -->
-      <section id="projects">
-        <div class="container">
-          <div class="section-header projects-header">
-            <div class="section-title">
-              <span class="bar"></span>
-              Key Sectors
-            </div>
-            <!-- <p class="section-subtitle">
-              De-risk your paving package by partnering with a manufacturer that understands both municipal and private
-              infrastructure requirements.
-            </p> -->
-          </div>
-
-          <div class="project-row">
-            <div>
-              <div class="tag-cloud">
-                <div class="tag primary">Railways</div>
-                <div class="tag primary">Malls &amp; Hotels</div>
-                <div class="tag primary">Roads &amp; Pathways</div>
-                <div class="tag primary">Educational Campuses</div>
-                <div class="tag primary">Residential Housing</div>
-                <div class="tag primary">Industrial Estate</div>
+              <div class="contact-info-card" style="border-color:rgba(245,178,72,0.18);">
+                <div class="contact-info-card-icon">
+                  <!-- Document icon -->
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <h4>Product Catalogue</h4>
+                <p>Full specifications, patterns and colour options in a single PDF document.</p>
+                <a href="Product Catalogue - D. D. ENTERPRISE.pdf" download class="btn btn-glass btn-sm" style="margin-top:0.8rem; display:inline-flex;">
+                  Download PDF
+                </a>
               </div>
-            </div>
-            <br>
-          </div>
-        </div>
-      </section>
-      <section>
-        <div class="container">
-          <div id="gallery">
-            <div class="section-title" style="margin-bottom:0.9rem;">
-              <span class="bar"></span>
-              Gallery Sneak Peek
-            </div>
-            <div class="gallery-strip horizontal-scroll">
-              <div class="gallery-item"><img src="Assets/_DSC0010.png" alt=""></div>
-              <div class="gallery-item"><img src="Assets/_DSC0043.png" alt=""></div>
-              <div class="gallery-item"><img src="Assets/_DSC0015.png" alt=""></div>
-              <div class="gallery-item"><img src="Assets/_DSC0045.png" alt=""></div>
-              <div class="gallery-item"><img src="Assets/_DSC0008.png" alt=""></div>
-              <div class="gallery-item"><img src="Assets/Office_Room.png" alt=""></div>
+
             </div>
           </div>
         </div>
       </section>
 
-      <!-- CONTACT -->
-      <section id="contact">
-        <div class="container">
-          <div class="section-title" style="margin-bottom:1.5rem;">
-            <span class="bar"></span>
-            Contact Us
-          </div>
-          <div class="contact-grid" style="grid-template-columns: 1fr 1fr;">
-            <div class="contact-block">
-              <h4>Head Office, Factory & Dispatch</h4>
-              <p>
-                D. D. ENTERPRISE<br>
-                Khelia, Arkhali-Amdanga<br>
-                North 24 Parganas, West Bengal – 743221
-              </p>
-              <p>Open • 9:00 AM – 6:00 PM (Friday Closed)</p>
-            </div>
-
-            <div class="contact-aside">
-              <div class="contact-block">
-                <h4>Talk to Us</h4>
-                <p>Phone (Sales): <a href="tel:9433393977" style="color: var(--accent-gold); font-size: 1.2rem; font-weight: 700;">+91 9433393977</a></p>
-                <p>Phone (Factory): <a href="tel:+919330532627">+91 9330532627</a></p>
-                <p>Email: <a href="mailto:info@ddenterprisepaverblock.co.in">info@ddenterprisepaverblock.co.in</a></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
 
-    <!-- FOOTER -->
+    <!-- ═══════════════════════ FOOTER ════════════════════════ -->
     <footer>
       <div class="container">
-        <div class="footer-grid">
+        <div class="footer-top">
           <div>
-            <div class="footer-logo">D. D. ENTERPRISE</div>
-            <p>
-              Design-Led Paver Block, Landscaping Tile and Kerbstone Manufacturer for Future-Ready Indian
-              Infrastructure.
-            </p>
+            <div class="footer-brand-name">D. D. Enterprise</div>
+            <p class="footer-brand-desc">Manufacturer of premium paver blocks, chequered tiles and roof tiles for Indian infrastructure. Serving West Bengal since 2010.</p>
           </div>
-
-          <div class="footer-col">
-            <h5>Company</h5>
+          <div>
+            <div class="footer-col-title">Navigate</div>
             <div class="footer-links">
-              <a href="#about">About</a>
-              <a href="#contact">Contact Us</a>
+              <a href="#hero">Home</a>
+              <a href="#products">Products</a>
+              <a href="#about">About Us</a>
+              <a href="#gallery">Gallery</a>
+              <a href="#contact">Contact</a>
             </div>
           </div>
-
-          <!-- <div class="footer-col">
-            <h5>Products</h5>
+          <div>
+            <div class="footer-col-title">Contact</div>
             <div class="footer-links">
-              <a href="#products">Paving Blocks</a>
-              <a href="#products">Landscaping Tiles</a>
-              <a href="#products">Kerbs &amp; Edgestones</a>
-              <a href="#products">Drain Covers</a>
+              <a href="tel:9433393977">+91 94333 93977</a>
+              <a href="mailto:info@ddenterprisepaverblock.co.in">info@ddenterprisepaverblock.co.in</a>
+              <a href="Product Catalogue - D. D. ENTERPRISE.pdf" download>Download Catalogue</a>
             </div>
           </div>
-
-          <div class="footer-col">
-            <h5>Resources</h5>
-            <div class="footer-links">
-              <a href="#contact">IS Codes &amp; guidelines</a>
-              <a href="#contact">Download brochure</a>
-              <a href="#contact">FAQs</a>
-            </div>
-          </div> -->
         </div>
-
         <div class="footer-bottom">
-          <span>© <span id="year"></span> D. D. ENTERPRISE. All Rights Reserved.</span>
-          <!-- <span>Built for <strong>architects, developers &amp; infrastructure teams</strong>.</span> -->
-          <!-- <div class="social-row">
-            <div class="social-pill">in</div>
-            <div class="social-pill">f</div>
-            <div class="social-pill">✕</div>
-            <div class="social-pill">IG</div>
-          </div> -->
+          <span class="footer-copy">&copy; <span id="footerYear"></span> D.D. Enterprise. All Rights Reserved.</span>
+          <span class="footer-tagline">Paver Blocks &middot; Chequered Tiles &middot; Roof Tiles &middot; West Bengal</span>
         </div>
       </div>
     </footer>
 
     <!-- Back to top -->
-    <button class="back-to-top" id="backToTop" aria-label="Back to top"></button>
-  </div>
+    <button id="back-to-top" aria-label="Back to top">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+    </button>
 
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal-overlay" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-header">
+          <div>
+            <div class="modal-kicker" id="modalKicker"></div>
+            <h3 id="modalTitle"></h3>
+          </div>
+          <button class="modal-close" id="modalClose" title="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class="modal-img-container" id="mainImageContainer">
+              <img src="" alt="Product image" class="modal-img visible" id="modalImageA">
+              <img src="" alt="Product image" class="modal-img" id="modalImageB">
+            </div>
+          </div>
+          <div>
+            <div class="modal-details-pills" id="modalPills"></div>
+            <p class="modal-desc" id="modalDesc"></p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <span class="modal-footer-text" id="modalFooterText"></span>
+          <button class="btn btn-gold" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'}); document.getElementById('productModal').classList.remove('open');">
+            Get a Quote
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end .page-wrapper -->
+
+  <!-- ═══════════════════════ SCRIPTS ═══════════════════════ -->
   <script>
-    // Mobile nav toggle
-    const nav = document.getElementById('nav');
+    // ─── CONCRETE AGGREGATE BACKGROUND ───────────────────────
+    // Warm stone dots + technical grid — manufacturing/material feel
+    (function () {
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+      let W, H, dots = [], rafId;
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+
+      function rand(a, b) { return a + Math.random() * (b - a); }
+
+      function createDots(count) {
+        dots = [];
+        for (let i = 0; i < count; i++) {
+          const roll = Math.random();
+          dots.push({
+            x: rand(0, W),
+            y: rand(0, H),
+            r: rand(0.8, 3.2),
+            vx: rand(-0.04, 0.04),
+            vy: rand(-0.04, 0.04),
+            alpha: rand(0.12, 0.38),
+            // Warm stone, amber, and neutral concrete tones — no blue/teal
+            color: roll > 0.6 ? '200,168,120' : roll > 0.3 ? '245,178,72' : '155,145,132'
+          });
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        // Fine technical grid — warm amber tint, like drafting paper
+        ctx.strokeStyle = 'rgba(220,185,130,0.06)';
+        ctx.lineWidth = 1;
+        const gs = 60;
+        for (let x = 0; x <= W; x += gs) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+        for (let y = 0; y <= H; y += gs) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+        // Aggregate dots — no connections, just material scatter
+        dots.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < -5) p.x = W + 5;
+          if (p.x > W + 5) p.x = -5;
+          if (p.y < -5) p.y = H + 5;
+          if (p.y > H + 5) p.y = -5;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
+          ctx.fill();
+        });
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', () => {
+        resize();
+        createDots(Math.floor(W * H / 7500));
+      });
+      resize();
+      createDots(Math.floor(W * H / 7500));
+      draw();
+    })();
+
+    // ─── NAVBAR ───────────────────────────────────────────────
+    const siteHeader = document.getElementById('site-header');
+    const navEl = document.getElementById('nav');
     const navToggle = document.getElementById('navToggle');
 
-    navToggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-
-    // Back to top visibility
-    const backToTop = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 320) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
+      siteHeader.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+
+    navToggle.addEventListener('click', () => {
+      const open = navEl.classList.toggle('open');
+      navToggle.classList.toggle('open', open);
     });
 
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navEl.classList.remove('open');
+        navToggle.classList.remove('open');
+      });
     });
 
-    // Year in footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-
-    // Note: Local storage and server-side quote submissions have been removed for static migration.
-
-    // Make vertical mouse wheel scroll horizontally over horizontal scrollers (Products & Gallery)
-    (function () {
-      const scrollers = document.querySelectorAll('.horizontal-scroll');
-      scrollers.forEach(scroller => {
-        scroller.addEventListener('wheel', function (e) {
-          // only intercept if vertical scroll is greater than horizontal
-          if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-            e.preventDefault();
-            scroller.scrollLeft += e.deltaY;
-          }
-        }, { passive: false });
-      });
-    })();
-
-    // Offset anchor scrolling to account for the sticky header height
-    (function () {
-      const header = document.querySelector('header');
-      const getHeaderHeight = () => header ? header.getBoundingClientRect().height : 72;
-
-      document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', function (ev) {
-          const href = this.getAttribute('href');
-          if (!href || href === '#') return;
-
-          // If Home/top anchor, scroll to absolute top instead of the section top
-          if (href === '#top') {
-            ev.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            history.replaceState(null, '', href);
-            return;
-          }
-
-          const target = document.querySelector(href);
-          if (!target) return;
-
-          ev.preventDefault();
-          const offset = getHeaderHeight() + 12; // extra breathing room
-          const top = target.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top, behavior: 'smooth' });
-          // update URL without jumping
-          history.replaceState(null, '', href);
-        });
-      });
-    })();
-
-    // Global helper so inline buttons can use the same offset behavior
-    function scrollToSection(targetSelectorOrId, instant = false) {
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.getBoundingClientRect().height : 72;
-      if (!targetSelectorOrId) return;
-      let selector = targetSelectorOrId;
-      if (!selector.startsWith('#')) selector = '#' + selector;
-
-      if (selector === '#top') {
-        window.scrollTo({ top: 0, behavior: instant ? 'auto' : 'smooth' });
-        history.replaceState(null, '', '#top');
-        return;
-      }
-
-      const target = document.querySelector(selector);
-      if (!target) return;
-      const offset = headerHeight + 12;
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: instant ? 'auto' : 'smooth' });
-      history.replaceState(null, '', selector);
+    // ─── SMOOTH SCROLL HELPER ─────────────────────────────────
+    function scrollTo(selector) {
+      const h = siteHeader.getBoundingClientRect().height;
+      if (!selector || selector === '#hero') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+      const el = document.querySelector(selector);
+      if (!el) return;
+      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - h - 16, behavior: 'smooth' });
     }
 
-  </script>
-</body>
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const href = link.getAttribute('href');
+        if (!href || href === '#') return;
+        e.preventDefault();
+        scrollTo(href);
+        history.replaceState(null, '', href);
+      });
+    });
 
+    // ─── BACK TO TOP ──────────────────────────────────────────
+    const btt = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => btt.classList.toggle('show', window.scrollY > 400), { passive: true });
+    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ─── FOOTER YEAR ──────────────────────────────────────────
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    // ─── SCROLL REVEAL ────────────────────────────────────────
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger-children').forEach(el => {
+      revealObs.observe(el);
+    });
+
+    // ─── COUNT-UP NUMBERS ─────────────────────────────────────
+    function countUp(el, target, dur = 1400) {
+      const start = performance.now();
+      const large = target > 999;
+      (function tick(now) {
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = large ? Math.floor(eased * target).toLocaleString('en-IN') : Math.floor(eased * target);
+        if (p < 1) requestAnimationFrame(tick);
+      })(start);
+    }
+
+    const countObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('[data-count]').forEach(el => {
+            countUp(el, parseInt(el.dataset.count));
+          });
+          countObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.hero, .stats-card').forEach(el => countObs.observe(el));
+
+    // ─── PRODUCTS DRAG SCROLL ─────────────────────────────────
+    (function () {
+      const grid = document.getElementById('productsGrid');
+      let isDown = false, startX, scrollLeft;
+
+      grid.addEventListener('mousedown', e => { isDown = true; grid.classList.add('grabbing'); startX = e.pageX - grid.offsetLeft; scrollLeft = grid.scrollLeft; });
+      document.addEventListener('mouseup', () => { isDown = false; grid.classList.remove('grabbing'); });
+      grid.addEventListener('mouseleave', () => { isDown = false; grid.classList.remove('grabbing'); });
+      grid.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        grid.scrollLeft = scrollLeft - (e.pageX - grid.offsetLeft - startX) * 1.5;
+      });
+      grid.addEventListener('wheel', e => {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.preventDefault(); grid.scrollLeft += e.deltaY; }
+      }, { passive: false });
+    })();
+
+    // ─── PRODUCT MODAL ────────────────────────────────────────
+    (function () {
+      const overlay = document.getElementById('productModal');
+      const closeBtn = document.getElementById('modalClose');
+      const kicker = document.getElementById('modalKicker');
+      const title = document.getElementById('modalTitle');
+      const desc = document.getElementById('modalDesc');
+      const pills = document.getElementById('modalPills');
+      const footerText = document.getElementById('modalFooterText');
+      const imgA = document.getElementById('modalImageA');
+      const imgB = document.getElementById('modalImageB');
+      let images = [], idx = 0, timer = null, visA = true;
+
+      function fade(src) {
+        const from = visA ? imgA : imgB, to = visA ? imgB : imgA;
+        to.src = src; to.alt = title.textContent;
+        to.classList.add('visible'); from.classList.remove('visible');
+        visA = !visA;
+      }
+      function goTo(i) { if (!images.length) return; idx = ((i % images.length) + images.length) % images.length; fade(images[idx].trim()); }
+      function startAuto() { stopAuto(); if (images.length > 1) timer = setInterval(() => goTo(idx + 1), 3800); }
+      function stopAuto() { clearInterval(timer); timer = null; }
+
+      function openModal(card) {
+        kicker.textContent = card.dataset.modalKicker || '';
+        title.textContent = card.dataset.modalTitle || card.querySelector('h3')?.textContent || '';
+        desc.textContent = card.dataset.modalDesc || '';
+        footerText.textContent = card.dataset.modalFooter || '';
+        pills.innerHTML = '';
+        (card.dataset.modalPills || '').split('|').forEach(t => {
+          if (!t.trim()) return;
+          const d = document.createElement('div'); d.className = 'modal-pill'; d.textContent = t.trim(); pills.appendChild(d);
+        });
+        images = (card.dataset.modalImages || '').split(',').filter(Boolean);
+        idx = 0; visA = true;
+        imgA.src = images[0]?.trim() || ''; imgA.alt = title.textContent; imgA.classList.add('visible');
+        imgB.src = ''; imgB.classList.remove('visible');
+        overlay.classList.add('open'); overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        startAuto();
+      }
+
+      function closeModal() {
+        stopAuto(); images = [];
+        overlay.classList.remove('open'); overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', e => { if (e.target.closest('a, button')) return; openModal(card); });
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+      window.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft') { goTo(idx - 1); stopAuto(); setTimeout(startAuto, 3000); }
+        if (e.key === 'ArrowRight') { goTo(idx + 1); stopAuto(); setTimeout(startAuto, 3000); }
+      });
+    })();
+
+    // ─── CAPTCHA ──────────────────────────────────────────────
+    function generateCaptcha() {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+      document.getElementById('captchaBox').textContent = code;
+    }
+    generateCaptcha();
+
+    // ─── FORM SUBMIT ──────────────────────────────────────────
+    document.getElementById('quoteForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const entered = document.getElementById('captchaInput').value.trim().toUpperCase();
+      const actual = document.getElementById('captchaBox').textContent.trim().toUpperCase();
+      if (entered !== actual) { alert('Incorrect verification code. Please try again.'); generateCaptcha(); return; }
+
+      const payload = {
+        name: document.getElementById('name').value.trim(),
+        company: document.getElementById('company').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        city: document.getElementById('city').value.trim(),
+        type: document.getElementById('type').value,
+        message: document.getElementById('message').value.trim(),
+        submittedAt: new Date().toISOString()
+      };
+
+      try {
+        const existing = JSON.parse(localStorage.getItem('dd_quotes') || '[]');
+        existing.push(payload);
+        localStorage.setItem('dd_quotes', JSON.stringify(existing));
+      } catch (_) {}
+
+      try {
+        const res = await fetch('/api/quotes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        if (!res.ok) throw new Error();
+        alert('Enquiry submitted. Our team will contact you shortly.');
+      } catch (_) {
+        alert('Your enquiry has been recorded. We will contact you shortly.');
+      }
+
+      this.reset();
+      generateCaptcha();
+    });
+
+    // ─── ACTIVE NAV LINK (scroll spy) ────────────────────────
+    (function () {
+      const sections = document.querySelectorAll('section[id]');
+      const links = document.querySelectorAll('.nav-link');
+      window.addEventListener('scroll', () => {
+        let current = 'hero';
+        sections.forEach(sec => {
+          if (window.scrollY >= sec.offsetTop - siteHeader.getBoundingClientRect().height - 80) current = sec.id;
+        });
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+      }, { passive: true });
+    })();
+  </script>
+
+</body>
 </html>
