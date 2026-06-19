@@ -64,7 +64,7 @@
 
           <div class="nav-actions">
             <a href="tel:9433393977" class="nav-phone">+91 94333 93977</a>
-            <button class="btn btn-gold btn-sm" onclick="scrollTo('#contact')">Get a Quote</button>
+            <a href="#contact" class="btn btn-gold btn-sm">Get a Quote</a>
           </div>
 
           <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -103,10 +103,10 @@
               </p>
 
               <div class="hero-cta-row reveal" style="transition-delay:0.22s">
-                <button class="btn btn-gold btn-lg" onclick="scrollTo('#products')">
+                <a href="#products" class="btn btn-gold btn-lg">
                   <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
                   View Product Range
-                </button>
+                </a>
                 <a href="Product Catalogue - D. D. ENTERPRISE.pdf" download class="btn btn-glass btn-lg">
                   <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                   Download Catalogue
@@ -412,7 +412,7 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
 
           <div style="margin-top:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;" class="reveal">
             <p style="font-size:0.83rem; color:var(--text-2);">Also manufactured: Roof tiles, landscaping tiles and kerbstones &mdash; available on request.</p>
-            <button class="btn btn-glass" onclick="scrollTo('#contact')">Request Full Catalogue</button>
+            <a href="#contact" class="btn btn-glass">Request Full Catalogue</a>
           </div>
         </div>
       </section>
@@ -930,56 +930,11 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
       });
     });
 
-    // ─── SMOOTH SCROLL HELPER ─────────────────────────────────
-    function scrollTo(selector) {
-      try {
-        const header = document.getElementById('site-header');
-        const h = header ? header.getBoundingClientRect().height : 0;
-        
-        if (!selector || selector === '#hero') { 
-          window.scrollTo({ top: 0, behavior: 'smooth' }); 
-          return; 
-        }
-        
-        const el = document.querySelector(selector);
-        if (!el) return;
-        
-        const targetPosition = el.getBoundingClientRect().top + window.scrollY - h - 16;
-        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-      } catch (err) {
-        console.error('scrollTo failed, falling back:', err);
-        try {
-          const el = document.querySelector(selector);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        } catch (e) {
-          console.error('scrollIntoView fallback failed:', e);
-        }
-      }
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', e => {
-        const href = link.getAttribute('href');
-        if (!href || href === '#') return;
-        e.preventDefault();
-        scrollTo(href);
-        try {
-          history.replaceState(null, '', href);
-        } catch (err) {
-          console.warn('history.replaceState failed:', err);
-        }
-      });
-    });
-
     // ─── BACK TO TOP ──────────────────────────────────────────
     const btt = document.getElementById('back-to-top');
     window.addEventListener('scroll', () => btt.classList.toggle('show', window.scrollY > 400), { passive: true });
     btt.addEventListener('click', () => {
-      try {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } catch (err) {
-        document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     // ─── FOOTER YEAR ──────────────────────────────────────────
