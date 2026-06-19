@@ -932,11 +932,29 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
 
     // ─── SMOOTH SCROLL HELPER ─────────────────────────────────
     function scrollTo(selector) {
-      const h = siteHeader.getBoundingClientRect().height;
-      if (!selector || selector === '#hero') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-      const el = document.querySelector(selector);
-      if (!el) return;
-      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - h - 16, behavior: 'smooth' });
+      try {
+        const header = document.getElementById('site-header');
+        const h = header ? header.getBoundingClientRect().height : 0;
+        
+        if (!selector || selector === '#hero') { 
+          window.scrollTo({ top: 0, behavior: 'smooth' }); 
+          return; 
+        }
+        
+        const el = document.querySelector(selector);
+        if (!el) return;
+        
+        const targetPosition = el.getBoundingClientRect().top + window.scrollY - h - 16;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      } catch (err) {
+        console.error('scrollTo failed, falling back:', err);
+        try {
+          const el = document.querySelector(selector);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        } catch (e) {
+          console.error('scrollIntoView fallback failed:', e);
+        }
+      }
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -945,14 +963,24 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
         if (!href || href === '#') return;
         e.preventDefault();
         scrollTo(href);
-        history.replaceState(null, '', href);
+        try {
+          history.replaceState(null, '', href);
+        } catch (err) {
+          console.warn('history.replaceState failed:', err);
+        }
       });
     });
 
     // ─── BACK TO TOP ──────────────────────────────────────────
     const btt = document.getElementById('back-to-top');
     window.addEventListener('scroll', () => btt.classList.toggle('show', window.scrollY > 400), { passive: true });
-    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    btt.addEventListener('click', () => {
+      try {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) {
+        document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
 
     // ─── FOOTER YEAR ──────────────────────────────────────────
     document.getElementById('footerYear').textContent = new Date().getFullYear();
