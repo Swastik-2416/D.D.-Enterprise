@@ -1166,6 +1166,53 @@ textarea { min-height: 110px; resize: vertical; }
 }
 .form-note { font-size: 0.73rem; color: var(--text-3); max-width: 260px; }
 
+/* Area Calculator */
+.area-calc-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+.area-input-wrap,
+.area-result-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.area-input-wrap input,
+.area-result-wrap input {
+  width: 100%;
+}
+.area-result {
+  background: rgba(245,178,72,0.08) !important;
+  border-color: rgba(245,178,72,0.3) !important;
+  color: var(--gold) !important;
+  font-weight: 600;
+  cursor: default;
+}
+.area-eq {
+  font-size: 1.1rem;
+  color: var(--text-3);
+  font-weight: 600;
+  text-align: center;
+  padding: 0 0.1rem;
+  margin-bottom: 1.2rem;
+}
+.area-unit {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding-left: 0.15rem;
+}
+.area-hint {
+  font-size: 0.76rem;
+  color: var(--text-3);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
 .captcha-row { display: flex; align-items: center; gap: 0.75rem; }
 .captcha-box {
   background: linear-gradient(135deg, #efefef, #d4d4d4);
@@ -1438,6 +1485,8 @@ footer {
   .gallery-item.featured { grid-column: span 2; grid-row: span 1; aspect-ratio: 16/7; }
   .contact-grid { grid-template-columns: 1fr; }
   .find-us-strip { grid-template-columns: 1fr; }
+  .area-calc-grid { grid-template-columns: 1fr; }
+  .area-eq { display: none; }
   .find-us-info { border-right: none; border-bottom: 1px solid var(--border-0); }
   .find-us-map { min-height: 220px; }
   .footer-top { grid-template-columns: 1fr 1fr; }

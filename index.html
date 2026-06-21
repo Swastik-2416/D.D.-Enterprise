@@ -816,53 +816,87 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
                 tailored recommendation and quote.</p>
 
               <form id="quoteForm" class="form-stack">
+
+                <!-- Row 1: Name + Mobile -->
                 <div class="form-row-2">
                   <div class="form-group">
                     <label for="name">Full Name <span class="req">*</span></label>
                     <input id="name" type="text" placeholder="Your name" required>
                   </div>
                   <div class="form-group">
-                    <label for="company">Organisation</label>
-                    <input id="company" type="text" placeholder="Developer / Architect / Contractor">
+                    <label for="phone">Mobile Number <span class="req">*</span></label>
+                    <input id="phone" type="tel" placeholder="+91-XXXXXXXXXX" required>
                   </div>
                 </div>
 
+                <!-- Row 2: Email + Project Location -->
                 <div class="form-row-2">
                   <div class="form-group">
                     <label for="email">Email Address</label>
                     <input id="email" type="email" placeholder="you@company.com">
                   </div>
                   <div class="form-group">
-                    <label for="phone">Contact Number <span class="req">*</span></label>
-                    <input id="phone" type="tel" placeholder="+91-XXXXXXXXXX" required>
+                    <label for="city">Project Location <span class="req">*</span></label>
+                    <input id="city" type="text" placeholder="City, State" required>
                   </div>
                 </div>
 
+                <!-- Row 3: Paver Type + Thickness -->
                 <div class="form-row-2">
                   <div class="form-group">
-                    <label for="city">City / Project Location <span class="req">*</span></label>
-                    <input id="city" type="text" placeholder="City, State" required>
+                    <label for="paverType">Type of Paver / Chequered Tile <span class="req">*</span></label>
+                    <select id="paverType" required onchange="calcPieces()">
+                      <option value="" disabled selected>Select paver type…</option>
+                      <option value="2.88">Zig-Zag (2.88 pcs / sq.ft)</option>
+                      <option value="1.85">Fishbone (1.85 pcs / sq.ft)</option>
+                      <option value="1.85">Max / Brook (1.85 pcs / sq.ft)</option>
+                      <option value="4.5">Brick (4.5 pcs / sq.ft)</option>
+                      <option value="1.28">Domino (1.28 pcs / sq.ft)</option>
+                      <option value="4">Chequered Tile (4 pcs / sq.ft)</option>
+                    </select>
                   </div>
                   <div class="form-group">
-                    <label for="type">Project Type</label>
-                    <select id="type">
-                      <option>Residential Driveway / Villa</option>
-                      <option>Housing Society / Township</option>
-                      <option>Commercial / Mall / Hotel</option>
-                      <option>Industrial / Logistics / Port</option>
-                      <option>Institutional Campus</option>
-                      <option>Public Works / Govt. Project</option>
+                    <label for="thickness">Required Thickness <span class="req">*</span></label>
+                    <select id="thickness" required>
+                      <option value="" disabled selected>Select thickness…</option>
+                      <option value="40mm">40 MM</option>
+                      <option value="60mm">60 MM</option>
                     </select>
                   </div>
                 </div>
 
+                <!-- Row 4: Project Area + Required Pieces -->
                 <div class="form-group">
-                  <label for="message">Requirements &amp; Notes <span class="req">*</span></label>
-                  <textarea id="message"
-                    placeholder="Share approximate area (sq.ft), load type (pedestrian / vehicles / forklifts), preferred colours and project timeline."
-                    required></textarea>
+                  <label>Project Area &amp; Required Pieces</label>
+                  <div class="area-calc-grid">
+                    <div class="area-input-wrap">
+                      <input id="areaSqft" type="number" min="0" step="any" placeholder="Area in sq.ft"
+                        oninput="onSqftInput()">
+                      <span class="area-unit">sq.ft</span>
+                    </div>
+                    <span class="area-eq">=</span>
+                    <div class="area-input-wrap">
+                      <input id="areaSqmt" type="number" min="0" step="any" placeholder="Area in sq.mt"
+                        oninput="onSqmtInput()">
+                      <span class="area-unit">sq.mt</span>
+                    </div>
+                    <span class="area-eq">=</span>
+                    <div class="area-result-wrap">
+                      <input id="piecesResult" type="text" placeholder="— pcs" readonly class="area-result">
+                      <span class="area-unit">pcs (auto)</span>
+                    </div>
+                  </div>
+                  <p class="area-hint" id="areaHint">Select a paver type above to enable auto-calculation.</p>
                 </div>
 
+                <!-- Row 5: Note -->
+                <div class="form-group">
+                  <label for="message">Note</label>
+                  <textarea id="message"
+                    placeholder="Any additional requirements — preferred colours, project timeline, load type (pedestrian / vehicles / forklifts), etc."></textarea>
+                </div>
+
+                <!-- Row 6: Captcha -->
                 <div class="form-group">
                   <label for="captchaInput">Enter Verification Code <span class="req">*</span></label>
                   <div class="captcha-row">
@@ -887,6 +921,7 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
                 </div>
               </form>
             </div>
+
 
             <!-- Contact info aside -->
             <div class="contact-aside reveal-right">
@@ -976,8 +1011,7 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
         </div>
         <div class="footer-bottom">
           <span class="footer-copy">&copy; <span id="footerYear"></span> D.D. Enterprise. All Rights Reserved.</span>
-          <span class="footer-tagline">Paver Blocks &middot; Chequered Tiles &middot; Roof Tiles &middot; West
-            Bengal</span>
+          <span class="footer-tagline">Paver Blocks &middot; Chequered Tiles &middot; Roof Tiles</span>
         </div>
       </div>
     </footer>
@@ -1240,6 +1274,52 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
         if (e.key === 'ArrowRight') { goTo(idx + 1); stopAuto(); setTimeout(startAuto, 3000); }
       });
     })();
+
+    // ─── PIECE CALCULATOR ─────────────────────────────────────
+    const SQ_FT_PER_SQ_MT = 10.7639;
+
+    function calcPieces() {
+      const rate = parseFloat(document.getElementById('paverType').value);
+      const sqft = parseFloat(document.getElementById('areaSqft').value);
+      const hint = document.getElementById('areaHint');
+      const result = document.getElementById('piecesResult');
+
+      if (!rate) {
+        hint.textContent = 'Select a paver type above to enable auto-calculation.';
+        result.value = '';
+        return;
+      }
+      hint.textContent = '';
+
+      if (!isNaN(sqft) && sqft > 0) {
+        const pieces = Math.ceil(sqft * rate);
+        result.value = pieces.toLocaleString('en-IN') + ' pcs';
+      } else {
+        result.value = '';
+      }
+    }
+
+    function onSqftInput() {
+      const sqft = parseFloat(document.getElementById('areaSqft').value);
+      const sqmtEl = document.getElementById('areaSqmt');
+      if (!isNaN(sqft) && sqft > 0) {
+        sqmtEl.value = (sqft / SQ_FT_PER_SQ_MT).toFixed(2);
+      } else {
+        sqmtEl.value = '';
+      }
+      calcPieces();
+    }
+
+    function onSqmtInput() {
+      const sqmt = parseFloat(document.getElementById('areaSqmt').value);
+      const sqftEl = document.getElementById('areaSqft');
+      if (!isNaN(sqmt) && sqmt > 0) {
+        sqftEl.value = (sqmt * SQ_FT_PER_SQ_MT).toFixed(2);
+      } else {
+        sqftEl.value = '';
+      }
+      calcPieces();
+    }
 
     // ─── CAPTCHA ──────────────────────────────────────────────
     let currentCaptchaCode = '';
