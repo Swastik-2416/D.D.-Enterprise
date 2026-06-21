@@ -110,45 +110,80 @@
 
     // Helper: update auth UI
     async function updateAuthUI() {
-      if (supabase) {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-          authSection.style.display = 'none';
-          userSection.style.display = 'flex';
-          userEmailSpan.textContent = session.user.email;
-          loadSubmissions();
+      console.log('updateAuthUI called. Supabase client:', !!supabase);
+      try {
+        if (supabase) {
+          const { data, error } = await supabase.auth.getSession();
+          if (error) {
+            console.error('getSession error:', error);
+            document.getElementById('status').textContent = 'Session error: ' + error.message;
+            return;
+          }
+          const session = data?.session;
+          console.log('Session status:', session ? 'Logged in as ' + session.user.email : 'Not logged in');
+          if (session) {
+            authSection.style.display = 'none';
+            userSection.style.display = 'flex';
+            userEmailSpan.textContent = session.user.email;
+            loadSubmissions();
+          } else {
+            authSection.style.display = 'flex';
+            userSection.style.display = 'none';
+            document.getElementById('list').innerHTML = '<p style="color:#666;text-align:center;padding:2rem;">Please sign in to view submissions.</p>';
+            document.getElementById('status').textContent = '';
+          }
         } else {
-          authSection.style.display = 'flex';
-          userSection.style.display = 'none';
-          document.getElementById('list').innerHTML = '<p style="color:#666;text-align:center;padding:2rem;">Please sign in to view submissions.</p>';
-          document.getElementById('status').textContent = '';
+          authSection.innerHTML = '<input id="token" placeholder="Admin token" style="min-width:200px">';
+          document.getElementById('token').value = localStorage.getItem('dd_quotes_token') || '';
+          loadSubmissions();
         }
-      } else {
-        authSection.innerHTML = '<input id="token" placeholder="Admin token" style="min-width:200px">';
-        document.getElementById('token').value = localStorage.getItem('dd_quotes_token') || '';
-        loadSubmissions();
+      } catch (err) {
+        console.error('Exception in updateAuthUI:', err);
+        document.getElementById('status').textContent = 'Auth UI Exception: ' + err.message;
       }
     }
 
     if (supabase) {
       loginBtn.addEventListener('click', async () => {
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-        if (!email || !password) return alert('Please enter email and password');
-        
-        document.getElementById('status').textContent = 'Signing in...';
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) {
-          alert('Sign in failed: ' + error.message);
-          document.getElementById('status').textContent = 'Error: ' + error.message;
-        } else {
-          updateAuthUI();
+        try {
+          const email = emailInput.value.trim();
+          const password = passwordInput.value;
+          console.log('Sign in button clicked for:', email);
+          if (!email || !password) {
+            alert('Please enter email and password');
+            return;
+          }
+          
+          document.getElementById('status').textContent = 'Signing in...';
+          console.log('Calling signInWithPassword...');
+          const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+          
+          if (error) {
+            console.error('signInWithPassword error returned:', error);
+            alert('Sign in failed: ' + error.message);
+            document.getElementById('status').textContent = 'Error: ' + error.message;
+          } else {
+            console.log('signInWithPassword successful, session user:', data?.user?.email);
+            document.getElementById('status').textContent = 'Signed in successfully!';
+            await updateAuthUI();
+          }
+        } catch (err) {
+          console.error('Exception in sign in flow:', err);
+          alert('Sign in exception: ' + err.message);
+          document.getElementById('status').textContent = 'Exception: ' + err.message;
         }
       });
 
       logoutBtn.addEventListener('click', async () => {
-        await supabase.auth.signOut();
-        updateAuthUI();
+        try {
+          console.log('Sign out button clicked');
+          const { error } = await supabase.auth.signOut();
+          if (error) throw error;
+          await updateAuthUI();
+        } catch (err) {
+          console.error('Exception in sign out flow:', err);
+          alert('Sign out failed: ' + err.message);
+        }
       });
     }
 
