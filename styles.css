@@ -164,13 +164,20 @@ button { font-family: inherit; cursor: pointer; }
 
 .nav-phone {
   font-size: 0.82rem;
-  color: var(--text-2);
+  color: var(--gold);
   padding: 0.4rem 1rem;
   border-radius: 999px;
-  border: 1px solid var(--border-1);
-  transition: color 0.2s, border-color 0.2s;
+  border: 1px solid rgba(245,178,72,0.4);
+  background: rgba(245,178,72,0.05);
+  font-weight: 600;
+  transition: color 0.2s, border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
 }
-.nav-phone:hover { color: var(--gold); border-color: rgba(245,178,72,0.4); }
+.nav-phone:hover {
+  color: #0a0804;
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(245,178,72,0.25);
+}
 
 /* Mobile hamburger */
 .nav-toggle {
