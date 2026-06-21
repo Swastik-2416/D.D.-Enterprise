@@ -1506,6 +1506,12 @@ footer {
     padding-bottom: 0.75rem;
   }
   #site-header { height: auto; }
+  #site-header.menu-open,
+  #site-header:has(.nav.open) {
+    background: rgba(12, 16, 20, 0.92);
+    backdrop-filter: blur(24px) saturate(1.3);
+    box-shadow: 0 1px 0 var(--border-0), 0 20px 40px rgba(0,0,0,0.5);
+  }
   .nav-brand { margin-right: auto; }
   .nav.open .nav-links {
     display: flex;

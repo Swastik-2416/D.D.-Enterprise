@@ -1137,12 +1137,14 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
     navToggle.addEventListener('click', () => {
       const open = navEl.classList.toggle('open');
       navToggle.classList.toggle('open', open);
+      siteHeader.classList.toggle('menu-open', open);
     });
 
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         navEl.classList.remove('open');
         navToggle.classList.remove('open');
+        siteHeader.classList.remove('menu-open');
       });
     });
 
