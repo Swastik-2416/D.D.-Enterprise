@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <title>Admin — Submissions</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
@@ -56,17 +57,27 @@
       <div id="status" style="color:#a8c;font-size:0.9rem;"></div>
     </div>
 
-    <div class="controls" style="flex-wrap:wrap;">
-      <input id="token" placeholder="Admin token" style="min-width:200px">
+    <div class="controls" style="flex-wrap:wrap; gap: 0.75rem;">
+      <!-- Auth Section -->
+      <div id="authSection" style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+        <input id="email" type="email" placeholder="Admin email" style="background:#141b25; color:#fff; border:1px solid #333; min-width:180px;">
+        <input id="password" type="password" placeholder="Password" style="background:#141b25; color:#fff; border:1px solid #333; min-width:130px;">
+        <button id="loginBtn" style="background:#1e3a8a; color:#fff; border-color:#2563eb;">Sign In</button>
+      </div>
+      <div id="userSection" style="display:none; gap:0.5rem; align-items:center;">
+        <span id="userEmail" style="font-size:0.9rem; color:#a8c; font-weight:bold; margin-right:0.5rem;"></span>
+        <button id="logoutBtn" style="background:#7f1d1d; color:#fff; border-color:#dc2626;">Sign Out</button>
+      </div>
 
-      <select id="filterStatus">
+      <select id="filterStatus" style="background:#141b25; color:#fff; border:1px solid #333; padding:0.5rem;">
         <option value="all">All Status</option>
         <option value="unread">Unread Only</option>
       </select>
 
-      <select id="sortOrder">
+      <select id="sortOrder" style="background:#141b25; color:#fff; border:1px solid #333; padding:0.5rem;">
         <option value="newest">Newest First</option>
         <option value="oldest">Oldest First</option>
+        <option value="priority">Priority (High to Low)</option>
       </select>
 
       <button id="load">Load</button>
@@ -79,46 +90,137 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'dd_quotes_token'; // Store token not data
+    const supabaseUrl = 'https://diaojuumezzritqjifbb.supabase.co';
+    const supabaseKey = 'sb_publishable_y7k4oyOT4x3kFETDyBOndA_kxbkgdi3';
+    const supabase = window.supabase ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
 
-    // Restore token
-    document.getElementById('token').value = localStorage.getItem(STORAGE_KEY) || '';
-
-    let currentData = [];
-
+    const authSection = document.getElementById('authSection');
+    const userSection = document.getElementById('userSection');
+    const userEmailSpan = document.getElementById('userEmail');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
     const loadBtn = document.getElementById('load');
     const csvBtn = document.getElementById('csv');
     const filterSelect = document.getElementById('filterStatus');
     const sortSelect = document.getElementById('sortOrder');
 
+    let currentData = [];
+
+    // Helper: update auth UI
+    async function updateAuthUI() {
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          authSection.style.display = 'none';
+          userSection.style.display = 'flex';
+          userEmailSpan.textContent = session.user.email;
+          loadSubmissions();
+        } else {
+          authSection.style.display = 'flex';
+          userSection.style.display = 'none';
+          document.getElementById('list').innerHTML = '<p style="color:#666;text-align:center;padding:2rem;">Please sign in to view submissions.</p>';
+          document.getElementById('status').textContent = '';
+        }
+      } else {
+        authSection.innerHTML = '<input id="token" placeholder="Admin token" style="min-width:200px">';
+        document.getElementById('token').value = localStorage.getItem('dd_quotes_token') || '';
+        loadSubmissions();
+      }
+    }
+
+    if (supabase) {
+      loginBtn.addEventListener('click', async () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        if (!email || !password) return alert('Please enter email and password');
+        
+        document.getElementById('status').textContent = 'Signing in...';
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          alert('Sign in failed: ' + error.message);
+          document.getElementById('status').textContent = 'Error: ' + error.message;
+        } else {
+          updateAuthUI();
+        }
+      });
+
+      logoutBtn.addEventListener('click', async () => {
+        await supabase.auth.signOut();
+        updateAuthUI();
+      });
+    }
+
     async function loadSubmissions() {
-      const token = document.getElementById('token').value.trim();
       const filter = filterSelect.value;
       const sort = sortSelect.value;
 
-      if (!token) return alert('Please enter Admin Token');
-
-      localStorage.setItem(STORAGE_KEY, token);
       document.getElementById('status').textContent = 'Loading...';
 
-      try {
-        const query = new URLSearchParams({ sort, filter });
-        const res = await fetch(`/api/quotes?${query}`, {
-          headers: { Authorization: 'Bearer ' + token }
-        });
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return;
 
-        if (!res.ok) {
-          const detail = await res.json().catch(() => ({}));
-          throw new Error(detail.error || `Server returned ${res.status}`);
+        try {
+          let query = supabase.from('project_requests').select('*');
+          if (filter === 'unread') {
+            query = query.eq('is_read', false);
+          }
+          if (sort === 'oldest') {
+            query = query.order('submitted_at', { ascending: true });
+          } else {
+            query = query.order('submitted_at', { ascending: false });
+          }
+
+          const { data, error } = await query;
+          if (error) throw error;
+
+          let items = data || [];
+
+          if (sort === 'priority') {
+            const priorityWeight = { high: 3, medium: 2, low: 1 };
+            items.sort((a, b) => {
+              const weightA = priorityWeight[a.priority] || 2;
+              const weightB = priorityWeight[b.priority] || 2;
+              if (weightA !== weightB) return weightB - weightA;
+              return new Date(b.submitted_at) - new Date(a.submitted_at);
+            });
+          }
+
+          currentData = items;
+          render(items);
+          document.getElementById('status').textContent = `Loaded ${items.length} items`;
+        } catch (err) {
+          console.error(err);
+          document.getElementById('status').textContent = `Error: ${err.message}`;
         }
+      } else {
+        const tokenInput = document.getElementById('token');
+        const token = tokenInput ? tokenInput.value.trim() : '';
+        if (!token) {
+          document.getElementById('status').textContent = 'Please enter Admin token.';
+          return;
+        }
+        localStorage.setItem('dd_quotes_token', token);
 
-        const data = await res.json();
-        currentData = data;
-        render(data);
-        document.getElementById('status').textContent = `Loaded ${data.length} items`;
-      } catch (err) {
-        console.error(err);
-        document.getElementById('status').textContent = `Error: ${err.message}`;
+        try {
+          const query = new URLSearchParams({ sort, filter });
+          const res = await fetch(`/api/quotes?${query}`, {
+            headers: { Authorization: 'Bearer ' + token }
+          });
+          if (!res.ok) {
+            const detail = await res.json().catch(() => ({}));
+            throw new Error(detail.error || `Server returned ${res.status}`);
+          }
+          const data = await res.json();
+          currentData = data;
+          render(data);
+          document.getElementById('status').textContent = `Loaded ${data.length} items`;
+        } catch (err) {
+          console.error(err);
+          document.getElementById('status').textContent = `Error: ${err.message}`;
+        }
       }
     }
 
@@ -127,59 +229,114 @@
     sortSelect.addEventListener('change', loadSubmissions);
 
     async function toggleRead(id, currentStatus) {
-      const token = document.getElementById('token').value.trim();
-      if (!token) return;
-
       const newStatus = !currentStatus;
-      try {
-        const res = await fetch(`/api/quotes/${id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          },
-          body: JSON.stringify({ is_read: newStatus })
-        });
-        if (res.ok) {
-          // update local data to reflect change immediately without reload
+      if (supabase) {
+        try {
+          const { error } = await supabase
+            .from('project_requests')
+            .update({ is_read: newStatus })
+            .eq('id', id);
+          if (error) throw error;
+
           const item = currentData.find(i => i.id === id);
-          if (item) item.is_read = newStatus ? 1 : 0;
+          if (item) item.is_read = newStatus;
           render(currentData);
+        } catch (err) {
+          console.error('Failed to toggle status', err);
+          alert('Update failed: ' + err.message);
         }
-      } catch (err) {
-        console.error('Failed to toggle status', err);
+      } else {
+        const token = localStorage.getItem('dd_quotes_token') || '';
+        try {
+          const res = await fetch(`/api/quotes/${id}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({ is_read: newStatus })
+          });
+          if (res.ok) {
+            const item = currentData.find(i => i.id === id);
+            if (item) item.is_read = newStatus ? 1 : 0;
+            render(currentData);
+          }
+        } catch (err) {
+          console.error('Failed to toggle status', err);
+        }
       }
     }
+
+    async function updatePriority(id, newPriority) {
+      if (supabase) {
+        try {
+          const { error } = await supabase
+            .from('project_requests')
+            .update({ priority: newPriority })
+            .eq('id', id);
+          if (error) throw error;
+
+          const item = currentData.find(i => i.id === id);
+          if (item) item.priority = newPriority;
+
+          if (sortSelect.value === 'priority') {
+            loadSubmissions();
+          } else {
+            render(currentData);
+          }
+        } catch (err) {
+          console.error('Failed to update priority', err);
+          alert('Update failed: ' + err.message);
+        }
+      }
+    }
+
     async function deleteSelected() {
       const selected = Array.from(document.querySelectorAll('.row-select:checked')).map(el => parseInt(el.dataset.id));
       if (selected.length === 0) return;
 
       if (!confirm(`Are you sure you want to delete ${selected.length} items? This cannot be undone.`)) return;
 
-      const token = document.getElementById('token').value.trim();
       const statusIndicator = document.getElementById('status');
       statusIndicator.textContent = 'Deleting...';
 
-      try {
-        const res = await fetch('/api/quotes', {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          },
-          body: JSON.stringify({ ids: selected })
-        });
+      if (supabase) {
+        try {
+          const { error } = await supabase
+            .from('project_requests')
+            .delete()
+            .in('id', selected);
+          if (error) throw error;
 
-        if (res.ok) {
           statusIndicator.textContent = `Deleted ${selected.length} items.`;
           loadSubmissions();
-        } else {
-          const detail = await res.json().catch(() => ({}));
-          throw new Error(detail.error || 'Delete failed');
+        } catch (err) {
+          console.error(err);
+          statusIndicator.textContent = `Error: ${err.message}`;
+          alert('Delete failed: ' + err.message);
         }
-      } catch (err) {
-        console.error(err);
-        statusIndicator.textContent = `Error: ${err.message}`;
+      } else {
+        const token = localStorage.getItem('dd_quotes_token') || '';
+        try {
+          const res = await fetch('/api/quotes', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({ ids: selected })
+          });
+          if (res.ok) {
+            statusIndicator.textContent = `Deleted ${selected.length} items.`;
+            loadSubmissions();
+          } else {
+            const detail = await res.json().catch(() => ({}));
+            throw new Error(detail.error || 'Delete failed');
+          }
+        } catch (err) {
+          console.error(err);
+          statusIndicator.textContent = `Error: ${err.message}`;
+        }
       }
     }
 
@@ -204,8 +361,18 @@
       }
 
       const rows = items.map(it => {
-        const isRead = it.is_read === 1;
+        const isRead = it.is_read === true || it.is_read === 1;
         const style = isRead ? 'background:transparent;opacity:0.7;' : 'background:rgba(58,209,195,0.05);font-weight:bold;';
+
+        const prioritySelect = supabase ? `
+          <td>
+            <select class="priority-select" onchange="updatePriority(${it.id}, this.value)" style="padding:0.2rem; background:#141b25; color:#fff; border-radius:4px; font-size:0.85rem; border:1px solid #444; cursor:pointer;">
+              <option value="high" ${it.priority === 'high' ? 'selected' : ''}>🔴 High</option>
+              <option value="medium" ${it.priority === 'medium' || !it.priority ? 'selected' : ''}>🟡 Medium</option>
+              <option value="low" ${it.priority === 'low' ? 'selected' : ''}>🟢 Low</option>
+            </select>
+          </td>
+        ` : '<td>—</td>';
 
         return `
         <tr style="${style}">
@@ -218,6 +385,7 @@
           <td>${escape(it.email)}</td>
           <td>${escape(it.city)}</td>
           <td>${escape(it.type)}</td>
+          ${prioritySelect}
           <td style="min-width:200px;font-weight:normal;">${escape(it.message)}</td>
           <td style="white-space:nowrap;font-size:0.8rem;color:#889;">${new Date(it.submitted_at).toLocaleString()}</td>
         </tr>`;
@@ -229,29 +397,23 @@
             <tr style="border-bottom:2px solid #333;text-align:left;color:#889;">
               <th style="width:30px"><input type="checkbox" onclick="toggleSelectAll(this)"></th>
               <th style="width:30px">✓</th>
-              <th>Name</th><th>Phone</th><th>Email</th><th>City</th><th>Type</th><th>Message</th><th>Time</th>
+              <th>Name</th><th>Phone</th><th>Email</th><th>City</th><th>Type</th><th>Priority</th><th>Message</th><th>Time</th>
             </tr>
           </thead>
           <tbody>${rows}</tbody>
         </table>`;
     }
 
-    // Make toggleRead global so it can be called from onclick
-    window.toggleRead = toggleRead;
-
-    function escape(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-
+    // Export CSV
     csvBtn.addEventListener('click', () => {
       if (!currentData || currentData.length === 0) return alert('No data to export');
 
-      // CSV Headers
-      const keys = ['id', 'name', 'company', 'email', 'phone', 'city', 'type', 'message', 'submitted_at', 'is_read'];
+      const keys = ['id', 'name', 'company', 'email', 'phone', 'city', 'type', 'priority', 'message', 'submitted_at', 'is_read'];
 
       const csvContent = [
         keys.join(','),
         ...currentData.map(row => keys.map(k => {
           let val = row[k] === null || row[k] === undefined ? '' : String(row[k]);
-          // Escape quotes and wrap in quotes
           val = val.replace(/"/g, '""');
           return `"${val}"`;
         }).join(','))
@@ -267,5 +429,16 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     });
+
+    window.toggleRead = toggleRead;
+    window.updatePriority = updatePriority;
+    window.deleteSelected = deleteSelected;
+    window.toggleSelectAll = toggleSelectAll;
+    window.updateDeleteBtn = updateDeleteBtn;
+
+    function escape(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+    // Start App
+    updateAuthUI();
   </script>
 </body>

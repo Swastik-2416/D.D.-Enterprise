@@ -3,15 +3,15 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>D.D. ENTERPRISE | Premium Paver Blocks &amp; Landscape Solutions</title>
+  <title>D. D. ENTERPRISE | Premium Paver Blocks &amp; Landscape Solutions</title>
   <meta name="description"
-    content="D.D. Enterprise — West Bengal's leading manufacturer of premium interlocking paver blocks, chequered tiles, and roof tiles. Trusted by architects, developers, and infrastructure teams." />
+    content="D. D. ENTERPRISE — West Bengal's leading manufacturer of premium interlocking paver blocks, chequered tiles, and roof tiles. Trusted by architects, developers, and infrastructure teams." />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="keywords"
-    content="paver blocks, interlocking paver, chequered tiles, roof tiles, West Bengal, D.D. Enterprise, precast concrete" />
+    content="paver blocks, interlocking paver, chequered tiles, roof tiles, West Bengal, D. D. ENTERPRISE, precast concrete" />
 
   <!-- Social Media & WhatsApp Preview Tags (Open Graph) -->
-  <meta property="og:title" content="D.D. ENTERPRISE | Premium Paver Blocks" />
+  <meta property="og:title" content="D. D. ENTERPRISE | Premium Paver Blocks" />
   <meta property="og:description"
     content="West Bengal's leading manufacturer of premium interlocking paver blocks, chequered tiles, and roof tiles." />
   <meta property="og:image" content="https://www.ddenterprisepaverblock.co.in/Assets/_DSC0010.png" />
@@ -28,7 +28,7 @@
   {
     "@context" : "https://schema.org",
     "@type" : "WebSite",
-    "name" : "D.D. Enterprise",
+    "name" : "D. D. ENTERPRISE",
     "alternateName": ["DD ENTERPRISE", "D. D. ENTERPRISE"],
     "url" : "https://www.ddenterprisepaverblock.co.in/"
   }
@@ -53,7 +53,7 @@
             </div>
             <div>
               <div class="brand-name">D. D. ENTERPRISE</div>
-              <div class="brand-sub">Paver Blocks &middot; Tiles</div>
+              <div class="brand-sub">Paver Block &middot; Chequered Tile &middot; Roof Tile</div>
             </div>
           </div>
 
@@ -475,7 +475,7 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
               <h2 class="section-heading">Built with Precision.<br><span class="grad">Delivered on Time.</span></h2>
 
               <p class="about-body-text">
-                Established in 2010, D.D. Enterprise is a dedicated manufacturer of premium precast concrete products in
+                Established in 2010, D.D. ENTERPRISE is a dedicated manufacturer of premium precast concrete products in
                 West Bengal.
                 We supply high-grade interlocking paver blocks, chequered tiles, and roof tiles to builders, architects,
                 and
@@ -1009,7 +1009,7 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
           </div>
         </div>
         <div class="footer-bottom">
-          <span class="footer-copy">&copy; <span id="footerYear"></span> D.D. Enterprise. All Rights Reserved.</span>
+          <span class="footer-copy">&copy; <span id="footerYear"></span> D.D. ENTERPRISE. All Rights Reserved.</span>
           <span class="footer-tagline">Paver Blocks &middot; Chequered Tiles &middot; Roof Tiles</span>
         </div>
       </div>
@@ -1058,7 +1058,13 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
   </div><!-- end .page-wrapper -->
 
   <!-- ═══════════════════════ SCRIPTS ═══════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    // Initialize Supabase Client
+    const supabaseUrl = 'https://diaojuumezzritqjifbb.supabase.co';
+    const supabaseKey = 'sb_publishable_y7k4oyOT4x3kFETDyBOndA_kxbkgdi3';
+    const supabase = window.supabase ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
+
     // ─── CONCRETE AGGREGATE BACKGROUND ───────────────────────
     // Warm stone dots + technical grid — manufacturing/material feel
     (function () {
@@ -1456,12 +1462,36 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
         localStorage.setItem('dd_quotes', JSON.stringify(existing));
       } catch (_) { }
 
-      try {
-        const res = await fetch('/api/quotes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-        if (!res.ok) throw new Error();
-        alert('Enquiry submitted. Our team will contact you shortly.');
-      } catch (_) {
-        alert('Your enquiry has been recorded. We will contact you shortly.');
+      if (supabase) {
+        try {
+          const { error } = await supabase
+            .from('project_requests')
+            .insert([
+              {
+                name: payload.name,
+                company: payload.company,
+                email: payload.email || null,
+                phone: payload.phone,
+                city: payload.city || null,
+                type: payload.type || null,
+                message: payload.message || null
+              }
+            ]);
+          if (error) throw error;
+          alert('Enquiry submitted. Our team will contact you shortly.');
+        } catch (err) {
+          console.error('Supabase error:', err);
+          alert('Failed to submit enquiry. Please try again.');
+          return;
+        }
+      } else {
+        try {
+          const res = await fetch('/api/quotes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          if (!res.ok) throw new Error();
+          alert('Enquiry submitted. Our team will contact you shortly.');
+        } catch (_) {
+          alert('Your enquiry has been recorded. We will contact you shortly.');
+        }
       }
 
       this.reset();
