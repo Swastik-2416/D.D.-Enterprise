@@ -90,9 +90,9 @@
   </div>
 
   <script>
-    const supabaseUrl = 'https://diaojuumezzritqjifbb.supabase.co';
-    const supabaseKey = 'sb_publishable_y7k4oyOT4x3kFETDyBOndA_kxbkgdi3';
-    const supabase = window.supabase ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
+    const _supabaseUrl = 'https://diaojuumezzritqjifbb.supabase.co';
+    const _supabaseKey = 'sb_publishable_y7k4oyOT4x3kFETDyBOndA_kxbkgdi3';
+    const supabase = (window.supabase && window.supabase.createClient) ? window.supabase.createClient(_supabaseUrl, _supabaseKey) : null;
 
     const authSection = document.getElementById('authSection');
     const userSection = document.getElementById('userSection');

@@ -1061,9 +1061,9 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     // Initialize Supabase Client
-    const supabaseUrl = 'https://diaojuumezzritqjifbb.supabase.co';
-    const supabaseKey = 'sb_publishable_y7k4oyOT4x3kFETDyBOndA_kxbkgdi3';
-    const supabase = window.supabase ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
+    const _supabaseUrl = 'https://diaojuumezzritqjifbb.supabase.co';
+    const _supabaseKey = 'sb_publishable_y7k4oyOT4x3kFETDyBOndA_kxbkgdi3';
+    const dbClient = (window.supabase && window.supabase.createClient) ? window.supabase.createClient(_supabaseUrl, _supabaseKey) : null;
 
     // ─── CONCRETE AGGREGATE BACKGROUND ───────────────────────
     // Warm stone dots + technical grid — manufacturing/material feel
@@ -1462,9 +1462,9 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
         localStorage.setItem('dd_quotes', JSON.stringify(existing));
       } catch (_) { }
 
-      if (supabase) {
+      if (dbClient) {
         try {
-          const { error } = await supabase
+          const { error } = await dbClient
             .from('project_requests')
             .insert([
               {
