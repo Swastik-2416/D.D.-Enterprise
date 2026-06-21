@@ -305,6 +305,7 @@ button { font-family: inherit; cursor: pointer; }
 /* === SECTIONS & REVEAL ANIMATIONS ======================= */
 section { padding: 6rem 0; }
 section[id] { scroll-margin-top: calc(var(--nav-h) - 4rem); }
+#request-callback { scroll-margin-top: calc(var(--nav-h) + 2rem); }
 
 .reveal {
   opacity: 0;

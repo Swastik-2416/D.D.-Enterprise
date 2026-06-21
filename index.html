@@ -85,7 +85,7 @@
                 </a>
               </div>
             </div>
-            <a href="#contact" class="btn btn-gold btn-sm">Get a Quote</a>
+            <a href="#request-callback" class="btn btn-gold btn-sm">Get a Quote</a>
           </div>
 
           <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -808,7 +808,7 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
           <div class="contact-grid">
 
             <!-- Quote form -->
-            <div class="contact-form-card reveal-left">
+            <div id="request-callback" class="contact-form-card reveal-left">
               <h3>Request a Callback</h3>
               <p class="contact-intro">Fill in the form and our team will get back to you within 24 hours with a
                 tailored recommendation and quote.</p>
@@ -1048,7 +1048,7 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
         <div class="modal-footer">
           <span class="modal-footer-text" id="modalFooterText"></span>
           <button class="btn btn-gold"
-            onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'}); document.getElementById('productModal').classList.remove('open');">
+            onclick="document.getElementById('request-callback').scrollIntoView({behavior:'smooth', block:'center'}); document.getElementById('productModal').classList.remove('open');">
             Get a Quote
           </button>
         </div>
