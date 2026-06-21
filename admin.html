@@ -92,7 +92,7 @@
   <script>
     const _supabaseUrl = 'https://diaojuumezzritqjifbb.supabase.co';
     const _supabaseKey = 'sb_publishable_y7k4oyOT4x3kFETDyBOndA_kxbkgdi3';
-    const supabase = (window.supabase && window.supabase.createClient) ? window.supabase.createClient(_supabaseUrl, _supabaseKey) : null;
+    const supabaseClient = (window.supabase && window.supabase.createClient) ? window.supabase.createClient(_supabaseUrl, _supabaseKey) : null;
 
     const authSection = document.getElementById('authSection');
     const userSection = document.getElementById('userSection');
@@ -110,10 +110,10 @@
 
     // Helper: update auth UI
     async function updateAuthUI() {
-      console.log('updateAuthUI called. Supabase client:', !!supabase);
+      console.log('updateAuthUI called. Supabase client:', !!supabaseClient);
       try {
-        if (supabase) {
-          const { data, error } = await supabase.auth.getSession();
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient.auth.getSession();
           if (error) {
             console.error('getSession error:', error);
             document.getElementById('status').textContent = 'Session error: ' + error.message;
@@ -143,7 +143,7 @@
       }
     }
 
-    if (supabase) {
+    if (supabaseClient) {
       loginBtn.addEventListener('click', async () => {
         try {
           const email = emailInput.value.trim();
@@ -156,7 +156,7 @@
           
           document.getElementById('status').textContent = 'Signing in...';
           console.log('Calling signInWithPassword...');
-          const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+          const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
           
           if (error) {
             console.error('signInWithPassword error returned:', error);
@@ -177,7 +177,7 @@
       logoutBtn.addEventListener('click', async () => {
         try {
           console.log('Sign out button clicked');
-          const { error } = await supabase.auth.signOut();
+          const { error } = await supabaseClient.auth.signOut();
           if (error) throw error;
           await updateAuthUI();
         } catch (err) {
@@ -193,12 +193,12 @@
 
       document.getElementById('status').textContent = 'Loading...';
 
-      if (supabase) {
-        const { data: { session } } = await supabase.auth.getSession();
+      if (supabaseClient) {
+        const { data: { session } } = await supabaseClient.auth.getSession();
         if (!session) return;
 
         try {
-          let query = supabase.from('project_requests').select('*');
+          let query = supabaseClient.from('project_requests').select('*');
           if (filter === 'unread') {
             query = query.eq('is_read', false);
           }
@@ -265,9 +265,9 @@
 
     async function toggleRead(id, currentStatus) {
       const newStatus = !currentStatus;
-      if (supabase) {
+      if (supabaseClient) {
         try {
-          const { error } = await supabase
+          const { error } = await supabaseClient
             .from('project_requests')
             .update({ is_read: newStatus })
             .eq('id', id);
@@ -303,9 +303,9 @@
     }
 
     async function updatePriority(id, newPriority) {
-      if (supabase) {
+      if (supabaseClient) {
         try {
-          const { error } = await supabase
+          const { error } = await supabaseClient
             .from('project_requests')
             .update({ priority: newPriority })
             .eq('id', id);
@@ -335,9 +335,9 @@
       const statusIndicator = document.getElementById('status');
       statusIndicator.textContent = 'Deleting...';
 
-      if (supabase) {
+      if (supabaseClient) {
         try {
-          const { error } = await supabase
+          const { error } = await supabaseClient
             .from('project_requests')
             .delete()
             .in('id', selected);
@@ -399,7 +399,7 @@
         const isRead = it.is_read === true || it.is_read === 1;
         const style = isRead ? 'background:transparent;opacity:0.7;' : 'background:rgba(58,209,195,0.05);font-weight:bold;';
 
-        const prioritySelect = supabase ? `
+        const prioritySelect = supabaseClient ? `
           <td>
             <select class="priority-select" onchange="updatePriority(${it.id}, this.value)" style="padding:0.2rem; background:#141b25; color:#fff; border-radius:4px; font-size:0.85rem; border:1px solid #444; cursor:pointer;">
               <option value="high" ${it.priority === 'high' ? 'selected' : ''}>🔴 High</option>
