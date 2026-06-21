@@ -1143,10 +1143,13 @@ input, select, textarea {
 input::placeholder, textarea::placeholder { color: var(--text-3); }
 input:focus, select:focus, textarea:focus {
   border-color: rgba(245,178,72,0.48);
-  background: rgba(245,178,72,0.04);
+  background-color: rgba(245,178,72,0.04);
   box-shadow: 0 0 0 3px rgba(245,178,72,0.1);
 }
 select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a94a6' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;

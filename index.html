@@ -844,9 +844,9 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
                 <!-- Row 3: Paver Type + Thickness -->
                 <div class="form-row-2">
                   <div class="form-group">
-                    <label for="paverType">Type of Paver / Chequered Tile <span class="req">*</span></label>
-                    <select id="paverType" required onchange="calcPieces()">
-                      <option value="" disabled selected>Select paver type…</option>
+                    <label for="paverType">Type of Paver / Chequered Tile</label>
+                    <select id="paverType" onchange="calcPieces()">
+                      <option value="" selected>Select paver type…</option>
                       <option value="2.88">Zig-Zag (2.88 pcs / sq.ft)</option>
                       <option value="1.85">Fishbone (1.85 pcs / sq.ft)</option>
                       <option value="1.85">Max / Brook (1.85 pcs / sq.ft)</option>
@@ -856,9 +856,9 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="thickness">Required Thickness <span class="req">*</span></label>
-                    <select id="thickness" required>
-                      <option value="" disabled selected>Select thickness…</option>
+                    <label for="thickness">Required Thickness</label>
+                    <select id="thickness">
+                      <option value="" selected>Select thickness…</option>
                       <option value="40mm">40 MM</option>
                       <option value="60mm">60 MM</option>
                     </select>
@@ -1402,14 +1402,50 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
       const actual = currentCaptchaCode.toUpperCase();
       if (entered !== actual) { alert('Incorrect verification code. Please try again.'); generateCaptcha(); return; }
 
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const city = document.getElementById('city').value.trim();
+
+      const paverTypeEl = document.getElementById('paverType');
+      const thicknessEl = document.getElementById('thickness');
+      const areaSqftVal = document.getElementById('areaSqft').value.trim();
+      const areaSqmtVal = document.getElementById('areaSqmt').value.trim();
+      const piecesVal = document.getElementById('piecesResult').value.trim();
+
+      // Build type description
+      let typeDesc = '';
+      if (paverTypeEl && paverTypeEl.value) {
+        typeDesc = paverTypeEl.options[paverTypeEl.selectedIndex].text;
+      } else {
+        typeDesc = 'General Paver Enquiry';
+      }
+      if (thicknessEl && thicknessEl.value) {
+        const thicknessText = thicknessEl.options[thicknessEl.selectedIndex].text;
+        typeDesc += ` [Thickness: ${thicknessText}]`;
+      }
+
+      // Build message note
+      let noteMessage = document.getElementById('message').value.trim();
+      if (!noteMessage) {
+        noteMessage = 'No additional notes provided.';
+      }
+
+      // Append calculated values if any
+      if (areaSqftVal || piecesVal) {
+        noteMessage += '\n\n---\nCalculator Data:';
+        if (areaSqftVal) noteMessage += `\nArea: ${areaSqftVal} sq.ft (${areaSqmtVal} sq.mt)`;
+        if (piecesVal) noteMessage += `\nEstimated Pieces: ${piecesVal}`;
+      }
+
       const payload = {
-        name: document.getElementById('name').value.trim(),
-        company: document.getElementById('company').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        city: document.getElementById('city').value.trim(),
-        type: document.getElementById('type').value,
-        message: document.getElementById('message').value.trim(),
+        name,
+        company: '',
+        email,
+        phone,
+        city,
+        type: typeDesc,
+        message: noteMessage,
         submittedAt: new Date().toISOString()
       };
 
@@ -1428,6 +1464,7 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
       }
 
       this.reset();
+      calcPieces();
       generateCaptcha();
     });
 

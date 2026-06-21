@@ -80,8 +80,8 @@ const db = require('./database');
 app.post('/api/quotes', async (req, res) => {
   const payload = req.body || {};
   // basic validation
-  if (!payload.name || !payload.phone || !payload.message) {
-    return res.status(400).json({ error: 'Missing required fields: name, phone, message' });
+  if (!payload.name || !payload.phone) {
+    return res.status(400).json({ error: 'Missing required fields: name, phone' });
   }
 
   // IP Rate Limiting: Max 10 per IP
