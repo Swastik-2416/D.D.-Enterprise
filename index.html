@@ -1469,7 +1469,6 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
             .insert([
               {
                 name: payload.name,
-                company: payload.company,
                 email: payload.email || null,
                 phone: payload.phone,
                 city: payload.city || null,
@@ -1481,7 +1480,8 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
           alert('Enquiry submitted. Our team will contact you shortly.');
         } catch (err) {
           console.error('Supabase error:', err);
-          alert('Failed to submit enquiry. Please try again.');
+          const errMsg = err?.message || err?.error_description || JSON.stringify(err);
+          alert('Failed to submit enquiry: ' + errMsg + '\n\nPlease contact us directly on WhatsApp.');
           return;
         }
       } else {
