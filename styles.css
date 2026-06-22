@@ -386,8 +386,8 @@ section[id] { scroll-margin-top: calc(var(--nav-h) - 4rem); }
 
 /* === HERO ================================================ */
 .hero {
-  padding-top: calc(var(--nav-h) + 4rem);
-  padding-bottom: 5rem;
+  padding-top: calc(var(--nav-h) + 1.5rem);
+  padding-bottom: 4.5rem;
   position: relative;
   overflow: hidden;
 }
@@ -1537,7 +1537,7 @@ footer {
 
 @media (max-width: 640px) {
   section { padding: 4rem 0; }
-  .hero { padding-top: calc(var(--nav-h) + 2rem); padding-bottom: 3rem; }
+  .hero { padding-top: calc(var(--nav-h) + 1rem); padding-bottom: 2.5rem; }
   .about-feature-list { grid-template-columns: 1fr; }
   .sectors-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: 1fr; }
