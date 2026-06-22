@@ -460,6 +460,13 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
             </div><!-- end .products-grid -->
           </div>
 
+          <!-- Custom horizontal navigation slider for desktop -->
+          <div class="products-slider-container reveal" style="transition-delay:0.15s">
+            <div class="products-slider-track" id="productsSliderTrack">
+              <div class="products-slider-thumb" id="productsSliderThumb"></div>
+            </div>
+          </div>
+
 
         </div>
       </section>
@@ -1188,22 +1195,129 @@ All patterns available in Red, Yellow, and Grey with colour-fast pigments."
 
     document.querySelectorAll('.hero, .stats-card').forEach(el => countObs.observe(el));
 
-    // ─── PRODUCTS DRAG SCROLL ─────────────────────────────────
+    // ─── PRODUCTS DRAG SCROLL & SLIDER ────────────────────────
     (function () {
       const grid = document.getElementById('productsGrid');
-      let isDown = false, startX, scrollLeft;
+      const track = document.getElementById('productsSliderTrack');
+      const thumb = document.getElementById('productsSliderThumb');
+      if (!grid || !track || !thumb) return;
+      const sliderContainer = track.parentElement;
 
-      grid.addEventListener('mousedown', e => { isDown = true; grid.classList.add('grabbing'); startX = e.pageX - grid.offsetLeft; scrollLeft = grid.scrollLeft; });
-      document.addEventListener('mouseup', () => { isDown = false; grid.classList.remove('grabbing'); });
-      grid.addEventListener('mouseleave', () => { isDown = false; grid.classList.remove('grabbing'); });
+      let isDown = false, startX, scrollLeft;
+      let isSliderDragging = false, sliderStartX, sliderStartLeft;
+
+      // Mouse drag scroll on the grid itself
+      grid.addEventListener('mousedown', e => { 
+        isDown = true; 
+        grid.classList.add('grabbing'); 
+        startX = e.pageX - grid.offsetLeft; 
+        scrollLeft = grid.scrollLeft; 
+      });
+      document.addEventListener('mouseup', () => { 
+        isDown = false; 
+        grid.classList.remove('grabbing'); 
+      });
+      grid.addEventListener('mouseleave', () => { 
+        isDown = false; 
+        grid.classList.remove('grabbing'); 
+      });
       grid.addEventListener('mousemove', e => {
         if (!isDown) return;
         e.preventDefault();
         grid.scrollLeft = scrollLeft - (e.pageX - grid.offsetLeft - startX) * 1.5;
       });
       grid.addEventListener('wheel', e => {
-        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.preventDefault(); grid.scrollLeft += e.deltaY; }
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { 
+          e.preventDefault(); 
+          grid.scrollLeft += e.deltaY; 
+        }
       }, { passive: false });
+
+      // Update Slider Thumb position and size
+      function updateSlider() {
+        const scrollWidth = grid.scrollWidth;
+        const clientWidth = grid.clientWidth;
+        
+        if (scrollWidth <= clientWidth) {
+          sliderContainer.style.display = 'none';
+          return;
+        } else {
+          sliderContainer.style.display = window.innerWidth > 960 ? 'flex' : 'none';
+        }
+
+        const maxScroll = scrollWidth - clientWidth;
+        const scrollPct = Math.min(Math.max(grid.scrollLeft / maxScroll, 0), 1);
+        
+        const trackWidth = track.clientWidth;
+        const thumbWidth = Math.max((clientWidth / scrollWidth) * trackWidth, 36); // minimum width 36px
+        thumb.style.width = thumbWidth + 'px';
+        
+        const maxThumbLeft = trackWidth - thumbWidth;
+        thumb.style.left = (scrollPct * maxThumbLeft) + 'px';
+      }
+
+      // Run on scroll and resize
+      grid.addEventListener('scroll', updateSlider);
+      window.addEventListener('resize', updateSlider);
+      window.addEventListener('load', updateSlider);
+      
+      // Initialize
+      setTimeout(updateSlider, 400);
+
+      // Drag Slider Thumb
+      thumb.addEventListener('mousedown', e => {
+        isSliderDragging = true;
+        thumb.style.transition = 'none'; // disable transitions while dragging
+        sliderStartX = e.pageX;
+        sliderStartLeft = parseFloat(thumb.style.left) || 0;
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', e => {
+        if (!isSliderDragging) return;
+        
+        const deltaX = e.pageX - sliderStartX;
+        const trackWidth = track.clientWidth;
+        const thumbWidth = thumb.clientWidth;
+        const maxThumbLeft = trackWidth - thumbWidth;
+        
+        let newLeft = sliderStartLeft + deltaX;
+        newLeft = Math.min(Math.max(newLeft, 0), maxThumbLeft);
+        
+        thumb.style.left = newLeft + 'px';
+        
+        // Scroll the grid accordingly
+        const scrollPct = newLeft / maxThumbLeft;
+        const maxScroll = grid.scrollWidth - grid.clientWidth;
+        grid.scrollLeft = scrollPct * maxScroll;
+      });
+
+      document.addEventListener('mouseup', () => {
+        if (isSliderDragging) {
+          isSliderDragging = false;
+          thumb.style.transition = ''; // restore transitions
+        }
+      });
+
+      // Click on track to scroll to that position
+      track.addEventListener('mousedown', e => {
+        if (e.target === thumb) return; // ignore clicks on thumb itself
+        const rect = track.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const thumbWidth = thumb.clientWidth;
+        
+        let targetLeft = clickX - thumbWidth / 2;
+        const maxThumbLeft = track.clientWidth - thumbWidth;
+        targetLeft = Math.min(Math.max(targetLeft, 0), maxThumbLeft);
+        
+        const scrollPct = targetLeft / maxThumbLeft;
+        const maxScroll = grid.scrollWidth - grid.clientWidth;
+        
+        grid.scrollTo({
+          left: scrollPct * maxScroll,
+          behavior: 'smooth'
+        });
+      });
     })();
 
     // ─── PRODUCT MODAL ────────────────────────────────────────
