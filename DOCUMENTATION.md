@@ -1,94 +1,137 @@
-# Full Project Documentation — Paver Project
+# Full Project Documentation — D.D. Enterprise
 
-This document provides a file-by-file explanation of the repository and how each file works together.
+This document provides a detailed, technical explanation of the architecture, database schemas, frontend pages, and integration flows of the D.D. Enterprise web application.
 
-## Overview
+---
 
-A Node.js server with a MySQL database backend for handling quote submissions. It includes a submission API and an admin UI to fetch, filter, and sort submissions. The server persists data to a MySQL database and can optionally send notifications via SMTP when environment variables are configured.
+## 1. System Architecture
 
-## Files
+The D.D. Enterprise website uses a dual-path architecture designed to run as a serverless static site in production (backed by Supabase), while maintaining a local Node.js + MySQL stack for local development and fallback capability.
 
-**Root files**
+```
+                  ┌─────────────────────────────────────┐
+                  │          Client Browser             │
+                  └──────────────┬──────────────┬───────┘
+                                 │              │
+                    (Primary Path)              │ (Fallback Path)
+                                 ▼              ▼
+                    ┌─────────────────┐    ┌─────────────────┐
+                    │    Supabase     │    │   Local Node    │
+                    │  Cloud Backend  │    │  Express Server │
+                    └────────┬────────┘    └────────┬────────┘
+                             │                      │
+                             ▼                      ▼
+                    ┌─────────────────┐    ┌─────────────────┐
+                    │   PostgreSQL    │    │      MySQL      │
+                    │    Database     │    │    Database     │
+                    └─────────────────┘    └─────────────────┘
+```
 
-- [server.js](server.js):
-  - Implements an Express server.
-  - Middleware: `cors()`, `express.json()` and `express.static(__dirname)` to serve static files.
-  - Environment variables used:
-    - `PORT` — server port (default `3000`).
-    - `ADMIN_TOKEN` — token required by the admin `GET /api/quotes` and `PATCH /api/quotes/:id` endpoints.
-    - `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_TO`, `EMAIL_FROM` — optional SMTP settings for `sendNotification()`.
-  - Endpoints:
-    - `POST /api/quotes` — Accepts JSON payloads. Requires `name`, `phone`, and `message`. Inserts the submission into `project_requests` table in MySQL and returns `{ ok: true, id: <id> }` on success. Asynchronously calls `sendNotification()`.
-    - `GET /api/quotes` — Returns submissions. Requires `Authorization: Bearer <ADMIN_TOKEN>`.
-      - Query params:
-        - `filter=unread`: Returns only unread submissions.
-        - `sort=oldest`: Sorts by `submitted_at` ascending (default is descending).
-    - `PATCH /api/quotes/:id` — Updates a submission (e.g., mark as read). Requires `Authorization: Bearer <ADMIN_TOKEN>`.
-      - Body: `{ is_read: <boolean> }`.
-  - Security notes: the admin endpoint is protected by a simple token; ensure `ADMIN_TOKEN` is kept secret in production.
+- **Active Production (Serverless)**: 
+  - Frontend is served statically (e.g., GitHub Pages).
+  - All form submissions are sent directly to **Supabase** via the client-side JavaScript SDK.
+  - The Admin UI authenticates users and performs operations directly against Supabase.
+- **Development/Fallback**:
+  - The client attempts to initialize the Supabase client. If it fails to load or connect (e.g. adblocker, network restrictions), form submissions fallback to hitting the local REST API (`/api/quotes`) hosted by the Node.js/Express server.
 
-- [database.js](database.js):
-  - Handles MySQL database connection and initialization using `mysql2/promise`.
-  - Expects environment variables for connection (`DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, or `DATABASE_URL`).
-  - Defines the `project_requests` table schema:
-    - `id`, `name`, `company`, `email`, `phone`, `city`, `type`, `message`, `submitted_at`, `is_read`.
-  - Exports helper functions: `run` (INSERT/UPDATE), `query` (SELECT all), `get` (SELECT one).
+---
 
-- [package.json](package.json):
-  - Project metadata and `scripts.start`.
-  - Dependencies: `express`, `cors`, `nodemailer`, `mysql2`, `dotenv`.
+## 2. Database Schema (`project_requests` Table)
 
-- [README.md](README.md):
-  - Quick start, install, and run instructions.
+Both database backends (Supabase PostgreSQL and Local MySQL) store enquiries in the `project_requests` table.
 
-- [CONTRIBUTING.md](CONTRIBUTING.md):
-  - Guidelines for reporting issues and submitting changes.
+### Supabase (PostgreSQL) Schema
+| Column Name | Data Type | Constraints / Default | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `bigint` (int8) | Primary Key, Identity | Unique lead identifier |
+| `name` | `text` | Not Null | Lead's full name |
+| `phone` | `text` | Not Null | Mobile number |
+| `email` | `text` | Nullable | Email address |
+| `city` | `text` | Nullable | Project city/location |
+| `type` | `text` | Nullable | Paver/Tile type + selected thickness |
+| `message` | `text` | Nullable | Additional notes and estimated pieces data |
+| `submitted_at` | `timestamp with time zone` | `now()` | Date and time submitted |
+| `is_read` | `boolean` | `false` | Read status |
+| `priority` | `text` | `'medium'` | Action priority: `'high'`, `'medium'`, `'low'` |
 
-- [DOCUMENTATION.md](DOCUMENTATION.md):
-  - (This file) Full per-file documentation.
+### Local MySQL Schema (Created dynamically by `database.js`)
+| Column Name | Data Type | Constraints / Default | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `INT` | AUTO_INCREMENT, Primary Key | Unique lead identifier |
+| `name` | `VARCHAR(255)` | - | Lead's full name |
+| `company` | `VARCHAR(255)` | - | (Legacy support) |
+| `email` | `VARCHAR(255)` | - | Email address |
+| `phone` | `VARCHAR(50)` | - | Mobile number |
+| `city` | `VARCHAR(100)` | - | Project city/location |
+| `type` | `VARCHAR(100)` | - | Selected product configuration |
+| `message` | `TEXT` | - | Form message + calculated pieces |
+| `submitted_at` | `DATETIME` | `CURRENT_TIMESTAMP` | Date and time submitted |
+| `is_read` | `BOOLEAN` | `0` (false) | Read status |
+| `ip_address` | `VARCHAR(45)` | - | Submitter's IP address (for rate limiting) |
 
-**Frontend / Static files**
+---
 
-- [index.html](index.html):
-  - Main marketing/front-facing single-page HTML.
-  - Contains inline CSS styles and the complete page layout and components.
-  - Uses Google Fonts `Inter`.
-  - Clients-side form posts to `POST /api/quotes` for submissions.
+## 3. Frontend Implementation & Integration
 
-- [admin.html](admin.html):
-  - Admin UI to manage submissions.
-  - Features:
-    - Authenticate with `ADMIN_TOKEN`.
-    - Fetch submissions via `GET /api/quotes`.
-    - Sort and filter options (Read/Unread, Newest/Oldest).
-    - Mark submissions as read via checkbox (calls `PATCH /api/quotes/:id`).
-    - Download CSV export of currently loaded data.
-
-- `index.html.bak`:
-  - Backup of an older version of `index.html`.
-
-
-## How things work together
-
-- The Express server serves `index.html` and other static assets. When a visitor submits a quote, the client posts JSON to `POST /api/quotes`.
-- `server.js` uses `database.js` to insert the record into the MySQL database.
-- The admin retrieves submissions by visiting `admin.html`, which requests `GET /api/quotes` using the `ADMIN_TOKEN`.
-- If SMTP environment variables are provided, `server.js` attempts to send an email notification.
-
-## Deployment and environment
-
-- Recommended minimal env vars for production:
-  - `PORT` — port to listen on.
-  - `ADMIN_TOKEN` — random strong string used to protect the admin API.
-  - Optional SMTP settings.
-
-- Run with:
-  ```bash
-  npm install
-  npm start
+### A. Customer Website (`index.html`)
+- **Supabase CDN**: Loads SDK via `<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>`.
+- **Client Initialization**:
+  ```javascript
+  const _supabaseUrl = 'https://diaojuumezzritqjifbb.supabase.co';
+  const _supabaseKey = 'sb_publishable_y7k4oyOT4x3kFETDyBOndA_kxbkgdi3';
+  const dbClient = (window.supabase && window.supabase.createClient) 
+                   ? window.supabase.createClient(_supabaseUrl, _supabaseKey) 
+                   : null;
   ```
+- **Quote Form Handler (`#quoteForm`)**:
+  1. Captcha validation.
+  2. Construction of description: Combines paver selection and thickness into the `type` string.
+  3. Appends dynamic calculator estimates (sq.ft/sq.mt converted area and estimated piece count) to the bottom of the `message`.
+  4. If `dbClient` is initialized, it issues an asynchronous `.insert()` directly to Supabase.
+  5. If `dbClient` is unavailable, it issues a `fetch('/api/quotes')` `POST` request to the local server.
+  6. Backs up the payload to `localStorage` under `dd_quotes` for redundancy.
 
-## Maintenance notes
+### B. Admin Lead Manager (`admin.html`)
+- **Authentication (Supabase Auth)**:
+  - When `supabaseClient` is active, the dashboard shows a login form for administrators.
+  - Authenticates via `supabaseClient.auth.signInWithPassword({ email, password })`.
+  - Once signed in, it displays the administrator's email and loads lead details.
+  - To secure data, Row Level Security (RLS) policies should be enabled in the Supabase Console, restricting read/write access to authenticated users.
+- **Operations (Supabase vs Fallback Local Server)**:
+  - **Read**: Fetches list using `supabaseClient.from('project_requests').select('*')` with sorting and read/unread filters. If serverless is inactive, requests `GET /api/quotes` with `Authorization: Bearer <token>`.
+  - **Toggle Status**: Marks read/unread by executing an `.update({ is_read })` query.
+  - **Update Priority**: Changes priority tags directly (`'high'`, `'medium'`, `'low'`).
+  - **Delete Leads**: Performs bulk-delete on selected item IDs using `.delete().in('id', selected)`.
+  - **Export CSV**: Locally parses the loaded table data and triggers a browser CSV file download.
 
-- Backups: The MySQL database contains all submission data; back it up regularly.
-- Database: The schema is defined in `database.js`. Migrations would be needed for schema changes in existing databases.
+---
+
+## 4. Legacy Backend REST API Endpoints
+
+When the local Express server is active, it runs on port `3000` (or `PORT`) and exposes these endpoints:
+
+### `POST /api/quotes`
+- **Access**: Public.
+- **Payload**: `{ name, email, phone, city, type, message }`
+- **Actions**:
+  1. Checks request IP using `req.headers['x-forwarded-for']` or `req.socket.remoteAddress`.
+  2. Restricts to a maximum of 10 submissions per IP (`ip_address`).
+  3. Inserts lead into the local MySQL database.
+  4. Fires SMTP notification email asynchronously if configured.
+
+### `GET /api/quotes`
+- **Access**: Protected. Requires `Authorization: Bearer <ADMIN_TOKEN>`.
+- **Query Params**:
+  - `filter`: Set to `unread` to load unread entries only.
+  - `sort`: Set to `oldest` for ascending submission dates; defaults to newest first.
+- **Response**: Array of JSON lead objects.
+
+### `PATCH /api/quotes/:id`
+- **Access**: Protected. Requires `Authorization: Bearer <ADMIN_TOKEN>`.
+- **Payload**: `{ is_read: boolean }`
+- **Action**: Updates `is_read` status in database.
+
+### `DELETE /api/quotes`
+- **Access**: Protected. Requires `Authorization: Bearer <ADMIN_TOKEN>`.
+- **Payload**: `{ ids: [number] }` (Array of ID values to delete).
+- **Action**: Bulk deletes matching IDs.
