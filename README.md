@@ -1,46 +1,68 @@
-# Paver Project
+# D.D. Enterprise - Quotes Server
 
-Simple Node.js quotes server + static pages.
+A Node.js web application for D.D. Enterprise that serves static marketing pages and provides a backend API for handling project quote submissions.
 
-## Overview
+## Features
 
-This repository contains a small Node.js application that serves static HTML and a quotes dataset. It's intended as a minimal demo app.
+- **MySQL Database**: Persistent storage for all quote requests using `mysql2`.
+- **Email Notifications**: Automatic SMTP email alerts when a new quote is submitted.
+- **Admin Dashboard UI**: A dedicated interface (`admin.html`) to manage, filter, sort, and export submissions.
+- **Secure Admin API**: Token-based authentication for retrieving and managing submissions.
+- **Rate Limiting**: IP-based rate limiting (max 10 submissions per IP) to prevent spam.
 
 ## Prerequisites
 
-- Node.js (LTS recommended)
-- npm (bundled with Node.js)
+- Node.js (v18+ recommended)
+- npm
 - MySQL Server
 
-## Install
+## Configuration
 
-Open a terminal in the project root and run:
+Create a `.env` file in the root of the project to configure the environment variables:
 
-```bash
-npm install
-```
+### Server Configuration
+- `PORT`: Port the server runs on (default: `3000`)
+- `ADMIN_TOKEN`: A secret token required to access the admin APIs.
 
-## Run
+### Database Configuration
+- `DATABASE_URL`: Full MySQL connection string (optional)
+- `DB_HOST`: Database host (default: `localhost`)
+- `DB_USER`: Database user (default: `root`)
+- `DB_PASSWORD`: Database password
+- `DB_NAME`: Database name (default: `dd_enterprise`)
 
-Start the server:
+### SMTP Email Configuration (Optional)
+- `SMTP_HOST`: Your SMTP server address
+- `SMTP_PORT`: SMTP port (default: `587`)
+- `SMTP_SECURE`: Use TLS (`true` or `false`)
+- `SMTP_USER`: SMTP username
+- `SMTP_PASS`: SMTP password
+- `EMAIL_TO`: Destination email address for notifications
+- `EMAIL_FROM`: Sender email address
 
-```bash
-npm start
-# or
-node server.js
-```
+## Install & Run
 
-By default the server uses the `start` script in `package.json` which invokes `node server.js`.
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-## Project files
+2. **Run in development mode:**
+   Starts the server with the `.env` file loaded:
+   ```bash
+   npm run dev
+   ```
 
-- `server.js` — Node/Express server serving the app and APIs.
-- `database.js` — MySQL connection and query helpers.
-- `package.json` — project metadata and `start` script.
-- `index.html` — main frontend page.
-- `admin.html` — admin or alternate page.
+3. **Run in production:**
+   ```bash
+   npm start
+   ```
 
-## Notes
+## Project Files
 
-- The project uses MySQL for data persistence. Configure it via `.env` file or environment variables (`DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DATABASE_URL`).
-- If you want me to add a contributing guide, API docs, or tests, tell me which you'd like next.
+- `server.js` — Node/Express server serving static files and the API.
+- `database.js` — MySQL connection pool and initialization script.
+- `package.json` — Project metadata and scripts.
+- `index.html` — Main frontend landing page.
+- `admin.html` — Admin dashboard for viewing requests.
+- `styles.css` — Styling for the static pages.
