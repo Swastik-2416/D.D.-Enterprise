@@ -4,7 +4,7 @@ This document provides a file-by-file explanation of the repository and how each
 
 ## Overview
 
-A Node.js server with a SQLite database backend for handling quote submissions. It includes a submission API and an admin UI to fetch, filter, and sort submissions. The server persists data to `data/database.sqlite` and can optionally send notifications via SMTP when environment variables are configured.
+A Node.js server with a MySQL database backend for handling quote submissions. It includes a submission API and an admin UI to fetch, filter, and sort submissions. The server persists data to a MySQL database and can optionally send notifications via SMTP when environment variables are configured.
 
 ## Files
 
@@ -18,26 +18,25 @@ A Node.js server with a SQLite database backend for handling quote submissions. 
     - `ADMIN_TOKEN` — token required by the admin `GET /api/quotes` and `PATCH /api/quotes/:id` endpoints.
     - `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_TO`, `EMAIL_FROM` — optional SMTP settings for `sendNotification()`.
   - Endpoints:
-    - `POST /api/quotes` — Accepts JSON payloads. Requires `name`, `phone`, and `message`. Inserts the submission into `project_requests` table in `data/database.sqlite` and returns `{ ok: true, id: <id> }` on success. Asynchronously calls `sendNotification()`.
+    - `POST /api/quotes` — Accepts JSON payloads. Requires `name`, `phone`, and `message`. Inserts the submission into `project_requests` table in MySQL and returns `{ ok: true, id: <id> }` on success. Asynchronously calls `sendNotification()`.
     - `GET /api/quotes` — Returns submissions. Requires `Authorization: Bearer <ADMIN_TOKEN>`.
       - Query params:
         - `filter=unread`: Returns only unread submissions.
         - `sort=oldest`: Sorts by `submitted_at` ascending (default is descending).
     - `PATCH /api/quotes/:id` — Updates a submission (e.g., mark as read). Requires `Authorization: Bearer <ADMIN_TOKEN>`.
       - Body: `{ is_read: <boolean> }`.
-  - Data directory handling: creates `data/` if missing.
   - Security notes: the admin endpoint is protected by a simple token; ensure `ADMIN_TOKEN` is kept secret in production.
 
 - [database.js](database.js):
-  - Handles SQLite database connection and initialization.
-  - Creates `data/database.sqlite` if it doesn't exist.
+  - Handles MySQL database connection and initialization using `mysql2/promise`.
+  - Expects environment variables for connection (`DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, or `DATABASE_URL`).
   - Defines the `project_requests` table schema:
     - `id`, `name`, `company`, `email`, `phone`, `city`, `type`, `message`, `submitted_at`, `is_read`.
   - Exports helper functions: `run` (INSERT/UPDATE), `query` (SELECT all), `get` (SELECT one).
 
 - [package.json](package.json):
   - Project metadata and `scripts.start`.
-  - Dependencies: `express`, `cors`, `nodemailer`, `sqlite3`.
+  - Dependencies: `express`, `cors`, `nodemailer`, `mysql2`, `dotenv`.
 
 - [README.md](README.md):
   - Quick start, install, and run instructions.
@@ -68,17 +67,11 @@ A Node.js server with a SQLite database backend for handling quote submissions. 
 - `index.html.bak`:
   - Backup of an older version of `index.html`.
 
-**Data**
-
-- `data/database.sqlite`:
-  - SQLite database file created by `database.js`.
-  - Contains the `project_requests` table.
-  - Ignored by git (via `.gitignore` if present/configured).
 
 ## How things work together
 
 - The Express server serves `index.html` and other static assets. When a visitor submits a quote, the client posts JSON to `POST /api/quotes`.
-- `server.js` uses `database.js` to insert the record into the SQLite database.
+- `server.js` uses `database.js` to insert the record into the MySQL database.
 - The admin retrieves submissions by visiting `admin.html`, which requests `GET /api/quotes` using the `ADMIN_TOKEN`.
 - If SMTP environment variables are provided, `server.js` attempts to send an email notification.
 
@@ -97,5 +90,5 @@ A Node.js server with a SQLite database backend for handling quote submissions. 
 
 ## Maintenance notes
 
-- Backups: `data/database.sqlite` contains all submission data; back it up regularly.
+- Backups: The MySQL database contains all submission data; back it up regularly.
 - Database: The schema is defined in `database.js`. Migrations would be needed for schema changes in existing databases.

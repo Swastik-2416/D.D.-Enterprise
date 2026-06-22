@@ -10,6 +10,7 @@ This repository contains a small Node.js application that serves static HTML and
 
 - Node.js (LTS recommended)
 - npm (bundled with Node.js)
+- MySQL Server
 
 ## Install
 
@@ -34,14 +35,12 @@ By default the server uses the `start` script in `package.json` which invokes `n
 ## Project files
 
 - `server.js` — Node/Express server serving the app and APIs.
-- `database.js` — SQLite connection and query helpers.
+- `database.js` — MySQL connection and query helpers.
 - `package.json` — project metadata and `start` script.
 - `index.html` — main frontend page.
 - `admin.html` — admin or alternate page.
-- `data/database.sqlite` — SQLite database file (created on runtime).
-- `index.html.bak` — backup of `index.html`.
 
 ## Notes
 
-- The project uses SQLite for data persistence.
+- The project uses MySQL for data persistence. Configure it via `.env` file or environment variables (`DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DATABASE_URL`).
 - If you want me to add a contributing guide, API docs, or tests, tell me which you'd like next.
