@@ -1107,9 +1107,9 @@ input:focus, select:focus, textarea:focus {
 
 .dropdown-menu a {
   display: flex !important;
-  align-items: center !important;
+  align-items: flex-start !important;
   gap: 0.75rem !important;
-  padding: 0.75rem 1.25rem !important;
+  padding: 0.7rem 1.25rem !important;
   color: var(--primary-navy) !important;
   font-family: var(--font-label) !important;
   font-size: 0.85rem !important;
@@ -1122,10 +1122,36 @@ input:focus, select:focus, textarea:focus {
 .dropdown-menu a svg {
   color: var(--accent-orange) !important;
   flex-shrink: 0 !important;
+  margin-top: 0.2rem !important;
+}
+
+.dropdown-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.dropdown-contact-name {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.84rem;
+  color: var(--primary-navy);
+  line-height: 1.2;
+}
+
+.dropdown-contact-num {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.76rem;
+  color: var(--accent-orange, #d94a00);
+  line-height: 1.2;
 }
 
 .dropdown-menu a:hover {
   background: var(--surface-low) !important;
+}
+
+.dropdown-menu a:hover .dropdown-contact-name {
   color: var(--accent-orange) !important;
 }
 
