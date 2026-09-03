@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.ddenterprisepaverblock.co.in/sitemap.xml
+Sitemap: https://ddpaver.co.in/sitemap.xml
