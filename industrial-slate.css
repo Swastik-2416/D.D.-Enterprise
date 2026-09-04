@@ -439,6 +439,11 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1.3; }
 }
 
 /* === HERO VISUAL CARD === */
+.hero-visual {
+  position: relative;
+  margin-top: -3.5rem !important;
+}
+
 .hero-card-main {
   background: rgba(255, 255, 255, 0.65) !important;
   backdrop-filter: blur(24px) saturate(1.2) !important;
@@ -1389,6 +1394,10 @@ footer {
   }
 
   /* Product Showcase Card in Hero */
+  .hero-visual {
+    margin-top: 0 !important;
+  }
+
   .hero-card-main {
     padding: 1.25rem !important;
   }
